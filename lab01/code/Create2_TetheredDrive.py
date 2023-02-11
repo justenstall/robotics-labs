@@ -42,6 +42,7 @@
 from tkinter import *
 import tkinter.messagebox
 import tkinter.simpledialog
+import time
 
 import struct
 import sys, glob # for listing serial ports
@@ -230,9 +231,14 @@ class TetheredDriveApp(Tk):
                 self.destroy()
             # Lab 01
             elif k == 'B': # Bumps and Wheeldrops
-                self.sendCommandASCII('142', '7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
-                tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
-            else:
+                #self.sendCommandASCII('142', '7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
+                #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
+                self.sendCommandASCII('149 1 7')
+                time.sleep(0.05)
+                #x = get sensor queried list
+                time.sleep(0.05)
+                #print x
+                tkinter.messagebox.showinfo("Bumps and Wheel drops", "Left wheel: \nRight wheel: \nLeft bumper: \nRight bumper: \n")
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
             if k == 'UP':
