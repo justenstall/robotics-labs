@@ -238,7 +238,8 @@ class TetheredDriveApp(Tk):
                 self.bumpWheelpkt = self.get8Unsigned()
                 time.sleep(0.15)
                 print(f"Value: {self.bumpWheelpkt}")
-                tkinter.messagebox.showinfo("Bumps and Wheel drops", "Left wheel: \nRight wheel: \nLeft bumper: \nRight bumper: \n")
+                checkbit = lambda i, yes, no : yes if ((self.bumpWheelpkt >> i) & 1) == 1 else no
+                tkinter.messagebox.showinfo("Bumps and Wheel drops", f"Left wheel: {checkbit(3, 'Dropped', 'Raised')}\nRight wheel: {checkbit(2, 'Dropped', 'Raised')}\nLeft bumper: {checkbit(2, 'Bump', 'No bump')}\nRight bumper: {checkbit(2, 'Bump', 'No bump')}\n")
             else:
                 print("not handled", repr(k))
                 #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
