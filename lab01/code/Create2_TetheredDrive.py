@@ -231,15 +231,16 @@ class TetheredDriveApp(Tk):
                 self.destroy()
             # Lab 01
             elif k == 'B': # Bumps and Wheeldrops
-                #self.sendCommandASCII('142', '7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
-                #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
-                self.sendCommandASCII('149 1 7')
+                self.sendCommandASCII('142 7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
                 time.sleep(0.05)
                 #x = get sensor queried list
+                bumpWheelpkt = self.sendCommandASCII('142 7')
                 time.sleep(0.05)
                 #print x
+                print(bumpWheelpkt)
                 tkinter.messagebox.showinfo("Bumps and Wheel drops", "Left wheel: \nRight wheel: \nLeft bumper: \nRight bumper: \n")
                 print("not handled", repr(k))
+                #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
             if k == 'UP':
                 self.callbackKeyUp = False
