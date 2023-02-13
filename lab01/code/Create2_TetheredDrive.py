@@ -118,6 +118,7 @@ class TetheredDriveApp(Tk):
 
         self.bind("<Key>", self.callbackKey)
         self.bind("<KeyRelease>", self.callbackKey)
+        self.bumpWheelpkt = None
 
     def sendCommandASCII(self, command):
         """
@@ -232,13 +233,13 @@ class TetheredDriveApp(Tk):
             # Lab 01
             elif k == 'B': # Bumps and Wheeldrops
                 self.sendCommandASCII('142 7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
-                time.sleep(0.05)
+                time.sleep(0.15)
                 #x = get sensor queried list
-                bumpWheelpkt = self.sendCommandASCII('142 7')
-                time.sleep(0.05)
-                #print x
-                print(bumpWheelpkt)
+                self.bumpWheelpkt = self.get8Unsigned()
+                time.sleep(0.15)
+                print(f"Value: {self.bumpWheelpkt}")
                 tkinter.messagebox.showinfo("Bumps and Wheel drops", "Left wheel: \nRight wheel: \nLeft bumper: \nRight bumper: \n")
+            else:
                 print("not handled", repr(k))
                 #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
