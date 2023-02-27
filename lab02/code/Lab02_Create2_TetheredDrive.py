@@ -232,14 +232,61 @@ class TetheredDriveApp(Tk):
                 self.destroy()
             # Lab 01
             elif k == 'B': # Bumps and Wheeldrops
+                # Check bumps and wheeldrops
                 self.sendCommandASCII('142 7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
                 time.sleep(0.15)
                 #x = get sensor queried list
                 self.bumpWheelpkt = self.get8Unsigned()
                 time.sleep(0.15)
-                print(f"Value: {self.bumpWheelpkt}")
+                print(f"Received value: {self.bumpWheelpkt}")
                 checkbit = lambda i, yes, no : yes if ((self.bumpWheelpkt >> i) & 1) == 1 else no
                 tkinter.messagebox.showinfo("Bumps and Wheel drops", f"Left wheel: {checkbit(3, 'Dropped', 'Raised')}\nRight wheel: {checkbit(2, 'Dropped', 'Raised')}\nLeft bumper: {checkbit(1, 'Bump', 'No bump')}\nRight bumper: {checkbit(0, 'Bump', 'No bump')}\n")
+
+                # Check bumps and wheeldrops
+                # self.sendCommandASCII('142 7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
+                # time.sleep(0.15)
+                # #x = get sensor queried list
+                # self.bumpWheelpkt = self.get8Unsigned()
+                # time.sleep(0.15)
+                # print(f"Received value: {self.bumpWheelpkt}")
+                # checkbit = lambda i, yes, no : yes if ((self.bumpWheelpkt >> i) & 1) == 1 else no
+                # tkinter.messagebox.showinfo("Bumps and Wheel drops", f"Left wheel: {checkbit(3, 'Dropped', 'Raised')}\nRight wheel: {checkbit(2, 'Dropped', 'Raised')}\nLeft bumper: {checkbit(1, 'Bump', 'No bump')}\nRight bumper: {checkbit(0, 'Bump', 'No bump')}\n")
+
+                # Wall signal
+                self.sendCommandASCII('149 6 8 9 10 11 12 3')
+                time.sleep(0.15)
+                wall = self.get8Unsigned()
+                cliffFL = self.get8Unsigned()
+                cliffLeft = self.get8Unsigned()
+                cliffFR = self.get8Unsigned()
+                cliffRight = self.get8Unsigned()
+
+                # Check packet group 3
+                # 21: Charging State, 1 byte
+                # 22: Voltage: 2 bytes
+                # 23: Current: 2 bytes
+                # 24: Temperature: 1 byte
+                # 25: Battery Charge: 2 bytes
+                # 26: Battery Capacity: 2 bytes
+                chargeState = self.get8Unsigned()
+                voltage = self.get16Unsigned()
+                current = self.get16Signed()
+                temp = self.get8Signed()
+                charge = self.get16Unsigned()
+                capacity = self.get16Unsigned()
+                time.sleep(0.15)
+
+                print(f"wall detected? {wall}")
+                print(f"cliffs: {cliffLeft} {cliffFL} {cliffFR} {cliffRight}")
+
+                print(f"charge state: {chargeState}")
+                print(f"voltage: {voltage}")
+                print(f"temp: {temp}")
+                print(f"current: {current}")
+                print(f"charge: {charge}")
+                print(f"capacity: {capacity}")
+
+                
             else:
                 print("not handled", repr(k))
                 #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
@@ -279,7 +326,7 @@ class TetheredDriveApp(Tk):
         """
         Handle the Serial Port Connection:
             + Determine if already connected.
-            + If not, list avaialbe options and attempt to establish connection
+            + If not, list available options and attempt to establish connection
         """
         global connection
 
