@@ -46,6 +46,7 @@ import time
 
 import struct
 import sys, glob # for listing serial ports
+import threading
 
 try:
     import serial
@@ -121,6 +122,8 @@ class TetheredDriveApp(Tk):
         self.bind("<Key>", self.callbackKey)
         self.bind("<KeyRelease>", self.callbackKey)
         self.bumpWheelpkt = None
+        self.ledStatus = False
+        self.ledThread = None
 
     def sendCommandASCII(self, command):
         """
@@ -278,13 +281,23 @@ class TetheredDriveApp(Tk):
                 print(f"charge: {charge}")
                 print(f"capacity: {capacity}")
             elif k == 'L':
+                if self.ledStatus:
+                    # stop the thread
+                else:
+                    # start the thread
                 # Start a thread that loops these two indefinitely
-                self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
-                time.sleep(5)
-                self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
-                time.sleep(5)
+                def ledToggle():    
+                    self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
+                    time.sleep(5)
+                    self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
+                    time.sleep(5)
 
                 # Store state of lights, either on or off. If someone turns lights off, then kill the thread
+                self.ledThread = threading.Thread(target=ledToggle)
+
+
+                self.start()
+
             else:
                 print("not handled", repr(k))
                 #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
