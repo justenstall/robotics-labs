@@ -77,6 +77,8 @@ class TetheredDriveApp(Tk):
                         "C": "Clean",
                         "D": "Dock",
                         "R": "Reset",
+                        "T": "Transmit sensor data", # Lab 02 Task 1
+                        "L": "Lights", # Lab 02 Task 2
                         "Space": "Beep",
                         "Arrows": "Motion",
                         "Escape": "Quick Shutdown",
@@ -241,17 +243,7 @@ class TetheredDriveApp(Tk):
                 print(f"Received value: {self.bumpWheelpkt}")
                 checkbit = lambda i, yes, no : yes if ((self.bumpWheelpkt >> i) & 1) == 1 else no
                 tkinter.messagebox.showinfo("Bumps and Wheel drops", f"Left wheel: {checkbit(3, 'Dropped', 'Raised')}\nRight wheel: {checkbit(2, 'Dropped', 'Raised')}\nLeft bumper: {checkbit(1, 'Bump', 'No bump')}\nRight bumper: {checkbit(0, 'Bump', 'No bump')}\n")
-
-                # Check bumps and wheeldrops
-                # self.sendCommandASCII('142 7') # 142 is sensor read, 7 is the packet ID of the BWD sensor
-                # time.sleep(0.15)
-                # #x = get sensor queried list
-                # self.bumpWheelpkt = self.get8Unsigned()
-                # time.sleep(0.15)
-                # print(f"Received value: {self.bumpWheelpkt}")
-                # checkbit = lambda i, yes, no : yes if ((self.bumpWheelpkt >> i) & 1) == 1 else no
-                # tkinter.messagebox.showinfo("Bumps and Wheel drops", f"Left wheel: {checkbit(3, 'Dropped', 'Raised')}\nRight wheel: {checkbit(2, 'Dropped', 'Raised')}\nLeft bumper: {checkbit(1, 'Bump', 'No bump')}\nRight bumper: {checkbit(0, 'Bump', 'No bump')}\n")
-
+            elif k == 'T':
                 # Wall signal
                 self.sendCommandASCII('149 6 8 9 10 11 12 3')
                 time.sleep(0.15)
@@ -285,8 +277,14 @@ class TetheredDriveApp(Tk):
                 print(f"current: {current}")
                 print(f"charge: {charge}")
                 print(f"capacity: {capacity}")
+            elif k == 'L':
+                # Start a thread that loops these two indefinitely
+                self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
+                time.sleep(5)
+                self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
+                time.sleep(5)
 
-                
+                # Store state of lights, either on or off. If someone turns lights off, then kill the thread
             else:
                 print("not handled", repr(k))
                 #tkinter.messagebox.showinfo('Bumps and Wheeldrops', "info")
