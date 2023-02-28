@@ -49,7 +49,7 @@ import sys, glob # for listing serial ports
 from threading import Thread
 from threading import Event
 
-import thread_periodic
+from thread_periodic import Periodic
 
 try:
     import serial
@@ -126,7 +126,9 @@ class TetheredDriveApp(Tk):
         self.bind("<KeyRelease>", self.callbackKey)
         self.bumpWheelpkt = None
         self.ledStatus = False
-        self.ledThread = None
+        self.ledThread = Periodic(1, self.ledToggle, autostart=False)
+        self.running = False
+    
 
     def sendCommandASCII(self, command):
         """
@@ -202,12 +204,26 @@ class TetheredDriveApp(Tk):
         """
         return self.getDecodedBytes(2, ">h")
 
+    def ledToggle(self): 
+        #self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
+        if self.ledStatus==True:
+            self.sendCommandASCII('139 6 255 0')
+            self.ledStatus=False
+        else:
+            self.sendCommandASCII('139 9 255 255')
+            self.ledStatus=True
+        #print("Sent ASCII command1\n")
+        #self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
+        #print("Sent ASCII command2\n")
+
     def callbackKey(self, event):
         """
         A handler for keyboard events. Feel free to add more!
         """
         k = event.keysym.upper()
         motionChange = False
+    
+    
 
         if event.type == '2': # KeyPress; need to figure out how to get constant
             if k == 'P':   # Passive
@@ -252,7 +268,7 @@ class TetheredDriveApp(Tk):
             elif k == 'T':
                 # Wall signal
                 self.sendCommandASCII('149 6 8 9 10 11 12 3')
-                time.sleep(0.15)
+                time.sleep(0.30)
                 wall = self.get8Unsigned()
                 cliffFL = self.get8Unsigned()
                 cliffLeft = self.get8Unsigned()
@@ -272,7 +288,7 @@ class TetheredDriveApp(Tk):
                 temp = self.get8Signed()
                 charge = self.get16Unsigned()
                 capacity = self.get16Unsigned()
-                time.sleep(0.15)
+                time.sleep(0.30)
 
                 print(f"wall detected? {wall}")
                 print(f"cliffs: {cliffLeft} {cliffFL} {cliffFR} {cliffRight}")
@@ -292,37 +308,17 @@ class TetheredDriveApp(Tk):
                     "Battery Information", 
                     f"Charge state: {chargeState}\nVoltage: {voltage}\nTemperature: {temp} degrees celsius\nCurrent: {current}\nCharge: {charge}\nCapacity: {capacity}")
             elif k == 'L':
-                def ledToggle(event):
-                    while True:    
-                        #self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
-                        #self.sendCommandASCII('139 6 255 0')
-                        print("Sent ASCII command1\n")
-                        time.sleep(1)
-                        #self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
-                        #self.sendCommandASCII('139 9 255 255')
-                        print("Sent ASCII command2\n")
-                        time.sleep(1)
-                        if event.is_set():
-                            break
                 
-                #Code from superfastpython.com
-                event = Event()
-                thread = Thread(target=ledToggle, args=(event,))
-                thread.start()
-                time.sleep(5)
-                event.set()
-                thread.join()
-                #ledThread = thread_periodic.Periodic(1, ledToggle)
-
-                # if self.ledStatus:
-                #     # stop the thread
-
-                #     ledThread.stop()
-                # else:
-                #     # start the thread
-                #     ledThread._run()
-
-                    
+                # root = tkinter.tk()
+                # B = tkinter.Button(root, text="Start/Stop", COMMAND=self.ledToggle)
+                # B.pack()
+                # root.mainloop()
+                if self.running:
+                    self.ledThread.stop()
+                    self.running=False
+                else:
+                    self.ledThread.start()
+                    self.running=True
 
                 # Store state of lights, either on or off. If someone turns lights off, then kill the thread
                 #self.ledThread = threading.Thread(target=ledToggle)

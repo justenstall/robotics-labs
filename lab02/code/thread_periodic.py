@@ -3,7 +3,7 @@
 from threading import Timer, Lock
 import time
 
-class Periodic():
+class Periodic(object):
     """
     A periodic task running in threading.Timers
     """
