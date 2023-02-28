@@ -46,7 +46,10 @@ import time
 
 import struct
 import sys, glob # for listing serial ports
-import threading
+from threading import Thread
+from threading import Event
+
+import thread_periodic
 
 try:
     import serial
@@ -281,22 +284,42 @@ class TetheredDriveApp(Tk):
                 print(f"charge: {charge}")
                 print(f"capacity: {capacity}")
             elif k == 'L':
-                if self.ledStatus:
-                    # stop the thread
-                else:
-                    # start the thread
-                # Start a thread that loops these two indefinitely
-                def ledToggle():    
-                    self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
-                    time.sleep(5)
-                    self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
-                    time.sleep(5)
+                def ledToggle(event):
+                    while True:    
+                        #self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
+                        #self.sendCommandASCII('139 6 255 0')
+                        print("Sent ASCII command1\n")
+                        time.sleep(1)
+                        #self.sendCommandASCII(f'139 {int(0b1001, 2)} 255 255')
+                        #self.sendCommandASCII('139 9 255 255')
+                        print("Sent ASCII command2\n")
+                        time.sleep(1)
+                        if event.is_set():
+                            break
+                
+                #Code from superfastpython.com
+                event = Event()
+                thread = Thread(target=ledToggle, args=(event,))
+                thread.start()
+                time.sleep(5)
+                event.set()
+                thread.join()
+                #ledThread = thread_periodic.Periodic(1, ledToggle)
+
+                # if self.ledStatus:
+                #     # stop the thread
+
+                #     ledThread.stop()
+                # else:
+                #     # start the thread
+                #     ledThread._run()
+
+                    
 
                 # Store state of lights, either on or off. If someone turns lights off, then kill the thread
-                self.ledThread = threading.Thread(target=ledToggle)
-
-
-                self.start()
+                #self.ledThread = threading.Thread(target=ledToggle)
+                #threading.Timer(0, ledToggle).start()
+                # self.start()
 
             else:
                 print("not handled", repr(k))
