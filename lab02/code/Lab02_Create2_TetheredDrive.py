@@ -283,6 +283,14 @@ class TetheredDriveApp(Tk):
                 print(f"current: {current}")
                 print(f"charge: {charge}")
                 print(f"capacity: {capacity}")
+
+                checkbit = lambda bit, yes, no : yes if (bit & 1) == 1 else no
+                tkinter.messagebox.showinfo(
+                    "Wall and Cliff Sensors", 
+                    f"{checkbit(wall, 'Wall detected', 'No wall detected')}\nCliff left: {checkbit(cliffLeft, 'Yes', 'No')}\nCliff front left: {checkbit(cliffFL, 'Yes', 'No')}\nCliff front right: {checkbit(cliffFR, 'Yes', 'No')}\nCliff right: {checkbit(cliffRight, 'Yes', 'No')}\n")
+                tkinter.messagebox.showinfo(
+                    "Battery Information", 
+                    f"Charge state: {chargeState}\nVoltage: {voltage}\nTemperature: {temp} degrees celsius\nCurrent: {current}\nCharge: {charge}\nCapacity: {capacity}")
             elif k == 'L':
                 def ledToggle(event):
                     while True:    
