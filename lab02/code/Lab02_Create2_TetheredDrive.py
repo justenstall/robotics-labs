@@ -293,7 +293,22 @@ class TetheredDriveApp(Tk):
                 print(f"wall detected? {wall}")
                 print(f"cliffs: {cliffLeft} {cliffFL} {cliffFR} {cliffRight}")
 
-                print(f"charge state: {chargeState}")
+                chargeStateString = "Invalid value"
+                match chargeState:
+                    case 0:
+                        chargeStateString = "Not charging"
+                    case 1:
+                        chargeStateString = "Reconditioning charging"
+                    case 2:
+                        chargeStateString = "Full charging"
+                    case 3:
+                        chargeStateString = "Trickle charging"
+                    case 4:
+                        chargeStateString = "Waiting"
+                    case 5:
+                        chargeStateString = "Charging fault condition"
+
+                print(f"charge state: {chargeState} ({chargeStateString})")
                 print(f"voltage: {voltage}")
                 print(f"temp: {temp}")
                 print(f"current: {current}")
@@ -306,7 +321,7 @@ class TetheredDriveApp(Tk):
                     f"{checkbit(wall, 'Wall detected', 'No wall detected')}\nCliff left: {checkbit(cliffLeft, 'Yes', 'No')}\nCliff front left: {checkbit(cliffFL, 'Yes', 'No')}\nCliff front right: {checkbit(cliffFR, 'Yes', 'No')}\nCliff right: {checkbit(cliffRight, 'Yes', 'No')}\n")
                 tkinter.messagebox.showinfo(
                     "Battery Information", 
-                    f"Charge state: {chargeState}\nVoltage: {voltage}\nTemperature: {temp} degrees celsius\nCurrent: {current}\nCharge: {charge}\nCapacity: {capacity}")
+                    f"Charge state: {chargeStateString}\nVoltage: {voltage} mV\nTemperature: {temp} C\nCurrent: {current} mA\nCharge: {charge} mAh\nCapacity: {capacity} mAh")
             elif k == 'L':
                 
                 # root = tkinter.tk()
