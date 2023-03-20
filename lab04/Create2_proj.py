@@ -136,6 +136,9 @@ class TetheredDriveApp(Tk):
         self.bind("<Key>", self.callbackKey)
         self.bind("<KeyRelease>", self.callbackKey)
 
+        self.ledThread = cl.RepeatTimer(1, self.ledToggle, autostart=False)
+        self.running = False
+
     def prettyPrint(self, sensors):
         str = f"{'-'*70}\n"
         str += f"{'Sensor':>40} | {'Value':<5}\n"
@@ -143,6 +146,15 @@ class TetheredDriveApp(Tk):
         for k, v in sensors._asdict().items():
             str += f"{k}: {v}\n"
         return str
+    
+    def ledToggle(self): 
+        #self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
+        if self.ledStatus==True:
+            self.sendCommandASCII('139 6 255 0')
+            self.ledStatus=False
+        else:
+            self.sendCommandASCII('139 9 255 255')
+            self.ledStatus=True
 
 
 
@@ -196,6 +208,70 @@ class TetheredDriveApp(Tk):
                 if self.robot is not None:
                     del self.robot
                 self.destroy()
+            elif k == 'T':
+                # Wall signal
+                self.sendCommandASCII('149 6 8 9 10 11 12 3')
+                time.sleep(0.30)
+                wall = self.get8Unsigned()
+                cliffFL = self.get8Unsigned()
+                cliffLeft = self.get8Unsigned()
+                cliffFR = self.get8Unsigned()
+                cliffRight = self.get8Unsigned()
+
+                # Check packet group 3
+                # 21: Charging State, 1 byte
+                # 22: Voltage: 2 bytes
+                # 23: Current: 2 bytes
+                # 24: Temperature: 1 byte
+                # 25: Battery Charge: 2 bytes
+                # 26: Battery Capacity: 2 bytes
+                chargeState = self.get8Unsigned()
+                voltage = self.get16Unsigned()
+                current = self.get16Signed()
+                temp = self.get8Signed()
+                charge = self.get16Unsigned()
+                capacity = self.get16Unsigned()
+                time.sleep(0.30)
+
+                print(f"wall detected? {wall}")
+                print(f"cliffs: {cliffLeft} {cliffFL} {cliffFR} {cliffRight}")
+
+                chargeStateString = "Invalid value"
+                match chargeState:
+                    case 0:
+                        chargeStateString = "Not charging"
+                    case 1:
+                        chargeStateString = "Reconditioning charging"
+                    case 2:
+                        chargeStateString = "Full charging"
+                    case 3:
+                        chargeStateString = "Trickle charging"
+                    case 4:
+                        chargeStateString = "Waiting"
+                    case 5:
+                        chargeStateString = "Charging fault condition"
+
+                print(f"charge state: {chargeState} ({chargeStateString})")
+                print(f"voltage: {voltage}")
+                print(f"temp: {temp}")
+                print(f"current: {current}")
+                print(f"charge: {charge}")
+                print(f"capacity: {capacity}")
+
+                checkbit = lambda bit, yes, no : yes if (bit & 1) == 1 else no
+                tkinter.messagebox.showinfo(
+                    "Wall and Cliff Sensors", 
+                    f"{checkbit(wall, 'Wall detected', 'No wall detected')}\nCliff left: {checkbit(cliffLeft, 'Yes', 'No')}\nCliff front left: {checkbit(cliffFL, 'Yes', 'No')}\nCliff front right: {checkbit(cliffFR, 'Yes', 'No')}\nCliff right: {checkbit(cliffRight, 'Yes', 'No')}\n")
+                tkinter.messagebox.showinfo(
+                    "Battery Information", 
+                    f"Charge state: {chargeStateString}\nVoltage: {voltage} mV\nTemperature: {temp} C\nCurrent: {current} mA\nCharge: {charge} mAh\nCapacity: {capacity} mAh")  
+            elif k == 'L':
+                if self.running:
+                    self.ledThread.stop()
+                    self.running=False
+                else:
+                    self.ledThread.start()
+                    self.running=True
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
