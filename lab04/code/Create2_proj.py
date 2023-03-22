@@ -47,6 +47,8 @@ import struct
 import sys, glob # for listing serial ports
 import time
 
+from threading import Thread
+
 # Create Library
 import createlib as cl
 
@@ -140,7 +142,10 @@ class TetheredDriveApp(Tk):
         self.bind("<KeyRelease>", self.callbackKey)
 
         self.ledThread = cl.RepeatTimer(1, self.ledToggle, autostart=False)
-        self.running = False
+        self.ledRunning = False
+        
+        self.driveThread = self.driveThread = Thread(target=self.driveBumpWheeldrop)
+        self.driving = False
 
     def prettyPrint(self, sensors):
         str = f"{'-'*70}\n"
@@ -204,6 +209,10 @@ class TetheredDriveApp(Tk):
                 self.checkSensors()
             elif k == 'L':
                 self.handleLED()
+            elif k == 'W':
+                self.handleDrive()
+            elif k == 'L':
+                self.handleDrive()
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
@@ -326,12 +335,12 @@ class TetheredDriveApp(Tk):
             f"Charger state: {cl.CHARGING_STATE(sensors.charger_state).name}\nVoltage: {sensors.voltage} mV\nTemperature: {sensors.temperature} C\nCurrent: {sensors.current} mA\nBattery Charge: {sensors.battery_charge} mAh\nBattery Capacity: {sensors.battery_capacity} mAh")
 
     def handleLED(self):
-        if self.running:
+        if self.ledRunning:
             self.ledThread.stop()
-            self.running=False
+            self.ledRunning=False
         else:
             self.ledThread.start()
-            self.running=True
+            self.ledRunning=True
     
     def ledToggle(self): 
         if self.ledStatus==True:
@@ -340,6 +349,53 @@ class TetheredDriveApp(Tk):
         else:
             self.robot.led(led_bits=9, power_color=255, power_intensity=255)
             self.ledStatus=True
+
+    def handleDrive(self, driveType):
+        if self.driving:
+            self.robot.drive_stop()
+            self.driving = False
+        elif driveType == "W":
+            self.driveThread = Thread(target=self.driveBumpWheeldrop)
+            self.driveThread.start()
+            self.driving = True
+        elif driveType == "B":
+            self.driveThread = Thread(target=self.driveLightBumper)
+            self.driveThread.start()
+            self.driving = True
+
+    def driveBumpWheeldrop(self):
+        self.robot.drive_direct(10, 10)
+        while self.driving:
+            sensors = self.robot.get_sensors()
+            # time.sleep(.1)
+            wl = sensors.bumps_wheeldrops.wheeldrop_left
+            wr = sensors.bumps_wheeldrops.wheeldrop_right
+            bl = sensors.bumps_wheeldrops.bump_left
+            br = sensors.bumps_wheeldrops.bump_right
+
+            if wl | wr | bl | br:
+                break
+        self.robot.drive_stop()
+        self.driving = False
+    
+    def driveLightBumper(self):
+        self.robot.drive_direct(10, 10)
+        while self.driving:
+            sensors = self.robot.get_sensors()
+            # time.sleep(.1)
+            lr = sensors.light_bumper_right
+            lfr = sensors.light_bumper_front_right
+            lcr = sensors.light_bumper_center_right
+            lcl = sensors.light_bumper_center_left
+            lfl = sensors.light_bumper_front_left
+            ll = sensors.light_bumper_left
+
+            # TODO: figure out how this value works and what number we want to be checking for
+            
+            if lr | lfr | lcr | lcl | lfl | ll:
+                break
+        self.robot.drive_stop()
+        self.driving = False
 
 
 
