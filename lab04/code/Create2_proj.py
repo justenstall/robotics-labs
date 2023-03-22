@@ -85,7 +85,10 @@ class TetheredDriveApp(Tk):
                         "Space": "Beep",
                         "Arrows": "Motion",
                         "Escape": "Quick Shutdown",
-                        "B": "Print Sensors",
+                        "T": "Transmit sensor data",
+                        "L": "Toggle Lights",
+                        "W": "Drive with Bumps and Wheeldrops sensor",
+                        "B": "Drive with Light Bumper sensor",
                      }
 
     # Project variables appear below this comment
@@ -146,14 +149,6 @@ class TetheredDriveApp(Tk):
         for k, v in sensors._asdict().items():
             str += f"{k}: {v}\n"
         return str
-    
-    def ledToggle(self): 
-        if self.ledStatus==True:
-            self.robot.led(led_bits=6, power_color=255, power_intensity=0)
-            self.ledStatus=False
-        else:
-            self.robot.led(led_bits=9, power_color=255, power_intensity=255)
-            self.ledStatus=True
 
     @_decorator
     def callbackKey(self, event):
@@ -206,23 +201,9 @@ class TetheredDriveApp(Tk):
                     del self.robot
                 self.destroy()
             elif k == 'T':
-                sensors = self.robot.get_sensors()
-                print(self.prettyPrint(sensors))
-
-                checkbit = lambda bit : 'Yes' if (bit & 1) == 1 else 'No'
-                tkinter.messagebox.showinfo(
-                    "Wall and Cliff Sensors", 
-                    f"Wall: {checkbit(sensors.wall)}\nCliff left: {checkbit(sensors.cliff_left)}\nCliff front left: {checkbit(sensors.cliff_front_left)}\nCliff front right: {checkbit(sensors.cliff_front_right)}\nCliff right: {checkbit(sensors.cliff_right)}\n")
-                tkinter.messagebox.showinfo(
-                    "Battery Information", 
-                    f"Charger state: {cl.CHARGING_STATE(sensors.charger_state).name}\nVoltage: {sensors.voltage} mV\nTemperature: {sensors.temperature} C\nCurrent: {sensors.current} mA\nBattery Charge: {sensors.battery_charge} mAh\nBattery Capacity: {sensors.battery_capacity} mAh")
+                self.checkSensors()
             elif k == 'L':
-                if self.running:
-                    self.ledThread.stop()
-                    self.running=False
-                else:
-                    self.ledThread.start()
-                    self.running=True
+                self.handleLED()
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
@@ -332,6 +313,34 @@ class TetheredDriveApp(Tk):
 
 
     # ----------------------- Custom functions ------------------------------
+    def checkSensors(self):
+        sensors = self.robot.get_sensors()
+        print(self.prettyPrint(sensors))
+
+        checkbit = lambda bit : 'Yes' if (bit & 1) == 1 else 'No'
+        tkinter.messagebox.showinfo(
+            "Wall and Cliff Sensors", 
+            f"Wall: {checkbit(sensors.wall)}\nCliff left: {checkbit(sensors.cliff_left)}\nCliff front left: {checkbit(sensors.cliff_front_left)}\nCliff front right: {checkbit(sensors.cliff_front_right)}\nCliff right: {checkbit(sensors.cliff_right)}\n")
+        tkinter.messagebox.showinfo(
+            "Battery Information", 
+            f"Charger state: {cl.CHARGING_STATE(sensors.charger_state).name}\nVoltage: {sensors.voltage} mV\nTemperature: {sensors.temperature} C\nCurrent: {sensors.current} mA\nBattery Charge: {sensors.battery_charge} mAh\nBattery Capacity: {sensors.battery_capacity} mAh")
+
+    def handleLED(self):
+        if self.running:
+            self.ledThread.stop()
+            self.running=False
+        else:
+            self.ledThread.start()
+            self.running=True
+    
+    def ledToggle(self): 
+        if self.ledStatus==True:
+            self.robot.led(led_bits=6, power_color=255, power_intensity=0)
+            self.ledStatus=False
+        else:
+            self.robot.led(led_bits=9, power_color=255, power_intensity=255)
+            self.ledStatus=True
+
 
 
     # ----------------------- Main Driver ------------------------------
