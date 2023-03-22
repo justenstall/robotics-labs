@@ -148,15 +148,12 @@ class TetheredDriveApp(Tk):
         return str
     
     def ledToggle(self): 
-        #self.sendCommandASCII(f'139 {int(0b0110, 2)} 255 0')
         if self.ledStatus==True:
-            self.sendCommandASCII('139 6 255 0')
+            self.robot.led(led_bits=6, power_color=255, power_intensity=0)
             self.ledStatus=False
         else:
-            self.sendCommandASCII('139 9 255 255')
+            self.robot.led(led_bits=9, power_color=255, power_intensity=255)
             self.ledStatus=True
-
-
 
     @_decorator
     def callbackKey(self, event):
@@ -209,62 +206,16 @@ class TetheredDriveApp(Tk):
                     del self.robot
                 self.destroy()
             elif k == 'T':
-                # Wall signal
-                self.sendCommandASCII('149 6 8 9 10 11 12 3')
-                time.sleep(0.30)
-                wall = self.get8Unsigned()
-                cliffFL = self.get8Unsigned()
-                cliffLeft = self.get8Unsigned()
-                cliffFR = self.get8Unsigned()
-                cliffRight = self.get8Unsigned()
+                sensors = self.robot.get_sensors()
+                print(self.prettyPrint(sensors))
 
-                # Check packet group 3
-                # 21: Charging State, 1 byte
-                # 22: Voltage: 2 bytes
-                # 23: Current: 2 bytes
-                # 24: Temperature: 1 byte
-                # 25: Battery Charge: 2 bytes
-                # 26: Battery Capacity: 2 bytes
-                chargeState = self.get8Unsigned()
-                voltage = self.get16Unsigned()
-                current = self.get16Signed()
-                temp = self.get8Signed()
-                charge = self.get16Unsigned()
-                capacity = self.get16Unsigned()
-                time.sleep(0.30)
-
-                print(f"wall detected? {wall}")
-                print(f"cliffs: {cliffLeft} {cliffFL} {cliffFR} {cliffRight}")
-
-                chargeStateString = "Invalid value"
-                match chargeState:
-                    case 0:
-                        chargeStateString = "Not charging"
-                    case 1:
-                        chargeStateString = "Reconditioning charging"
-                    case 2:
-                        chargeStateString = "Full charging"
-                    case 3:
-                        chargeStateString = "Trickle charging"
-                    case 4:
-                        chargeStateString = "Waiting"
-                    case 5:
-                        chargeStateString = "Charging fault condition"
-
-                print(f"charge state: {chargeState} ({chargeStateString})")
-                print(f"voltage: {voltage}")
-                print(f"temp: {temp}")
-                print(f"current: {current}")
-                print(f"charge: {charge}")
-                print(f"capacity: {capacity}")
-
-                checkbit = lambda bit, yes, no : yes if (bit & 1) == 1 else no
+                checkbit = lambda bit : 'Yes' if (bit & 1) == 1 else 'No'
                 tkinter.messagebox.showinfo(
                     "Wall and Cliff Sensors", 
-                    f"{checkbit(wall, 'Wall detected', 'No wall detected')}\nCliff left: {checkbit(cliffLeft, 'Yes', 'No')}\nCliff front left: {checkbit(cliffFL, 'Yes', 'No')}\nCliff front right: {checkbit(cliffFR, 'Yes', 'No')}\nCliff right: {checkbit(cliffRight, 'Yes', 'No')}\n")
+                    f"Wall: {checkbit(sensors.wall)}\nCliff left: {checkbit(sensors.cliff_left)}\nCliff front left: {checkbit(sensors.cliff_front_left)}\nCliff front right: {checkbit(sensors.cliff_front_right)}\nCliff right: {checkbit(sensors.cliff_right)}\n")
                 tkinter.messagebox.showinfo(
                     "Battery Information", 
-                    f"Charge state: {chargeStateString}\nVoltage: {voltage} mV\nTemperature: {temp} C\nCurrent: {current} mA\nCharge: {charge} mAh\nCapacity: {capacity} mAh")  
+                    f"Charger state: {cl.CHARGING_STATE(sensors.charger_state).name}\nVoltage: {sensors.voltage} mV\nTemperature: {sensors.temperature} C\nCurrent: {sensors.current} mA\nBattery Charge: {sensors.battery_charge} mAh\nBattery Capacity: {sensors.battery_capacity} mAh")
             elif k == 'L':
                 if self.running:
                     self.ledThread.stop()
