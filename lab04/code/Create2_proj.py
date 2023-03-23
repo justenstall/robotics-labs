@@ -367,7 +367,6 @@ class TetheredDriveApp(Tk):
         self.robot.drive_direct(10, 10)
         while self.driving:
             sensors = self.robot.get_sensors()
-            # time.sleep(.1)
             wl = sensors.bumps_wheeldrops.wheeldrop_left
             wr = sensors.bumps_wheeldrops.wheeldrop_right
             bl = sensors.bumps_wheeldrops.bump_left
@@ -379,10 +378,10 @@ class TetheredDriveApp(Tk):
         self.driving = False
     
     def driveLightBumper(self):
+        light_threshold = 10 # TODO: determine if we need this and if so what value we need
         self.robot.drive_direct(10, 10)
         while self.driving:
             sensors = self.robot.get_sensors()
-            # time.sleep(.1)
             lr = sensors.light_bumper_right
             lfr = sensors.light_bumper_front_right
             lcr = sensors.light_bumper_center_right
@@ -392,7 +391,7 @@ class TetheredDriveApp(Tk):
 
             # TODO: figure out how this value works and what number we want to be checking for
             
-            if lr | lfr | lcr | lcl | lfl | ll:
+            if any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
                 break
         self.robot.drive_stop()
         self.driving = False
@@ -403,3 +402,10 @@ class TetheredDriveApp(Tk):
 if __name__ == "__main__":
     app = TetheredDriveApp()
     app.mainloop()
+
+# TODO: edit this based on how the light sensors work, the logic may be backwards if the light
+def any_greater_than(threshold, list):
+    for i in list:
+        if i > threshold:
+            return False
+    return True
