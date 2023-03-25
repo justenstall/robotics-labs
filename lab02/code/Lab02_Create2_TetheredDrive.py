@@ -288,7 +288,7 @@ class TetheredDriveApp(Tk):
                 temp = self.get8Signed()
                 charge = self.get16Unsigned()
                 capacity = self.get16Unsigned()
-                time.sleep(0.30)
+                #time.sleep(0.30)
 
                 print(f"wall detected? {wall}")
                 print(f"cliffs: {cliffLeft} {cliffFL} {cliffFR} {cliffRight}")

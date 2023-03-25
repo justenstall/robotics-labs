@@ -396,6 +396,30 @@ class TetheredDriveApp(Tk):
         self.robot.drive_stop()
         self.driving = False
 
+    def goTheDistance(self, velocity, distance):
+        finalDistance = distance
+        currentDistance = 0
+        currentVelocity = velocity
+        #start drive
+        self.driveBumpWheeldrop()
+        startTime = time.perf_counter()
+        while (currentDistance < finalDistance):
+            #check sensor. handled in driveBumpWheeldrop, so may not need to keep checking sensors here too
+            if self.driving == False:
+                #robot has stopped from driveBumpWheeldrop. will need to keep checking sensors to determine if obstacle is gone.
+                currentVelocity = 0
+            elif currentVelocity == 0:
+                #resume driving. currentVelocity should only be zero after the robot stopped. can only reach here if driving is true. 
+                self.driving = True
+                currentVelocity = velocity
+                self.driveBumpWheeldrop()
+                starTime = time.perf_counter()
+            else:
+                checkTime = time.pref_counter()
+                currentTime = checkTime - startTime
+                #For this calculation below, I am assuming units are meters per sec but we may need to ensure that. currentTime may be in ms.
+                currentDistance = currentDistance + (currentVelocity * currentTime)
+            self.robot.drive_stop()
 
 
     # ----------------------- Main Driver ------------------------------
