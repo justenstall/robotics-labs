@@ -84,13 +84,15 @@ class TetheredDriveApp(Tk):
                         "C": "Clean",
                         "D": "Dock",
                         "R": "Reset",
+                        "B": "Get Sensors",
                         "Space": "Beep",
                         "Arrows": "Motion",
                         "Escape": "Quick Shutdown",
                         "T": "Transmit sensor data",
                         "L": "Toggle Lights",
                         "W": "Drive with Bumps and Wheeldrops sensor",
-                        "B": "Drive with Light Bumper sensor",
+                        "E": "Drive with Light Bumper sensor",
+                        "G": "Distance Drive"
                      }
 
     # Project variables appear below this comment
@@ -143,8 +145,10 @@ class TetheredDriveApp(Tk):
 
         self.ledThread = cl.RepeatTimer(1, self.ledToggle, autostart=False)
         self.ledRunning = False
+        self.ledStatus = False
         
-        self.driveThread = self.driveThread = Thread(target=self.driveBumpWheeldrop)
+        #self.driveThread = self.driveThread = Thread(target=self.driveBumpWheeldrop)
+        self.driveThread = Thread(target=self.driveBumpWheeldrop)
         self.driving = False
 
     def prettyPrint(self, sensors):
@@ -210,9 +214,13 @@ class TetheredDriveApp(Tk):
             elif k == 'L':
                 self.handleLED()
             elif k == 'W':
-                self.handleDrive()
-            elif k == 'L':
-                self.handleDrive()
+                #self.handleDrive(k)
+                self.driveBumpWheeldrop()
+            elif k == 'E':
+                #self.handleDrive(k)
+                self.driveLightBumper()
+            elif k == 'G':
+                self.goTheDistance(200,1000)
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
@@ -353,18 +361,25 @@ class TetheredDriveApp(Tk):
     def handleDrive(self, driveType):
         if self.driving:
             self.robot.drive_stop()
+            #self.driveThread.join()
             self.driving = False
         elif driveType == "W":
-            self.driveThread = Thread(target=self.driveBumpWheeldrop)
-            self.driveThread.start()
+            #self.driveThread = Thread(target=self.driveBumpWheeldrop)
+            #self.driveThread.start()
             self.driving = True
-        elif driveType == "B":
-            self.driveThread = Thread(target=self.driveLightBumper)
-            self.driveThread.start()
+            self.driveBumpWheeldrop()
+            
+        elif driveType == "P":
+            #self.driveThread = Thread(target=self.driveLightBumper)
+            #self.driveThread.start()
+            self.driveLightBumper()
             self.driving = True
 
     def driveBumpWheeldrop(self):
-        self.robot.drive_direct(10, 10)
+        vr = int(200)
+        vl = int(200)
+        self.driving = True
+        self.robot.drive_direct(vl, vr)
         while self.driving:
             sensors = self.robot.get_sensors()
             wl = sensors.bumps_wheeldrops.wheeldrop_left
@@ -373,28 +388,37 @@ class TetheredDriveApp(Tk):
             br = sensors.bumps_wheeldrops.bump_right
 
             if wl | wr | bl | br:
+                print("sensor hit")
+                self.robot.drive_stop()
+                self.driving = False
                 break
-        self.robot.drive_stop()
-        self.driving = False
+        # self.robot.drive_stop()
+        # self.driving = False
     
     def driveLightBumper(self):
-        light_threshold = 10 # TODO: determine if we need this and if so what value we need
-        self.robot.drive_direct(10, 10)
+        #light_threshold = 10 # TODO: determine if we need this and if so what value we need
+        vr = int(200)
+        vl = int(200)
+        self.driving = True
+        self.robot.drive_direct(vl, vr)
         while self.driving:
             sensors = self.robot.get_sensors()
-            lr = sensors.light_bumper_right
-            lfr = sensors.light_bumper_front_right
-            lcr = sensors.light_bumper_center_right
-            lcl = sensors.light_bumper_center_left
-            lfl = sensors.light_bumper_front_left
-            ll = sensors.light_bumper_left
+            lr = sensors.light_bumper.right
+            lfr = sensors.light_bumper.front_right
+            lcr = sensors.light_bumper.center_right
+            lcl = sensors.light_bumper.center_left
+            lfl = sensors.ligh_bumper.front_left
+            ll = sensors.light_bumper.left
 
             # TODO: figure out how this value works and what number we want to be checking for
             
-            if any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
+            #if any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
+            if lr | lfr | lcr | lcl | lfl | ll:
+                print("Sensor hit")
+                self.robot.drive_stop()
+                self.driving = False
                 break
-        self.robot.drive_stop()
-        self.driving = False
+        
 
     def goTheDistance(self, velocity, distance):
         finalDistance = distance
@@ -408,16 +432,17 @@ class TetheredDriveApp(Tk):
             if self.driving == False:
                 #robot has stopped from driveBumpWheeldrop. will need to keep checking sensors to determine if obstacle is gone.
                 currentVelocity = 0
+                #call sensor check here. Could create function that checks sesnors in thread in while loop until obstacle cleared.
             elif currentVelocity == 0:
                 #resume driving. currentVelocity should only be zero after the robot stopped. can only reach here if driving is true. 
                 self.driving = True
                 currentVelocity = velocity
                 self.driveBumpWheeldrop()
-                starTime = time.perf_counter()
+                startTime = time.perf_counter()
             else:
                 checkTime = time.pref_counter()
                 currentTime = checkTime - startTime
-                #For this calculation below, I am assuming units are meters per sec but we may need to ensure that. currentTime may be in ms.
+                #distance is mm. velocity is mm/s
                 currentDistance = currentDistance + (currentVelocity * currentTime)
             self.robot.drive_stop()
 
