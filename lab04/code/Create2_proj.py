@@ -407,7 +407,7 @@ class TetheredDriveApp(Tk):
             lfr = sensors.light_bumper.front_right
             lcr = sensors.light_bumper.center_right
             lcl = sensors.light_bumper.center_left
-            lfl = sensors.ligh_bumper.front_left
+            lfl = sensors.light_bumper.front_left
             ll = sensors.light_bumper.left
 
             # TODO: figure out how this value works and what number we want to be checking for
