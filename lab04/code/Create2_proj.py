@@ -220,7 +220,8 @@ class TetheredDriveApp(Tk):
                 #self.handleDrive(k)
                 self.driveLightBumper()
             elif k == 'G':
-                self.goTheDistance(200,1000)
+                # drive 10cm at 200mm/s
+                self.goTheDistance(velocity=200, distance=1000)
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
