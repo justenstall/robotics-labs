@@ -382,21 +382,14 @@ class TetheredDriveApp(Tk):
         self.robot.drive_direct(vl, vr)
         while self.driving:
             sensors = self.robot.get_sensors()
-            wl = sensors.bumps_wheeldrops.wheeldrop_left
-            wr = sensors.bumps_wheeldrops.wheeldrop_right
-            bl = sensors.bumps_wheeldrops.bump_left
-            br = sensors.bumps_wheeldrops.bump_right
-
-            if wl | wr | bl | br:
+            if bump_or_wheeldrop(sensors=sensors):
                 print("sensor hit")
                 self.robot.drive_stop()
                 self.driving = False
                 break
-        # self.robot.drive_stop()
-        # self.driving = False
     
     def driveLightBumper(self):
-        #light_threshold = 10 # TODO: determine if we need this and if so what value we need
+        #light_threshold = 10
         vr = int(200)
         vl = int(200)
         self.driving = True
@@ -409,8 +402,6 @@ class TetheredDriveApp(Tk):
             lcl = sensors.light_bumper.center_left
             lfl = sensors.light_bumper.front_left
             ll = sensors.light_bumper.left
-
-            # TODO: figure out how this value works and what number we want to be checking for
             
             #if any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
             if lr | lfr | lcr | lcl | lfl | ll:
@@ -421,66 +412,38 @@ class TetheredDriveApp(Tk):
         
 
     def goTheDistance(self, velocity, distance):
-        finalDistance = distance
-        currentDistance = 0
-        currentVelocity = velocity
-        vl = velocity
-        vr = velocity
-        #start drive
-        #self.driveBumpWheeldrop()
-        self.robot.drive_direct(vl,vr)
+        # Start checking distance
+        travelled = 0
+
+        # Start drive
+        self.robot.drive_direct(velocity,velocity)
+        self.driving = True
+
+        # Set up timer
         #time.perf_counter() returns time in seconds
         startTime = time.perf_counter()
-        totalTime = startTime
-        while (currentDistance <= finalDistance):
-            #check sensor. handled in driveBumpWheeldrop, so may not need to keep checking sensors here too
+        elapsed = 0
+
+        while (travelled <= distance):
+            # Check travelled distance
+            # get what time it is
+            checkTime = time.perf_counter()
+            # difference between checkTime and startTime is how much time has passed
+            elapsed = checkTime - startTime
+            # distance is mm. velocity is mm/s
+            travelled = velocity * elapsed
+            print("Current Distance: ", travelled,"\n")
+
+            # Check sensors, drive if they're fine
             sensors = self.robot.get_sensors()
-            wl = sensors.bumps_wheeldrops.wheeldrop_left
-            wr = sensors.bumps_wheeldrops.wheeldrop_right
-            bl = sensors.bumps_wheeldrops.bump_left
-            br = sensors.bumps_wheeldrops.bump_right
+            if bump_or_wheeldrop(sensors=sensors):
+                break
 
-            if wl | wr | bl | br:
-                print("sensor hit")
-                self.driving = False
-                self.robot.drive_stop()
-                startTime = 0
-            if self.driving == False:
-                if wl == False and wr == False and bl == False and br == False:
-                    self.driving = True
-                    self.robot.drive_direct(vl, vr)
-                    startTime = time.perf_counter() 
-            else:
-                #get what time it is
-                checkTime = time.perf_counter()
-                #difference between checkTime and startTime is how much time has passed
-                currentTime = checkTime - startTime
-                #distance is mm. velocity is mm/s
-                currentDistance = currentDistance + (currentVelocity * currentTime)
-                print("Current Distance: ", currentDistance,"\n")
-                startTime = time.perf_counter()
-
-            # elif !wl and !wr and !bl and !br:
-            #     self.driving = True
-            #     self.robot.drive_direct(vl,vr)
-            #     startTime = time.perf_counter()
-                
-            
-            # if self.driving == False:
-            #     #robot has stopped from driveBumpWheeldrop. will need to keep checking sensors to determine if obstacle is gone.
-            #     currentVelocity = 0
-            #     #call sensor check here. Could create function that checks sesnors in thread in while loop until obstacle cleared.
-            #     #could maybe throw a while loop in here to keep checking sensors until they are false.
-            # elif currentVelocity == 0:
-            #     #resume driving. currentVelocity should only be zero after the robot stopped. can only reach here if driving is true. 
-            #     self.driving = True
-            #     currentVelocity = velocity
-            #     self.driveBumpWheeldrop()
-                
-        checkTime = time.perf_counter()
-        allTime = checkTime - totalTime
-        print("Robot drove ", distance, "mm in ",allTime, " seconds.")
         self.robot.drive_stop()
+        self.driving = False
+
+        # Print current values for travelled and elapsed
+        print(f"Robot drove {travelled}mm in {elapsed} seconds.")
 
 
     # ----------------------- Main Driver ------------------------------
@@ -494,3 +457,10 @@ def any_greater_than(threshold, list):
         if i > threshold:
             return False
     return True
+
+def bump_or_wheeldrop(sensors: cl.Sensors):
+    wl = sensors.bumps_wheeldrops.wheeldrop_left
+    wr = sensors.bumps_wheeldrops.wheeldrop_right
+    bl = sensors.bumps_wheeldrops.bump_left
+    br = sensors.bumps_wheeldrops.bump_right
+    return wl | wr | bl | br
