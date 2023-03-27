@@ -424,27 +424,56 @@ class TetheredDriveApp(Tk):
         finalDistance = distance
         currentDistance = 0
         currentVelocity = velocity
+        vl = velocity
+        vr = velocity
         #start drive
-        self.driveBumpWheeldrop()
+        #self.driveBumpWheeldrop()
+        self.robot.drive_direct(vl,vr)
+        #time.perf_counter() returns time in seconds
         startTime = time.perf_counter()
-        while (currentDistance < finalDistance):
+        totalTime = startTime
+        while (currentDistance <= finalDistance):
             #check sensor. handled in driveBumpWheeldrop, so may not need to keep checking sensors here too
-            if self.driving == False:
-                #robot has stopped from driveBumpWheeldrop. will need to keep checking sensors to determine if obstacle is gone.
-                currentVelocity = 0
-                #call sensor check here. Could create function that checks sesnors in thread in while loop until obstacle cleared.
-            elif currentVelocity == 0:
-                #resume driving. currentVelocity should only be zero after the robot stopped. can only reach here if driving is true. 
-                self.driving = True
-                currentVelocity = velocity
-                self.driveBumpWheeldrop()
-                startTime = time.perf_counter()
+            sensors = self.robot.get_sensors()
+            wl = sensors.bumps_wheeldrops.wheeldrop_left
+            wr = sensors.bumps_wheeldrops.wheeldrop_right
+            bl = sensors.bumps_wheeldrops.bump_left
+            br = sensors.bumps_wheeldrops.bump_right
+
+            if wl | wr | bl | br:
+                print("sensor hit")
+                self.driving = False
+                self.robot.drive_stop()
+
             else:
-                checkTime = time.pref_counter()
+                #get what time it is
+                checkTime = time.perf_counter()
+                #difference between checkTime and startTime is how much time has passed
                 currentTime = checkTime - startTime
                 #distance is mm. velocity is mm/s
                 currentDistance = currentDistance + (currentVelocity * currentTime)
-            self.robot.drive_stop()
+                print("Current Distance: ", currentDistance,"\n")
+                startTime = time.perf_counter()
+
+            # elif !wl and !wr and !bl and !br:
+            #     self.driving = True
+            #     self.robot.drive_direct(vl,vr)
+            #     startTime = time.perf_counter()
+                
+            
+            # if self.driving == False:
+            #     #robot has stopped from driveBumpWheeldrop. will need to keep checking sensors to determine if obstacle is gone.
+            #     currentVelocity = 0
+            #     #call sensor check here. Could create function that checks sesnors in thread in while loop until obstacle cleared.
+            #     #could maybe throw a while loop in here to keep checking sensors until they are false.
+            # elif currentVelocity == 0:
+            #     #resume driving. currentVelocity should only be zero after the robot stopped. can only reach here if driving is true. 
+            #     self.driving = True
+            #     currentVelocity = velocity
+            #     self.driveBumpWheeldrop()
+                
+
+        self.robot.drive_stop()
 
 
     # ----------------------- Main Driver ------------------------------
