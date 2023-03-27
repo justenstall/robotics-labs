@@ -413,7 +413,7 @@ class TetheredDriveApp(Tk):
 
     def goTheDistance(self, velocity, distance):
         # Start checking distance
-        travelled = 0
+        traveled = 0
 
         # Start drive
         self.robot.drive_direct(velocity,velocity)
@@ -424,15 +424,15 @@ class TetheredDriveApp(Tk):
         startTime = time.perf_counter()
         elapsed = 0
 
-        while (travelled <= distance):
-            # Check travelled distance
+        while (traveled <= distance):
+            # Check traveled distance
             # get what time it is
             checkTime = time.perf_counter()
             # difference between checkTime and startTime is how much time has passed
             elapsed = checkTime - startTime
             # distance is mm. velocity is mm/s
-            travelled = velocity * elapsed
-            print("Current Distance: ", travelled,"\n")
+            traveled = velocity * elapsed
+            print("Current Distance: ", traveled,"\n")
 
             # Check sensors, drive if they're fine
             sensors = self.robot.get_sensors()
@@ -442,8 +442,8 @@ class TetheredDriveApp(Tk):
         self.robot.drive_stop()
         self.driving = False
 
-        # Print current values for travelled and elapsed
-        print(f"Robot drove {travelled}mm in {elapsed} seconds.")
+        # Print current values for traveled and elapsed
+        print(f"Robot drove {traveled}mm in {elapsed} seconds.")
 
 
     # ----------------------- Main Driver ------------------------------
