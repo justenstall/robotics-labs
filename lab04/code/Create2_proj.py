@@ -444,7 +444,12 @@ class TetheredDriveApp(Tk):
                 print("sensor hit")
                 self.driving = False
                 self.robot.drive_stop()
-
+                startTime = 0
+            if self.driving == False:
+                if wl == False and wr == False and bl == False and br == False:
+                    self.driving = True
+                    self.robot.drive_direct(vl, vr)
+                    startTime = time.perf_counter() 
             else:
                 #get what time it is
                 checkTime = time.perf_counter()
@@ -472,7 +477,9 @@ class TetheredDriveApp(Tk):
             #     currentVelocity = velocity
             #     self.driveBumpWheeldrop()
                 
-
+        checkTime = time.perf_counter()
+        allTime = checkTime - totalTime
+        print("Robot drove ", distance, "mm in ",allTime, " seconds.")
         self.robot.drive_stop()
 
 
