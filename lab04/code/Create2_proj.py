@@ -412,33 +412,39 @@ class TetheredDriveApp(Tk):
         
 
     def goTheDistance(self, velocity, distance):
-        # Start checking distance
+        """goTheDistance
+        Drives the robot until it has traveled the requested distance or it detects a bump or wheeldrop  
+
+        Args:
+            velocity (int): robot's velocity in mm/s
+            distance (int): requested distance in mm
+        """
+
+        # Initialized distance traveled
         traveled = 0
 
         # Start drive
         self.robot.drive_direct(velocity,velocity)
         self.driving = True
 
-        # Set up timer
-        #time.perf_counter() returns time in seconds
-        startTime = time.perf_counter()
-        elapsed = 0
+        # Initialize timing
+        startTime = time.perf_counter() # returns time in seconds
+        elapsed = 0 # initialize elapsed time
 
         while (traveled <= distance):
-            # Check traveled distance
-            # get what time it is
-            checkTime = time.perf_counter()
+            # Check traveled distance no matter what so elapsed time and traveled distance are accurate
+            checkTime = time.perf_counter() # get what time it is
             # difference between checkTime and startTime is how much time has passed
-            elapsed = checkTime - startTime
-            # distance is mm. velocity is mm/s
-            traveled = velocity * elapsed
-            print("Current Distance: ", traveled,"\n")
+            elapsed = checkTime - startTime # update elapsed time
+            traveled = velocity * elapsed # update traveled distance
+            print(f"Current Distance: {traveled}\n")
 
-            # Check sensors, drive if they're fine
+            # Exit loop if there has been a bump or wheeldrop
             sensors = self.robot.get_sensors()
             if bump_or_wheeldrop(sensors=sensors):
                 break
 
+        # Stop driving
         self.robot.drive_stop()
         self.driving = False
 
