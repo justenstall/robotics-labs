@@ -84,15 +84,12 @@ class TetheredDriveApp(Tk):
                         "C": "Clean",
                         "D": "Dock",
                         "R": "Reset",
-                        "B": "Get Sensors",
                         "Space": "Beep",
                         "Arrows": "Motion",
                         "Escape": "Quick Shutdown",
-                        "T": "Transmit sensor data",
-                        "L": "Toggle Lights",
-                        "W": "Drive with Bumps and Wheeldrops sensor",
-                        "E": "Drive with Light Bumper sensor",
-                        "G": "Distance Drive"
+                        "B": "Print Sensors",
+                        "W": "Find wall", # Task 1
+                        "F": "Follow walls" # Task 2
                      }
 
     # Project variables appear below this comment
@@ -209,19 +206,12 @@ class TetheredDriveApp(Tk):
                 if self.robot is not None:
                     del self.robot
                 self.destroy()
-            elif k == 'T':
-                self.checkSensors()
-            elif k == 'L':
-                self.handleLED()
             elif k == 'W':
-                #self.handleDrive(k)
-                self.driveBumpWheeldrop()
-            elif k == 'E':
-                #self.handleDrive(k)
-                self.driveLightBumper()
-            elif k == 'G':
-                # drive 10cm at 200mm/s
-                self.goTheDistance(velocity=200, distance=1000)
+                # Find wall
+                print("Find wall")
+            elif k == 'F':
+                # Follow wall
+                print("Find wall")
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
