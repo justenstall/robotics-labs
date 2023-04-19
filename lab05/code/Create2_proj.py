@@ -39,6 +39,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
 
+from math import pi
 from tkinter import *
 import tkinter.messagebox
 import tkinter.simpledialog
@@ -48,6 +49,7 @@ import sys, glob # for listing serial ports
 import time
 
 from threading import Thread
+from typing import Callable, ClassVar
 
 # Create Library
 import createlib as cl
@@ -359,7 +361,6 @@ class TetheredDriveApp(Tk):
             #self.driveThread.start()
             self.driving = True
             self.driveBumpWheeldrop()
-            
         elif driveType == "P":
             #self.driveThread = Thread(target=self.driveLightBumper)
             #self.driveThread.start()
@@ -394,7 +395,7 @@ class TetheredDriveApp(Tk):
                 break
         
 
-    def goTheDistance(self, velocity, distance):
+    def goTheDistance(self, velocity, distance=200):
         """goTheDistance
         Drives the robot until it has traveled the requested distance or it detects a bump or wheeldrop  
 
@@ -403,18 +404,103 @@ class TetheredDriveApp(Tk):
             distance (int): requested distance in mm
         """
 
+        stats = self.drive_until(velocity, distance, stop_condition=bump_or_wheeldrop)
+
+        # # Initialized distance traveled
+        # traveled = 0
+
+        # # Start drive
+        # self.robot.drive_direct(velocity,velocity)
+        # self.driving = True
+
+        # # Initialize timing
+        # startTime = time.perf_counter() # returns time in seconds
+        # elapsed = 0 # initialize elapsed time
+
+        # while (traveled <= distance):
+        #     # Check traveled distance no matter what so elapsed time and traveled distance are accurate
+        #     checkTime = time.perf_counter() # get what time it is
+        #     # difference between checkTime and startTime is how much time has passed
+        #     elapsed = checkTime - startTime # update elapsed time
+        #     traveled = velocity * elapsed # update traveled distance
+        #     print(f"Current Distance: {traveled}\n")
+
+        #     # Exit loop if there has been a bump or wheeldrop
+        #     sensors = self.robot.get_sensors()
+        #     if bump_or_wheeldrop(sensors=sensors):
+        #         break
+
+        # # Stop driving
+        # self.robot.drive_stop()
+        # self.driving = False
+
+        # Print current values for traveled and elapsed
+        print(f"Robot drove {stats[0]}mm in {stats[1]} seconds.")
+    
+    def rotate_until(self, velocity: int, degrees=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
+        """rotate_until
+        Rotates the robot until it reaches the stop_condition or has turned the specified degrees  
+
+        Args:
+            velocity (int): wheel velocity in mm/s
+            distance (int): distance limit in mm (only for same wheel speed)
+            stop_condition (Callable(self) -> bool): robot will stop driving when this condition is true
+        
+        Returns:
+            Distance travelled in mm
+        """
+        print("rotating")
+
+        diameter = 235 # Create 2 wheel diameter
+        circumference = diameter * pi
+
+        distance = circumference * (degrees/360)
+        return self.base_drive_func(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
+
+# LIGHT BUMP SENSOR READINGS
+# Farthest reading was just center left hit first with a sensor value of 178
+# At a better distance:
+
+
+    def drive_until(self, velocity=200, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
+        """direct_drive_until
+        Drives the robot until it reaches the stop_condition or has travelled the specified distance in mm  
+
+        Args:
+            velocity (int): wheel velocity in mm/s
+            distance (int): distance limit in mm (only for same wheel speed)
+            stop_condition (Callable(self) -> bool): robot will stop driving when this condition is true
+        
+        Returns:
+            Distance travelled in mm
+        """
+        return self.base_drive_func(velocity, velocity, distance, stop_condition)
+
+    def base_drive_func(self, l_vel, r_vel, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
+        """direct_drive_until
+        Drives the robot until it reaches the stop_condition or has travelled the specified distance in mm  
+
+        Args:
+            velocity (int): wheel velocity in mm/s
+            distance (int): distance limit in mm (only for same wheel speed)
+            stop_condition (Callable(self) -> bool): robot will stop driving when this condition is true
+        
+        Returns:
+            Distance travelled in mm
+        """
+
         # Initialized distance traveled
         traveled = 0
 
         # Start drive
-        self.robot.drive_direct(velocity,velocity)
+        self.robot.drive_direct(l_vel,r_vel)
         self.driving = True
 
         # Initialize timing
         startTime = time.perf_counter() # returns time in seconds
         elapsed = 0 # initialize elapsed time
 
-        while (traveled <= distance):
+        while (traveled < distance):
             # Check traveled distance no matter what so elapsed time and traveled distance are accurate
             checkTime = time.perf_counter() # get what time it is
             # difference between checkTime and startTime is how much time has passed
@@ -424,21 +510,18 @@ class TetheredDriveApp(Tk):
 
             # Exit loop if there has been a bump or wheeldrop
             sensors = self.robot.get_sensors()
-            if bump_or_wheeldrop(sensors=sensors):
+            if stop_condition(sensors):
                 break
 
         # Stop driving
         self.robot.drive_stop()
         self.driving = False
 
-        # Print current values for traveled and elapsed
-        print(f"Robot drove {traveled}mm in {elapsed} seconds.")
-
-
-    # ----------------------- Main Driver ------------------------------
-if __name__ == "__main__":
-    app = TetheredDriveApp()
-    app.mainloop()
+        # Handle the result
+        if traveled < distance:
+            return self.drive_until(velocity, distance-traveled, stop_condition)
+        
+        return (traveled, elapsed)
 
 # TODO: edit this based on how the light sensors work, the logic may be backwards if the light
 def any_greater_than(threshold, list):
@@ -464,3 +547,8 @@ def light_bumper(sensors: cl.Sensors):
     
     # return any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
     return lr | lfr | lcr | lcl | lfl | ll
+
+# ----------------------- Main Driver ------------------------------
+if __name__ == "__main__":
+    app = TetheredDriveApp()
+    app.mainloop()
