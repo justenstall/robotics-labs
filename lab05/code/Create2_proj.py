@@ -91,6 +91,7 @@ class TetheredDriveApp(Tk):
                         "Escape": "Quick Shutdown",
                         "B": "Print Sensors",
                         "W": "Find wall", # Task 1
+                        "T": "Turn", # Task 1
                         "F": "Follow walls" # Task 2
                      }
 
@@ -212,6 +213,7 @@ class TetheredDriveApp(Tk):
                 # Find wall
                 print("Find wall")
                 self.driveLightBumper()
+            elif k == 'T':
                 self.rotate_until(200, 90)
             elif k == 'F':
                 # Follow wall
