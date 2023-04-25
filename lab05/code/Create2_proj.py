@@ -92,7 +92,8 @@ class TetheredDriveApp(Tk):
                         "L": "Toggle Lights",
                         "W": "Drive with Bumps and Wheeldrops sensor",
                         "E": "Drive with Light Bumper sensor",
-                        "G": "Distance Drive"
+                        "G": "Distance Drive",
+                        "U": "Turn"
                      }
 
     # Project variables appear below this comment
@@ -222,6 +223,9 @@ class TetheredDriveApp(Tk):
             elif k == 'G':
                 # drive 10cm at 200mm/s
                 self.goTheDistance(velocity=200, distance=1000)
+            elif k == 'U':
+                #Turn the robot once it has reached a wall
+                print("Turning")
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
@@ -445,10 +449,7 @@ class TetheredDriveApp(Tk):
         print(f"Robot drove {traveled}mm in {elapsed} seconds.")
 
 
-    # ----------------------- Main Driver ------------------------------
-if __name__ == "__main__":
-    app = TetheredDriveApp()
-    app.mainloop()
+
 
 # TODO: edit this based on how the light sensors work, the logic may be backwards if the light
 def any_greater_than(threshold, list):
@@ -474,3 +475,8 @@ def light_bumper(sensors: cl.Sensors):
     
     # return any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
     return lr | lfr | lcr | lcl | lfl | ll
+
+    # ----------------------- Main Driver ------------------------------
+if __name__ == "__main__":
+    app = TetheredDriveApp()
+    app.mainloop()

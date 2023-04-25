@@ -184,7 +184,6 @@ class Create2(object):
         """
         Drive motors directly: [-500, 500] mm/sec
         """
-        print(l_vel,"\n",r_vel,"\n")
         l_vel = self.limit(l_vel, -500, 500)
         r_vel = self.limit(r_vel, -500, 500)
         data = struct.unpack('4B', struct.pack('>2h', r_vel, l_vel))  # write do this?
