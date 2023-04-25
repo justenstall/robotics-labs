@@ -462,7 +462,7 @@ class TetheredDriveApp(Tk):
         circumference = diameter * math.pi
 
         distance = circumference * (degrees/360)
-        return self.base_drive_func(l_vel=-velocity, r_vel=velocity, distance=distance, stop_condition=stop_condition)
+        return self.base_drive_func(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
 
 # LIGHT BUMP SENSOR READINGS
 # Farthest reading was just center left hit first with a sensor value of 178
@@ -548,7 +548,7 @@ class TetheredDriveApp(Tk):
         array_maxsize = 10
 
         # Create array to store errors 
-        error_array = [None] * 10
+        error_array = [0] * 10
 
         cycler = cycle(range(array_maxsize))
 
@@ -559,7 +559,10 @@ class TetheredDriveApp(Tk):
             # Pause driving if there is a bump or wheeldrop
             if bump_or_wheeldrop(sensors=sensors):
                 print("Bump or wheeldrop")
-                self.robot.drive_stop()
+                #reverse
+                
+                #self.robot.drive_stop()
+
                 # continue to next iteration so sensor can be read again
                 # if there is no bump or wheeldrop on the next, it will drive again
                 continue
@@ -571,7 +574,7 @@ class TetheredDriveApp(Tk):
             
             # Store the current error
             error_array[index] = error_n
-            print("Total error: "+error_n)
+            print("Total error: ", error_n)
 
             # Represents the speed difference for each wheel
             # It is applied to each wheel's speed oppositely
@@ -584,14 +587,19 @@ class TetheredDriveApp(Tk):
             Ki = 1
             Kd = 1
             #deltaT = 1
-            output = (Kp * error_array[index]) + (Ki * (sum(error_array))) + (kd * (error_array[index-1] - error_array[index])) 
-            print(output,"\n")
+            if (error_array[index-1] == None):
+                prev_Error = 0
+            else:
+                prev_Error = error_array[index-1]
+
+            output = (Kp * error_array[index]) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_array[index])) 
+            print("Output: ", output)
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
-            if in_range(output, 300, 600): # TODO: determine the correct range for turning left
+            if in_range(output, -300, -166): # TODO: determine the correct range for turning left
                 deviation = -5
                 print("Turning left")
-            elif in_range(output, 0, 80): # TODO: determine the correct range for turning right
+            elif in_range(output, -164, 0): # TODO: determine the correct range for turning right
                 deviation = 5
                 print("Turning right")
 
