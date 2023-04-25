@@ -47,6 +47,7 @@ import tkinter.simpledialog
 import struct
 import sys, glob # for listing serial ports
 import time
+import math
 
 from threading import Thread
 from typing import Callable, ClassVar
@@ -456,7 +457,7 @@ class TetheredDriveApp(Tk):
         print("rotating")
 
         diameter = 235 # Create 2 wheel diameter
-        circumference = diameter * pi
+        circumference = diameter * math.pi
 
         distance = circumference * (degrees/360)
         return self.base_drive_func(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
