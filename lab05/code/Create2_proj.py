@@ -580,7 +580,11 @@ class TetheredDriveApp(Tk):
             deviation = 0  # mm/s
 
             # The big formula for PID that evaluates to "output" on his board
-            output = 0 # TODO: implement this
+            Kp = 1
+            Ki = 1
+            Kd = 1
+            #deltaT = 1
+            output = (Kp * error_array[index]) + (Ki * (sum(error_array))) + (kd * (error_array[index-1] - error_array[index])) # TODO: implement this
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
             if in_range(output, 0, 1): # TODO: determine the correct range for turning left
