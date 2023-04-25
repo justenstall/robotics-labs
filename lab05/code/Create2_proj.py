@@ -462,7 +462,7 @@ class TetheredDriveApp(Tk):
         circumference = diameter * math.pi
 
         distance = circumference * (degrees/360)
-        return self.base_drive_func(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
+        return self.base_drive_func(l_vel=-velocity, r_vel=velocity, distance=distance, stop_condition=stop_condition)
 
 # LIGHT BUMP SENSOR READINGS
 # Farthest reading was just center left hit first with a sensor value of 178
@@ -519,9 +519,9 @@ class TetheredDriveApp(Tk):
             print(f"Current Distance: {traveled}\n")
 
             # Exit loop if there has been a bump or wheeldrop
-            sensors = self.robot.get_sensors()
-            if stop_condition(sensors):
-                break
+            #sensors = self.robot.get_sensors()
+            #if stop_condition(sensors):
+            #    break
 
         # Stop driving
         self.robot.drive_stop()
