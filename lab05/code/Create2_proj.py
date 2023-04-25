@@ -49,7 +49,8 @@ import sys, glob # for listing serial ports
 import time
 
 from threading import Thread
-from typing import Callable, ClassVar
+from typing import Callable
+from itertools import cycle
 
 # Create Library
 import createlib as cl
@@ -218,6 +219,7 @@ class TetheredDriveApp(Tk):
             elif k == 'F':
                 # Follow wall
                 print("Follow wall")
+                self.wall_follow_pid()
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
@@ -465,7 +467,6 @@ class TetheredDriveApp(Tk):
 # Farthest reading was just center left hit first with a sensor value of 178
 # At a better distance:
 
-
     def drive_until(self, velocity=200, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
         """direct_drive_until
         Drives the robot until it reaches the stop_condition or has travelled the specified distance in mm  
@@ -504,6 +505,10 @@ class TetheredDriveApp(Tk):
         startTime = time.perf_counter() # returns time in seconds
         elapsed = 0 # initialize elapsed time
 
+        velocity = l_vel
+        if r_vel > l_vel:
+            velocity = r_vel
+
         while (traveled < distance):
             # Check traveled distance no matter what so elapsed time and traveled distance are accurate
             checkTime = time.perf_counter() # get what time it is
@@ -524,13 +529,131 @@ class TetheredDriveApp(Tk):
         # Print current values for traveled and elapsed
         print(f"Robot drove {traveled}mm in {elapsed} seconds.")
 
-
-
         # Handle the result
         if traveled < distance:
             return self.drive_until(velocity, distance-traveled, stop_condition)
         
         return (traveled, elapsed)
+    
+    # A PID implementation for following a wall
+    # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
+    def wall_follow_pid(self, normal_velocity=100):
+        # "normal_velocity" is the default speed to go if the robot is moving straight forward
+
+        self.driving = True
+
+        # Set the number of errors to store
+        # The error array is created as this size
+        array_maxsize = 10
+
+        # Create array to store errors 
+        error_array = [None] * 10
+
+        cycler = cycle(range(array_maxsize))
+
+        for index in cycler:
+            # Read the sensors
+            sensors = self.robot.get_sensors()
+
+            # Pause driving if there is a bump or wheeldrop
+            if bump_or_wheeldrop(sensors=sensors):
+                print("Bump or wheeldrop")
+                self.robot.drive_stop()
+                # continue to next iteration so sensor can be read again
+                # if there is no bump or wheeldrop on the next, it will drive again
+                continue
+
+            # Calculate the error
+            # Negative error: light reading was too low, turn towards the wall (left)
+            # Positive error: light reading was too high, turn away from the wall (right)
+            error_n = calc_error(sensors)
+            
+            # Store the current error
+            error_array[index] = error_n
+            print("Total error: "+error_n)
+
+            # Represents the speed difference for each wheel
+            # It is applied to each wheel's speed oppositely
+            # Deviation is applied positively to the left wheel,
+            #   so visualize it as the change to the left wheel speed
+            deviation = 0  # mm/s
+
+            # The big formula for PID that evaluates to "output" on his board
+            output = 0 # TODO: implement this
+
+            # We need to figure out the output ranges to map to "turn left" and "turn right"
+            if in_range(output, 0, 1): # TODO: determine the correct range for turning left
+                deviation = -5
+                print("Turning left")
+            elif in_range(output, 1, 2): # TODO: determine the correct range for turning right
+                deviation = 5
+                print("Turning right")
+
+            # Add deviation to one wheel's velocity,
+            #  subtract it from the other
+            # RIGHT TURN: left wheel speeds up, right wheel slows down
+            # LEFT TURN: left wheel slows down, right wheel speeds up
+            self.robot.drive_direct(normal_velocity + deviation, normal_velocity - deviation)
+
+# each sensor range is a tuple: (range_start, range_stop)
+light_ranges = {
+    # The "right" sensors are not used since our robot follows using its left side
+    # 'right': (),
+    # 'front_right': (),
+    # 'center_right': (),
+
+    # The left sensors have a "happy" range designed to keep the robot driving parallel
+    # Once any sensor is outside its "happy" range, the robot will start adjusting
+    
+    # If this gets too high it means the robot is head on and needs to turn
+    # The low of the range is 0, which happens when the robot is going straight
+    'center_left': (0, 1200),
+
+    # If this gets too high it means the robot is head on and needs to turn
+    # The low of the range is very low, which happens when the robot is going straight
+    'front_left': (5, 1000),
+    
+    # If this gets too high it means the robot is too close to the wall and needs to adjust away
+    # If this gets too low it means the robot is moving away from a convex corner,
+    #   which means the robot needs to turn towards the corner
+    'left': (10, 500)
+}
+
+# Calculates error for each left side light bumper sensor
+# Uses the "happy" ranges defined in the dict above
+def calc_error(sensors):
+    # right = sensors.light_bumper.right
+    # front_right = sensors.light_bumper.front_right
+    # center_right = sensors.light_bumper.center_right
+    center_left = sensors.light_bumper.center_left
+    center_left_error = range_error(center_left, light_ranges['center_left'])
+
+    front_left = sensors.light_bumper.front_left
+    front_left_error = range_error(front_left, light_ranges['front_left'])
+
+    left = sensors.light_bumper.left
+    left_error = range_error(left, light_ranges['left'])
+
+    total_error = center_left_error + front_left_error + left_error
+
+    return total_error
+
+# Will need to determine the ranges for sensors and the output is a matrix, 
+#   which would require a more complex function here
+def in_range(output, range_start, range_stop):
+    return range_start <= output <= range_stop
+
+# Calculate an error for "value" for the given range "range_tuple"
+# "range_tuple": (range_start, range_stop)
+def range_error(value, range_tuple):
+    range_start = range_tuple[0]
+    range_stop = range_tuple[1]
+    if value < range_start:
+        return -(range_start-value)
+    elif value > range_stop:
+        return value - range_stop
+    else:
+        return 0
 
 # TODO: edit this based on how the light sensors work, the logic may be backwards if the light
 def any_greater_than(threshold, list):
