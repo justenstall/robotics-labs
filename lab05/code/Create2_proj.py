@@ -94,7 +94,7 @@ class TetheredDriveApp(Tk):
                         "B": "Print Sensors",
                         "W": "Find wall", # Task 1
                         "T": "Turn", # Task 1
-                        "F": "Follow walls" # Task 2
+                        "X": "Follow walls" # Task 2
                      }
 
     # Project variables appear below this comment
@@ -217,7 +217,7 @@ class TetheredDriveApp(Tk):
                 self.driveLightBumper()
             elif k == 'T':
                 self.rotate_until(200, 90)
-            elif k == 'F':
+            elif k == 'X':
                 # Follow wall
                 print("Follow wall")
                 self.wall_follow_pid()
@@ -584,13 +584,14 @@ class TetheredDriveApp(Tk):
             Ki = 1
             Kd = 1
             #deltaT = 1
-            output = (Kp * error_array[index]) + (Ki * (sum(error_array))) + (kd * (error_array[index-1] - error_array[index])) # TODO: implement this
+            output = (Kp * error_array[index]) + (Ki * (sum(error_array))) + (kd * (error_array[index-1] - error_array[index])) 
+            print(output,"\n")
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
-            if in_range(output, 0, 1): # TODO: determine the correct range for turning left
+            if in_range(output, 300, 600): # TODO: determine the correct range for turning left
                 deviation = -5
                 print("Turning left")
-            elif in_range(output, 1, 2): # TODO: determine the correct range for turning right
+            elif in_range(output, 0, 80): # TODO: determine the correct range for turning right
                 deviation = 5
                 print("Turning right")
 
