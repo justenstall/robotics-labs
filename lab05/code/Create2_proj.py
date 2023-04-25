@@ -211,9 +211,11 @@ class TetheredDriveApp(Tk):
             elif k == 'W':
                 # Find wall
                 print("Find wall")
+                self.driveLightBumper()
+                self.rotate_until(200, 90)
             elif k == 'F':
                 # Follow wall
-                print("Find wall")
+                print("Follow wall")
             else:
                 print("not handled", repr(k))
         elif event.type == '3': # KeyRelease; need to figure out how to get constant
