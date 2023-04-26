@@ -1,0 +1,370 @@
+Trying /dev/tty.usbserial-DN0264WN... 
+----------------------------------------
+ Create opened serial connection
+   port: /dev/tty.usbserial-DN0264WN
+   datarate: 115200 bps
+----------------------------------------
+Connected!
+Passive
+Safe
+Follow wall
+Light =     4     0     8     1     3     0 total=16
+Error =  -796   -10     8     0     0     0 =  -798
+PID: error= -798 --> out= -798
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     1     6     1     4     2 total=19
+Error =  -795    -9     6     0     0     0 =  -798
+PID: error= -798 --> out=-2394
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     2     7     0     3     1 total=17
+Error =  -796    -8     7     0     0     0 =  -797
+PID: error= -797 --> out=-3191
+Away from wall
+Drive: R= 80 L= 80
+Light =     4    16     1     0     4     0 total=25
+Error =  -796     6     1     0     0     0 =  -789
+PID: error= -789 --> out=-3979
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     2     6     0     4     0 total=15
+Error =  -797    -8     6     0     0     0 =  -799
+PID: error= -799 --> out=-4770
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     4     0     0     0 total=5
+Error =  -800    -9     4     0     0     0 =  -805
+PID: error= -805 --> out=-5585
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     2     2     0     0     0 total=4
+Error =  -800    -8     2     0     0     0 =  -806
+PID: error= -806 --> out=-6397
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     3     4     0     0     0 total=7
+Error =  -800    -7     4     0     0     0 =  -803
+PID: error= -803 --> out=-7201
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     0     8     0     2     0 total=11
+Error =  -799   -10     8     0     0     0 =  -801
+PID: error= -801 --> out=-7999
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     2     5     3     2     0 total=16
+Error =  -796    -8     5     0     0     0 =  -799
+PID: error= -799 --> out=-8796
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     4     6     0     4     0 total=19
+Error =  -795    -6     6     0     0     0 =  -795
+PID: error= -795 --> out=-8791
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     7     1     0     0 total=10
+Error =  -798   -10     7     0     0     0 =  -801
+PID: error= -801 --> out=-8790
+Away from wall
+Drive: R= 80 L= 80
+Light =     6     0     7     0     3     0 total=16
+Error =  -794   -10     7     0     0     0 =  -797
+PID: error= -797 --> out=-8796
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     0     3     2     2     0 total=8
+Error =  -799   -10     3     0     0     0 =  -806
+PID: error= -806 --> out=-8809
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     4     0     1     0 total=5
+Error =  -800   -10     4     0     0     0 =  -806
+PID: error= -806 --> out=-8825
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     4     0     0     0 total=4
+Error =  -800   -10     4     0     0     0 =  -806
+PID: error= -806 --> out=-8826
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     0     7     0     2     0 total=12
+Error =  -797   -10     7     0     0     0 =  -800
+PID: error= -800 --> out=-8820
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     0    11     0     4     0 total=20
+Error =  -795   -10    11     0     0     0 =  -794
+PID: error= -794 --> out=-8805
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     7     1     1     0 total=9
+Error =  -800   -10     7     0     0     0 =  -803
+PID: error= -803 --> out=-8801
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     0     8     0     3     0 total=14
+Error =  -797   -10     8     0     0     0 =  -799
+PID: error= -799 --> out=-8810
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     4     1     0     0 total=5
+Error =  -800   -10     4     0     0     0 =  -806
+PID: error= -806 --> out=-8817
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     4     0     0     0 total=4
+Error =  -800   -10     4     0     0     0 =  -806
+PID: error= -806 --> out=-8829
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     4     0     0     0 total=4
+Error =  -800   -10     4     0     0     0 =  -806
+PID: error= -806 --> out=-8838
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     3     3     0     0     0 total=6
+Error =  -800    -7     3     0     0     0 =  -804
+PID: error= -804 --> out=-8836
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     1     8     0     4     0 total=18
+Error =  -795    -9     8     0     0     0 =  -796
+PID: error= -796 --> out=-8824
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     0     7     0     1     0 total=12
+Error =  -796   -10     7     0     0     0 =  -799
+PID: error= -799 --> out=-8809
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     0     7     0     4     0 total=14
+Error =  -797   -10     7     0     0     0 =  -800
+PID: error= -800 --> out=-8812
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     7     2     2     0 total=12
+Error =  -800    -9     7     0     0     0 =  -802
+PID: error= -802 --> out=-8821
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     0     4     0     1     0 total=6
+Error =  -799   -10     4     0     0     0 =  -805
+PID: error= -805 --> out=-8825
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     4     0     0     0 total=5
+Error =  -800    -9     4     0     0     0 =  -805
+PID: error= -805 --> out=-8834
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     4     0     0     0 total=5
+Error =  -800    -9     4     0     0     0 =  -805
+PID: error= -805 --> out=-8833
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     3     0     0     0 total=5
+Error =  -798   -10     3     0     0     0 =  -805
+PID: error= -805 --> out=-8832
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     4     0     3     0 total=9
+Error =  -798   -10     4     0     0     0 =  -804
+PID: error= -804 --> out=-8830
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     7     0     4     0 total=12
+Error =  -800    -9     7     0     0     0 =  -802
+PID: error= -802 --> out=-8827
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     7     5     0     6     0 total=20
+Error =  -798    -3     5     0     0     0 =  -796
+PID: error= -796 --> out=-8825
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     0     7     0     4     0 total=14
+Error =  -797   -10     7     0     0     0 =  -800
+PID: error= -800 --> out=-8820
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     0     4     0     1     0 total=5
+Error =  -800   -10     4     0     0     0 =  -806
+PID: error= -806 --> out=-8830
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     0     4     0     1     0 total=6
+Error =  -799   -10     4     0     0     0 =  -805
+PID: error= -805 --> out=-8839
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     4     0     0     0 total=5
+Error =  -800    -9     4     0     0     0 =  -805
+PID: error= -805 --> out=-8838
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     0     4     0     0     0 total=5
+Error =  -799   -10     4     0     0     0 =  -805
+PID: error= -805 --> out=-8838
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     5     0     4     0 total=11
+Error =  -798   -10     5     0     0     0 =  -803
+PID: error= -803 --> out=-8836
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     6     0     4     0 total=12
+Error =  -798   -10     6     0     0     0 =  -802
+PID: error= -802 --> out=-8831
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     0     8     0     4     0 total=17
+Error =  -795   -10     8     0     0     0 =  -797
+PID: error= -797 --> out=-8823
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     2     7     0     4     0 total=17
+Error =  -796    -8     7     0     0     0 =  -797
+PID: error= -797 --> out=-8813
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     5     7     0     4     0 total=21
+Error =  -795    -5     7     0     0     0 =  -793
+PID: error= -793 --> out=-8810
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     1     2     1     0     0 total=7
+Error =  -797    -9     2     0     0     0 =  -804
+PID: error= -804 --> out=-8810
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     4     4     0     0     0 total=8
+Error =  -800    -6     4     0     0     0 =  -802
+PID: error= -802 --> out=-8817
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     3     4     0     0     0 total=8
+Error =  -799    -7     4     0     0     0 =  -802
+PID: error= -802 --> out=-8812
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     6     0     4     0 total=12
+Error =  -798   -10     6     0     0     0 =  -802
+PID: error= -802 --> out=-8809
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     2     5     0     4     0 total=16
+Error =  -795    -8     5     0     0     0 =  -798
+PID: error= -798 --> out=-8802
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     1     6     0     4     0 total=15
+Error =  -796    -9     6     0     0     0 =  -799
+PID: error= -799 --> out=-8794
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     0     7     1     4     0 total=15
+Error =  -797   -10     7     0     0     0 =  -800
+PID: error= -800 --> out=-8793
+Away from wall
+Drive: R= 80 L= 80
+Light =     6     2     6     0     4     0 total=18
+Error =  -794    -8     6     0     0     0 =  -796
+PID: error= -796 --> out=-8793
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     1     4     2     4     0 total=12
+Error =  -799    -9     4     0     0     0 =  -804
+PID: error= -804 --> out=-8796
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     3     4     2     4     0 total=13
+Error =  -800    -7     4     0     0     0 =  -803
+PID: error= -803 --> out=-8814
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     0     4     0     4     0 total=10
+Error =  -798   -10     4     0     0     0 =  -804
+PID: error= -804 --> out=-8813
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     0     7     4     5     0 total=20
+Error =  -796   -10     7     0     0     0 =  -799
+PID: error= -799 --> out=-8811
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     1     7     4     6     0 total=23
+Error =  -795    -9     7     0     0     0 =  -797
+PID: error= -797 --> out=-8801
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     1     8     4     4     0 total=22
+Error =  -795    -9     8     0     0     0 =  -796
+PID: error= -796 --> out=-8793
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     2     7     4     4     0 total=21
+Error =  -796    -8     7     0     0     0 =  -797
+PID: error= -797 --> out=-8791
+Away from wall
+Drive: R= 80 L= 80
+Light =     5     3     7     4     4     0 total=23
+Error =  -795    -7     7     0     0     0 =  -795
+PID: error= -795 --> out=-8788
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     1     3     1     3     4 total=13
+Error =  -799    -9     3     0     0     0 =  -805
+PID: error= -805 --> out=-8791
+Away from wall
+Drive: R= 80 L= 80
+Light =     0     1     4     3     5     4 total=17
+Error =  -800    -9     4     0     0     0 =  -805
+PID: error= -805 --> out=-8810
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     2     1     2     8     1 total=15
+Error =  -799    -8     1     0     0     0 =  -806
+PID: error= -806 --> out=-8812
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     4     4     0     8     4 total=21
+Error =  -799    -6     4     0     0     0 =  -801
+PID: error= -801 --> out=-8811
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     4     6     0    13     5 total=31
+Error =  -797    -6     6     0     0     0 =  -797
+PID: error= -797 --> out=-8799
+Away from wall
+Drive: R= 80 L= 80
+Light =     8     3     7     0    17     5 total=40
+Error =  -792    -7     7     0     0     0 =  -792
+PID: error= -792 --> out=-8788
+Away from wall
+Drive: R= 80 L= 80
+Light =     3     2     4     1    20     8 total=38
+Error =  -797    -8     4     0     0     0 =  -801
+PID: error= -801 --> out=-8787
+Away from wall
+Drive: R= 80 L= 80
+Light =     4     1     4     0    28    12 total=49
+Error =  -796    -9     4     0     0     0 =  -801
+PID: error= -801 --> out=-8801
+Away from wall
+Drive: R= 80 L= 80
+Light =     1     0     1     0    32    13 total=47
+Error =  -799   -10     1     0     0     0 =  -808
+PID: error= -808 --> out=-8812
+Away from wall
+Drive: R= 80 L= 80
+Light =     2     2     4     0    44    20 total=72
+Error =  -798    -8     4     0     0     0 =  -802
+PID: error= -802 --> out=-8826
+Sharp left
+Drive: R= 10 L=100
+Light =     1     1     3     1    64    38 total=108
+Error =  -799    -9     3     0     0     0 =  -805
+PID: error= -805 --> out=-8820
+Sharp left
+Drive: R= 10 L=100

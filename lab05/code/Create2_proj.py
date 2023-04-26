@@ -591,7 +591,7 @@ class TetheredDriveApp(Tk):
             error_n = calc_error(sensors)
 
             # Store the current error
-            if n > len(error_array):
+            if n >= len(error_array):
                 error_array.append(error_n)
             else:
                 error_array[n] = error_n
@@ -600,7 +600,7 @@ class TetheredDriveApp(Tk):
             n_minus_1 = (n - 1) % array_size
 
             error_n_minus_1 = 0
-            if n_minus_1 > len(error_array):
+            if n_minus_1 < len(error_array):
                 # This case should only happen on the first iteration
                 # n-1 will be -1 which will eval to 9
                 error_n_minus_1 = error_array[n_minus_1]
@@ -623,17 +623,17 @@ class TetheredDriveApp(Tk):
             right_bound = 3000
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
-            if total_light < 50:
-                print(f"Away from wall")
-                left_vel = normal_velocity
-                right_vel = normal_velocity
-            elif output <= left_bound:
+            # if total_light < 15:
+            #     print(f"Away from wall")
+            #     left_vel = normal_velocity
+            #     right_vel = normal_velocity
+            if output <= left_bound:
                 # if output < -100000:
                 print("Sharp left")
                 # left_vel = -normal_velocity
                 # right_vel = normal_velocity
                 left_vel = 10
-                right_vel = 100
+                right_vel = 50
             elif left_bound <= output <= middle_bound:
             # elif in_range(output, left_bound, middle_bound): # TODO: determine the correct range for turning left
                 print("Turn left")
@@ -648,7 +648,7 @@ class TetheredDriveApp(Tk):
                 print("Sharp right")
                 # left_vel = normal_velocity
                 # right_vel = -normal_velocity
-                left_vel = 100
+                left_vel = 50
                 right_vel = 10
 
             print(f"Drive: R={left_vel:3} L={right_vel:3}")
@@ -660,7 +660,7 @@ class TetheredDriveApp(Tk):
 
         print("Stopping wall follow")
         self.robot.drive_stop()
-        self.driving = False  
+        self.driving = False
 
 # each sensor range is a tuple: (range_start, range_stop)
 light_set_points = {
@@ -678,12 +678,12 @@ light_set_points = {
 
     # If this gets too high it means the robot is head on and needs to turn
     # The low of the range is very low, which happens when the robot is going straight
-    'front_left': 10,
+    'front_left': 0,
     
     # If this gets too high it means the robot is too close to the wall and needs to adjust away
     # If this gets too low it means the robot is moving away from a convex corner,
     #   which means the robot needs to turn towards the corner
-    'left': 800
+    'left': 35
 }
 
 def calc_error(sensors: cl.Sensors):
