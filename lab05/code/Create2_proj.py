@@ -538,6 +538,7 @@ class TetheredDriveApp(Tk):
 
         # Create array to store errors 
         error_array = [None] * 10
+        error_array = []
 
         # and endless stream of 0-9, 0-9, 0-9, etc
         index_circle = cycle(range(array_size))
@@ -588,18 +589,21 @@ class TetheredDriveApp(Tk):
             # Negative error: light reading was too low, turn towards the wall (left)
             # Positive error: light reading was too high, turn away from the wall (right)
             error_n = calc_error(sensors)
-            
+
             # Store the current error
-            error_array[n] = error_n
+            if n > len(error_array):
+                error_array.append(error_n)
+            else:
+                error_array[n] = error_n
 
             # Use remainder so it circles
             n_minus_1 = (n - 1) % array_size
 
-            error_n_minus_1 = error_array[n_minus_1]
-            if error_n_minus_1 is None:
+            error_n_minus_1 = 0
+            if n_minus_1 > len(error_array):
                 # This case should only happen on the first iteration
-                # n-1 will be -1 which will
-                error_n_minus_1 = 0
+                # n-1 will be -1 which will eval to 9
+                error_n_minus_1 = error_array[n_minus_1]
 
             # The big formula for PID that evaluates to "output" on his board
             Kp = 1
@@ -609,10 +613,9 @@ class TetheredDriveApp(Tk):
             delta_t = checkTime - startTime # update elapsed time
             
             proportional = Kp * error_n
-            integral = Ki * sum(filter(None, error_array))
+            integral = Ki * sum(error_array)
             derivative = Kd * (error_n_minus_1 - error_n)
             output = proportional + integral + derivative
-            # output = (Kp * error_n) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_n)) 
             print(f"PID: error={error_n:5} --> out={output:5}")
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
