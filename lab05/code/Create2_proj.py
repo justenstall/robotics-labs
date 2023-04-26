@@ -620,7 +620,7 @@ class TetheredDriveApp(Tk):
             print("Output: ", output)
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
-            if in_range(output, -200, -150): # TODO: determine the correct range for turning left
+            if in_range(output, -200, -50): # TODO: determine the correct range for turning left
                 deviation = -25
                 print("Turning left")
             elif in_range(output, -10, 4000): # TODO: determine the correct range for turning right
