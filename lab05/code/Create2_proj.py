@@ -568,14 +568,16 @@ class TetheredDriveApp(Tk):
 
         # Set the number of errors to store
         # The error array is created as this size
-        array_maxsize = 10
+        array_size = 10
+        indexify = lambda i : i % array_size
 
         # Create array to store errors 
-        error_array = [0] * 10
+        error_array = [None] * 10
 
-        cycler = cycle(range(array_maxsize))
+        # and endless stream of 1-10, 1-10, 1-10, etc
+        index_circle = cycle(range(array_size))
 
-        for index in cycler:
+        for index_n in index_circle:
             # Read the sensors
             sensors = self.robot.get_sensors()
 
@@ -597,7 +599,7 @@ class TetheredDriveApp(Tk):
             error_n = calc_error(sensors)
             
             # Store the current error
-            error_array[index] = error_n
+            error_array[index_n] = error_n
             print("Total error: ", error_n)
 
             # Represents the speed difference for each wheel
@@ -611,12 +613,12 @@ class TetheredDriveApp(Tk):
             Ki = 1
             Kd = 1
             #deltaT = 1
-            if (error_array[index-1] == None):
+            if (error_array[indexify(index_n-1)] == None):
                 prev_Error = 0
             else:
-                prev_Error = error_array[index-1]
+                prev_Error = error_array[indexify(index_n-1)]
 
-            output = (Kp * error_array[index]) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_array[index])) 
+            output = (Kp * error_array[index_n]) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_array[index_n])) 
             print("Output: ", output)
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
