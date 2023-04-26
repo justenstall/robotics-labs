@@ -555,28 +555,23 @@ class TetheredDriveApp(Tk):
         # Set the number of errors to store
         # The error array is created as this size
         array_size = 10
-        indexify = lambda i : i % array_size
 
         # Create array to store errors 
         error_array = [None] * 10
 
-        # and endless stream of 1-10, 1-10, 1-10, etc
+        # and endless stream of 0-9, 0-9, 0-9, etc
         index_circle = cycle(range(array_size))
 
-        for index_n in index_circle:
+        for n in index_circle:
             # Read the sensors
             sensors = self.robot.get_sensors()
 
             # Pause driving if there is a bump or wheeldrop
             if bump_or_wheeldrop(sensors=sensors):
-                #print("Bump or wheeldrop")
-                #reverse
-                #turn
+                print("Bump or wheeldrop")
                 self.reverse_drive()
-                #self.robot.drive_stop()
-
-                # continue to next iteration so sensor can be read again
-                # if there is no bump or wheeldrop on the next, it will drive again
+                continue
+                # continue to next iteration so sensors are refreshed
 
             # Calculate the error
             # Negative error: light reading was too low, turn towards the wall (left)
@@ -584,31 +579,36 @@ class TetheredDriveApp(Tk):
             error_n = calc_error(sensors)
             
             # Store the current error
-            error_array[index_n] = error_n
+            error_array[n] = error_n
             print("Total error: ", error_n)
 
-            # Represents the speed difference for each wheel
-            # It is applied to each wheel's speed oppositely
-            # Deviation is applied positively to the left wheel,
-            #   so visualize it as the change to the left wheel speed
-            deviation = 0  # mm/s
+            # Use remainder so it circles
+            n_minus_1 = (n - 1) % array_size
+
+            error_n_minus_1 = error_array[n_minus_1]
+            if error_n_minus_1 is None:
+                # This case should only happen on the first iteration
+                # n-1 will be -1 which will
+                error_n_minus_1 = 0
 
             # The big formula for PID that evaluates to "output" on his board
             Kp = 1
             Ki = 1
             Kd = 1
             #deltaT = 1
-            if (error_array[indexify(index_n-1)] == None):
-                prev_Error = 0
-            else:
-                prev_Error = error_array[indexify(index_n-1)]
 
             proportional = Kp * error_n
             integral = Ki * sum(error_array)
-            derivative = Kd * (error_n - prev_Error)
+            derivative = Kd * (error_n - error_n_minus_1)
             output = proportional + integral + derivative
             # output = (Kp * error_n) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_n)) 
             print("Output: ", output)
+
+            # Represents the speed difference for each wheel
+            # It is applied to each wheel's speed oppositely
+            # Deviation is applied positively to the left wheel,
+            #   so visualize it as the change to the left wheel speed
+            deviation = 0  # mm/s
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
             if in_range(output, -200, -50): # TODO: determine the correct range for turning left
@@ -651,21 +651,33 @@ light_ranges = {
 # Calculates error for each left side light bumper sensor
 # Uses the "happy" ranges defined in the dict above
 def calc_error(sensors):
-    # right = sensors.light_bumper.right
-    # front_right = sensors.light_bumper.front_right
-    # center_right = sensors.light_bumper.center_right
+    right = sensors.light_bumper_right
+    # right_e = range_error(right, light_ranges['right'])
+    right_e = 0
+    
+    front_right = sensors.light_bumper_front_right
+    # front_right_e = range_error(front_right, light_ranges['front_right'])
+    front_right_e = 0
+    
+    center_right = sensors.light_bumper_center_right
+    # center_right_e = range_error(center_right, light_ranges['center_right'])
+    center_right_e = 0
+    
     center_left = sensors.light_bumper_center_left
-    center_left_error = range_error(center_left, light_ranges['center_left'])
+    center_left_e = range_error(center_left, light_ranges['center_left'])
 
     front_left = sensors.light_bumper_front_left
-    front_left_error = range_error(front_left, light_ranges['front_left'])
+    front_left_e = range_error(front_left, light_ranges['front_left'])
 
     left = sensors.light_bumper_left
-    left_error = range_error(left, light_ranges['left'])
+    left_e = range_error(left, light_ranges['left'])
 
-    total_error = center_left_error + front_left_error + left_error
+    total = center_left_e + front_left_e + left_e
 
-    return total_error
+    print(f"Sensors = {right:5} {front_right:5} {center_right:5} {center_left:5} {front_left:5} {left:5}")
+    print(f"Errors  = {right_e:5} {front_right_e:5} {center_right_e:5} {center_left_e:5} {front_left_e:5} {left_e:5} = {total:5}")
+
+    return total
 
 def calc_error_two(sensors):
     center_left = sensors.light_bumper_center_left
