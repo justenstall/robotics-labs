@@ -618,27 +618,33 @@ class TetheredDriveApp(Tk):
             output = proportional + integral + derivative
             print(f"PID: error={error_n:5} --> out={output:5}")
 
+            left_bound = -1000
+            middle_bound = -50
+            right_bound = 3000
+
             # We need to figure out the output ranges to map to "turn left" and "turn right"
             if total_light < 50:
                 print(f"Away from wall")
                 left_vel = normal_velocity
                 right_vel = normal_velocity
-            elif output < -100000:
+            elif output <= left_bound:
                 # if output < -100000:
                 print("Sharp left")
                 # left_vel = -normal_velocity
                 # right_vel = normal_velocity
                 left_vel = 10
                 right_vel = 100
-            elif in_range(output, -1000, -50): # TODO: determine the correct range for turning left
+            elif left_bound <= output <= middle_bound:
+            # elif in_range(output, left_bound, middle_bound): # TODO: determine the correct range for turning left
                 print("Turn left")
                 left_vel = normal_velocity - deviation
                 right_vel = normal_velocity + deviation
-            elif in_range(output, -10, 3000): # TODO: determine the correct range for turning right
+            elif middle_bound <= output <= right_bound:
+                # elif in_range(output, middle_bound, right_bound): # TODO: determine the correct range for turning right
                 print("Turn right")
                 left_vel = normal_velocity + deviation
                 right_vel = normal_velocity - deviation
-            elif output >= 3000: # TODO: determine the correct range for turning right
+            elif right_bound <= output: # TODO: determine the correct range for turning right
                 print("Sharp right")
                 # left_vel = normal_velocity
                 # right_vel = -normal_velocity
@@ -691,25 +697,6 @@ def calc_error(sensors: cl.Sensors):
 
     return total_e
 
-# Will need to determine the ranges for sensors and the output is a matrix, 
-#   which would require a more complex function here
-def in_range(output, range_start, range_stop):
-    return range_start <= output <= range_stop
-
-# Calculate an error for "value" for the given range "range_tuple"
-# "range_tuple": (range_start, range_stop)
-def range_error(value, range_tuple):
-    range_start = range_tuple[0]
-    range_stop = range_tuple[1]
-    if value < range_start:
-        print("under range start")
-        return -(range_start-value)
-    elif value > range_stop:
-        print("over range stop")
-        return value - range_stop
-    else:
-        return 0
-
 # TODO: edit this based on how the light sensors work, the logic may be backwards if the light
 def any_greater_than(threshold, list):
     for i in list:
@@ -718,11 +705,7 @@ def any_greater_than(threshold, list):
     return True
 
 def bump_or_wheeldrop(sensors: cl.Sensors):
-    wl = sensors.bumps_wheeldrops.wheeldrop_left
-    wr = sensors.bumps_wheeldrops.wheeldrop_right
-    bl = sensors.bumps_wheeldrops.bump_left
-    br = sensors.bumps_wheeldrops.bump_right
-    return wl | wr | bl | br
+    return bump(sensors) | wheeldrop(sensors)
 
 def bump(sensors: cl.Sensors):
     bl = sensors.bumps_wheeldrops.bump_left
@@ -741,8 +724,6 @@ def light_bumper(sensors: cl.Sensors):
     lcl = sensors.light_bumper.center_left
     lfl = sensors.light_bumper.front_left
     ll = sensors.light_bumper.left
-    
-    # return any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
     return lr | lfr | lcr | lcl | lfl | ll
 
 def check_light(sensors: cl.Sensors):
