@@ -649,7 +649,7 @@ class TetheredDriveApp(Tk):
                 # left_vel = normal_velocity
                 # right_vel = -normal_velocity
                 left_vel = 50
-                right_vel = 10
+                right_vel = -50
 
             print(f"Drive: R={left_vel:3} L={right_vel:3}")
 
@@ -691,7 +691,7 @@ def calc_error(sensors: cl.Sensors):
     front_left_e = sensors.light_bumper_front_left - light_set_points['front_left']
     center_left_e =  sensors.light_bumper_center_left - light_set_points['center_left']
 
-    total_e = left_e + front_left_e + center_left_e
+    total_e = left_e + (front_left_e * .75) + (center_left_e * .5)
 
     print(f"Error = {left_e:5} {front_left_e:5} {center_left_e:5} {0:5} {0:5} {0:5} = {total_e:5}")
 
