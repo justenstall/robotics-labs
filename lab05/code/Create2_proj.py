@@ -411,7 +411,7 @@ class TetheredDriveApp(Tk):
             distance (int): requested distance in mm
         """
 
-        stats = self.drive_until(velocity, distance, stop_condition=bump_or_wheeldrop)
+        stats = self.drive_straight_until(velocity, distance, stop_condition=bump_or_wheeldrop)
 
         # # Initialized distance traveled
         # traveled = 0
@@ -462,7 +462,7 @@ class TetheredDriveApp(Tk):
         circumference = diameter * math.pi
 
         distance = circumference * (degrees/360)
-        return self.base_drive_func(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
+        return self.drive_until(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
 
 # LIGHT BUMP SENSOR READINGS
 # Farthest reading was just center left hit first with a sensor value of 178
@@ -472,28 +472,12 @@ class TetheredDriveApp(Tk):
         l_vel = -75
         r_vel = -100
         distance = 200 #mm
-        velocity = 100
-
-        self.robot.drive_direct(l_vel,r_vel)
-        self.driving = True
-
-        startTime = time.perf_counter() # returns time in seconds
-        elapsed = 0 # initialize elapsed time
-        traveled = 0
-
-        while (traveled < distance):
-            # Check traveled distance no matter what so elapsed time and traveled distance are accurate
-            checkTime = time.perf_counter() # get what time it is
-            # difference between checkTime and startTime is how much time has passed
-            elapsed = checkTime - startTime # update elapsed time
-            traveled = velocity * elapsed # update traveled distance
-            #print(f"Current Distance: {traveled}\n")
-        
+        self.drive_until(l_vel=l_vel, r_vel=r_vel, distance=distance, stop_condition=bump_or_wheeldrop)
         self.wall_follow_pid()
 
-    def drive_until(self, velocity=200, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
-        """direct_drive_until
-        Drives the robot until it reaches the stop_condition or has travelled the specified distance in mm  
+    def drive_straight_until(self, velocity=200, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
+        """drive_straight_until
+        Drives the robot straight until it reaches the stop_condition or has travelled the specified distance in mm  
 
         Args:
             velocity (int): wheel velocity in mm/s
@@ -503,14 +487,15 @@ class TetheredDriveApp(Tk):
         Returns:
             Distance travelled in mm
         """
-        return self.base_drive_func(velocity, velocity, distance, stop_condition)
+        return self.drive_until(velocity, velocity, distance, stop_condition)
 
-    def base_drive_func(self, l_vel, r_vel, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
-        """direct_drive_until
+    def drive_until(self, l_vel, r_vel, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
+        """drive_until
         Drives the robot until it reaches the stop_condition or has travelled the specified distance in mm  
 
         Args:
-            velocity (int): wheel velocity in mm/s
+            l_vel (int): left wheel velocity in mm/s
+            r_vel (int): right wheel velocity in mm/s
             distance (int): distance limit in mm (only for same wheel speed)
             stop_condition (Callable(self) -> bool): robot will stop driving when this condition is true
         
@@ -529,9 +514,9 @@ class TetheredDriveApp(Tk):
         startTime = time.perf_counter() # returns time in seconds
         elapsed = 0 # initialize elapsed time
 
-        velocity = l_vel
-        if r_vel > l_vel:
-            velocity = r_vel
+        velocity = abs(l_vel)
+        if abs(r_vel) > abs(l_vel):
+            velocity = abs(r_vel)
 
         while (traveled < distance):
             # Check traveled distance no matter what so elapsed time and traveled distance are accurate
@@ -542,9 +527,10 @@ class TetheredDriveApp(Tk):
             print(f"Current Distance: {traveled}\n")
 
             # Exit loop if there has been a bump or wheeldrop
-            #sensors = self.robot.get_sensors()
-            #if stop_condition(sensors):
-            #    break
+            if stop_condition is not None:
+                sensors = self.robot.get_sensors()
+                if stop_condition(sensors):
+                    break
 
         # Stop driving
         self.robot.drive_stop()
@@ -591,7 +577,6 @@ class TetheredDriveApp(Tk):
 
                 # continue to next iteration so sensor can be read again
                 # if there is no bump or wheeldrop on the next, it will drive again
-                
 
             # Calculate the error
             # Negative error: light reading was too low, turn towards the wall (left)
@@ -618,7 +603,11 @@ class TetheredDriveApp(Tk):
             else:
                 prev_Error = error_array[indexify(index_n-1)]
 
-            output = (Kp * error_array[index_n]) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_array[index_n])) 
+            proportional = Kp * error_n
+            integral = Ki * sum(error_array)
+            derivative = Kd * (error_n - prev_Error)
+            output = proportional + integral + derivative
+            # output = (Kp * error_n) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_n)) 
             print("Output: ", output)
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
