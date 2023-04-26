@@ -530,6 +530,8 @@ class TetheredDriveApp(Tk):
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
     def wall_follow_pid(self):
+        time.sleep(self.sensorDelay)
+
         self.driving = True
 
         # Set the number of errors to store
@@ -691,7 +693,7 @@ def calc_error(sensors: cl.Sensors):
     front_left_e = sensors.light_bumper_front_left - light_set_points['front_left']
     center_left_e =  sensors.light_bumper_center_left - light_set_points['center_left']
 
-    total_e = left_e + (front_left_e * .75) + (center_left_e * .5)
+    total_e = left_e + front_left_e + (center_left_e * .75)
 
     print(f"Error = {left_e:5} {front_left_e:5} {center_left_e:5} {0:5} {0:5} {0:5} = {total_e:5}")
 
