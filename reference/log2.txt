@@ -1,0 +1,550 @@
+^C~/school/robotics-labs/lab05/code [main|✚ 1…2]
+$ /Users/justenstall/.pyenv/versions/3.10.4/bin/python /Users/justenstall/school/robotics-labs/lab05/code/Create2_proj.py
+Trying /dev/tty.usbserial-DN0264WN... 
+----------------------------------------
+ Create opened serial connection
+   port: /dev/tty.usbserial-DN0264WN
+   datarate: 115200 bps
+----------------------------------------
+Connected!
+Passive
+Safe
+Follow wall
+under range start
+under range start
+Sensors  =     7     2     4     1     4     0
+Error    =  -993    -3     0     0     0     0 =  -996
+Weighted = -9930   -30     0     0     0     0 = -9960
+PID: error=-9960 --> out=366475.34613050305
+Away from wall (total_light: 18)
+Sharp right
+Drive: R=100 L= 10
+under range start
+under range start
+Sensors  =     8     2     4     0     4     0
+Error    =  -992    -3     0     0     0     0 =  -995
+Weighted = -9920   -30     0     0     0     0 = -9950
+PID: error=-9950 --> out=-29925.728808156306
+Away from wall (total_light: 18)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     8     0     8     0     3     0
+Error    =  -992    -5     0     0     0     0 =  -997
+Weighted = -9920   -50     0     0     0     0 = -9970
+PID: error=-9970 --> out=-39777.845155529336
+Away from wall (total_light: 19)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     9     2     4     1     3     0
+Error    =  -991    -3     0     0     0     0 =  -994
+Weighted = -9910   -30     0     0     0     0 = -9940
+PID: error=-9940 --> out=-49834.60309605052
+Away from wall (total_light: 19)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =    11     0     8     0     3     0
+Error    =  -989    -5     0     0     0     0 =  -994
+Weighted = -9890   -50     0     0     0     0 = -9940
+PID: error=-9940 --> out=-59700.0
+Away from wall (total_light: 22)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =    16     3     9     0     4     0
+Error    =  -984    -2     0     0     0     0 =  -986
+Weighted = -9840   -20     0     0     0     0 = -9860
+PID: error=-9860 --> out=-69602.69919831233
+Away from wall (total_light: 32)
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =    32    12    13     0     4     0
+Error    =  -968     0     0     0     0     0 =  -968
+Weighted = -9680     0     0     0     0     0 = -9680
+PID: error=-9680 --> out=-79211.70722438095
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =    56    20    15     0     2     0
+Error    =  -944     0     0     0     0     0 =  -944
+Weighted = -9440     0     0     0     0     0 = -9440
+PID: error=-9440 --> out=-88446.1220773987
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =    87    35    16     0     6     0
+Error    =  -913     0     0     0     0     0 =  -913
+Weighted = -9130     0     0     0     0     0 = -9130
+PID: error=-9130 --> out=-97301.8965801514
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   120    59    16     0     0     0
+Error    =  -880     0     0     0     0     0 =  -880
+Weighted = -8800     0     0     0     0     0 = -8800
+PID: error=-8800 --> out=-105756.50781537734
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   172    86    12     0     4     0
+Error    =  -828     0     0     0     0     0 =  -828
+Weighted = -8280     0     0     0     0     0 = -8280
+PID: error=-8280 --> out=-103677.28571485123
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   249   118    12     0     4     0
+Error    =  -751     0     0     0     0     0 =  -751
+Weighted = -7510     0     0     0     0     0 = -7510
+PID: error=-7510 --> out=-100609.3307973635
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   355   152    13     0     2     0
+Error    =  -645     0     0     0     0     0 =  -645
+Weighted = -6450     0     0     0     0     0 = -6450
+PID: error=-6450 --> out=-96174.32547523957
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   485   214    16     0     4     0
+Error    =  -515     0     0     0     0     0 =  -515
+Weighted = -5150     0     0     0     0     0 = -5150
+PID: error=-5150 --> out=-90177.13969186289
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   648   303    31     0     5     0
+Error    =  -352     0     0     0     0     0 =  -352
+Weighted = -3520     0     0     0     0     0 = -3520
+PID: error=-3520 --> out=-82257.59450196299
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =   908   485    59     4     5     0
+Error    =   -92     0     0     0     0     0 =   -92
+Weighted =  -920     0     0     0     0     0 =  -920
+PID: error= -920 --> out=-71167.44189225038
+Sharp left
+Drive: R= 10 L=100
+Sensors  =  1204   763   126    15     6     1
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+PID: error=    0 --> out=-59654.038409620596
+Sharp left
+Drive: R= 10 L=100
+over range stop
+Sensors  =  1411  1077   237    39     4     0
+Error    =     0    77     0     0     0     0 =    77
+Weighted =     0    77     0     0     0     0 =    77
+PID: error=   77 --> out=-49641.79336953705
+Sharp left
+Drive: R= 10 L=100
+over range stop
+Sensors  =  1401  1364   430    88     6     0
+Error    =     0   364     0     0     0     0 =   364
+Weighted =     0   364     0     0     0     0 =   364
+PID: error=  364 --> out=-39951.11327049884
+Sharp left
+Drive: R= 10 L=100
+over range stop
+Sensors  =  1279  1689   662   180     8     1
+Error    =     0   689     0     0     0     0 =   689
+Weighted =     0   689     0     0     0     0 =   689
+PID: error=  689 --> out=-30146.31834238561
+Sharp left
+Drive: R= 10 L=100
+over range stop
+Sensors  =  1207  1857   713   340     9     2
+Error    =     0   857     0     0     0     0 =   857
+Weighted =     0   857     0     0     0     0 =   857
+PID: error=  857 --> out=-20772.489496563834
+Sharp left
+Drive: R= 10 L=100
+over range stop
+over range stop
+Sensors  =  1118  1834  1608   609     8     4
+Error    =     0   834   408     0     0     0 =  1242
+Weighted =     0   834   408     0     0     0 =  1242
+PID: error= 1242 --> out=-11714.163063069713
+Sharp left
+Drive: R= 10 L=100
+over range stop
+under range start
+Sensors  =   957   485  2207   955    12     0
+Error    =   -43     0  1007     0     0     0 =   964
+Weighted =  -430     0  1007     0     0     0 =   577
+PID: error=  577 --> out=-4967.533667798158
+Sharp left
+Drive: R= 10 L=100
+Collision detected, reversing
+Robot drove 200.0mm in 10.0 seconds.
+under range start
+Sensors  =     6    12    15     1     4     0
+Error    =  -994     0     0     0     0     0 =  -994
+Weighted = -9940     0     0     0     0     0 = -9940
+PID: error=-9940 --> out=-21802.870949958182
+Away from wall (total_light: 38)
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     5    12    16     4     4     0
+Error    =  -995     0     0     0     0     0 =  -995
+Weighted = -9950     0     0     0     0     0 = -9950
+PID: error=-9950 --> out=-31183.294156200645
+Away from wall (total_light: 41)
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     6    16    17     0     4     0
+Error    =  -994     0     0     0     0     0 =  -994
+Weighted = -9940     0     0     0     0     0 = -9940
+PID: error=-9940 --> out=-41114.699672078
+Away from wall (total_light: 43)
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     5    18    16     4     6     0
+Error    =  -995     0     0     0     0     0 =  -995
+Weighted = -9950     0     0     0     0     0 = -9950
+PID: error=-9950 --> out=-51150.30639223995
+Away from wall (total_light: 49)
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     6    19    23     3     8     0
+Error    =  -994     0     0     0     0     0 =  -994
+Weighted = -9940     0     0     0     0     0 = -9940
+PID: error=-9940 --> out=-61445.687628206506
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     8    21    28     5    11     0
+Error    =  -992     0     0     0     0     0 =  -992
+Weighted = -9920     0     0     0     0     0 = -9920
+PID: error=-9920 --> out=-72035.3635338468
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     8    20    26     4    12     0
+Error    =  -992     0     0     0     0     0 =  -992
+Weighted = -9920     0     0     0     0     0 = -9920
+PID: error=-9920 --> out=-82811.0
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     4    21    24     6    12     0
+Error    =  -996     0     0     0     0     0 =  -996
+Weighted = -9960     0     0     0     0     0 = -9960
+PID: error=-9960 --> out=-94050.31853805421
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     2    24    20     8    11     0
+Error    =  -998     0     0     0     0     0 =  -998
+Weighted = -9980     0     0     0     0     0 = -9980
+PID: error=-9980 --> out=-104628.67039875763
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     2    20    20     8    12     0
+Error    =  -998     0     0     0     0     0 =  -998
+Weighted = -9980     0     0     0     0     0 = -9980
+PID: error=-9980 --> out=-109460.0
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     0    19    16     8    12     1
+Error    = -1000     0     0     0     0     0 = -1000
+Weighted = -10000     0     0     0     0     0 = -10000
+PID: error=-10000 --> out=-109538.69212582172
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     3    18    20     8    15     1
+Error    =  -997     0     0     0     0     0 =  -997
+Weighted = -9970     0     0     0     0     0 = -9970
+PID: error=-9970 --> out=-109531.94590064332
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     4    16    16     8    13     0
+Error    =  -996     0     0     0     0     0 =  -996
+Weighted = -9960     0     0     0     0     0 = -9960
+PID: error=-9960 --> out=-109540.64342363657
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     1    15    17     7    16     0
+Error    =  -999     0     0     0     0     0 =  -999
+Weighted = -9990     0     0     0     0     0 = -9990
+PID: error=-9990 --> out=-109608.08513927675
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     3    12    16    10    16     4
+Error    =  -997     0     0     0     0     0 =  -997
+Weighted = -9970     0     0     0     0     0 = -9970
+PID: error=-9970 --> out=-109621.26648798831
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     3     8    10     7    18     0
+Error    =  -997     0     0     0     0     0 =  -997
+Weighted = -9970     0     0     0     0     0 = -9970
+PID: error=-9970 --> out=-109670.0
+Away from wall (total_light: 46)
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     3     9     8     6    24     4
+Error    =  -997     0     0     0     0     0 =  -997
+Weighted = -9970     0     0     0     0     0 = -9970
+PID: error=-9970 --> out=-109720.0
+Sharp left
+Drive: R= 10 L=100
+under range start
+Sensors  =     0     8     8     5    21     5
+Error    = -1000     0     0     0     0     0 = -1000
+Weighted = -10000     0     0     0     0     0 = -10000
+PID: error=-10000 --> out=-109788.1443272521
+Away from wall (total_light: 47)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     0     4     5     4    19     8
+Error    = -1000    -1     0     0     0     0 = -1001
+Weighted = -10000   -10     0     0     0     0 = -10010
+PID: error=-10010 --> out=-109829.386197277
+Away from wall (total_light: 40)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     4     8     4    16    11
+Error    =  -996    -1     0     0     0     0 =  -997
+Weighted = -9960   -10     0     0     0     0 = -9970
+PID: error=-9970 --> out=-109782.43650044574
+Away from wall (total_light: 47)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     1     8     4    16    18
+Error    =  -996    -4     0     0     0     0 = -1000
+Weighted = -9960   -40     0     0     0     0 = -10000
+PID: error=-10000 --> out=-109808.18654088273
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     7     4     7     4    12    27
+Error    =  -993    -1     0     0     0     0 =  -994
+Weighted = -9930   -10     0     0     0     0 = -9940
+PID: error=-9940 --> out=-109723.5997825192
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     3     6     3    10    34
+Error    =  -996    -2     0     0     0     0 =  -998
+Weighted = -9960   -20     0     0     0     0 = -9980
+PID: error=-9980 --> out=-109777.61801345761
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     0     0     4     4     9    36
+Error    = -1000    -5     0     0     0     0 = -1005
+Weighted = -10000   -50     0     0     0     0 = -10050
+PID: error=-10050 --> out=-109905.86233626267
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     0     3     0     1     8    34
+Error    = -1000    -2     0     0     0     0 = -1002
+Weighted = -10000   -20     0     0     0     0 = -10020
+PID: error=-10020 --> out=-109931.76033771655
+Away from wall (total_light: 46)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     0     4     0     1     4    29
+Error    = -1000    -1     0     0     0     0 = -1001
+Weighted = -10000   -10     0     0     0     0 = -10010
+PID: error=-10010 --> out=-109960.58250868268
+Away from wall (total_light: 38)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     3     4     1     0     4    28
+Error    =  -997    -1     0     0     0     0 =  -998
+Weighted = -9970   -10     0     0     0     0 = -9980
+PID: error=-9980 --> out=-109941.73489680473
+Away from wall (total_light: 40)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     3     3     7     4     4    27
+Error    =  -997    -2     0     0     0     0 =  -999
+Weighted = -9970   -20     0     0     0     0 = -9990
+PID: error=-9990 --> out=-109939.42585359172
+Away from wall (total_light: 48)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     5     0     6     3     5    20
+Error    =  -995    -5     0     0     0     0 = -1000
+Weighted = -9950   -50     0     0     0     0 = -10000
+PID: error=-10000 --> out=-109939.42995055733
+Away from wall (total_light: 39)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     3     0     6     4     4    13
+Error    =  -997    -5     0     0     0     0 = -1002
+Weighted = -9970   -50     0     0     0     0 = -10020
+PID: error=-10020 --> out=-110008.86797407844
+Away from wall (total_light: 30)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     3     7     0     4    11
+Error    =  -996    -2     0     0     0     0 =  -998
+Weighted = -9960   -20     0     0     0     0 = -9980
+PID: error=-9980 --> out=-109952.24817737809
+Away from wall (total_light: 29)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     1     1     4     1     3     5
+Error    =  -999    -4     0     0     0     0 = -1003
+Weighted = -9990   -40     0     0     0     0 = -10030
+PID: error=-10030 --> out=-110087.20940913372
+Away from wall (total_light: 15)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     0     1     2     4     1     2
+Error    = -1000    -4     0     0     0     0 = -1004
+Weighted = -10000   -40     0     0     0     0 = -10040
+PID: error=-10040 --> out=-110159.44572951413
+Away from wall (total_light: 10)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     0     0     2     0     0     3
+Error    = -1000    -5     0     0     0     0 = -1005
+Weighted = -10000   -50     0     0     0     0 = -10050
+PID: error=-10050 --> out=-110169.44954297869
+Away from wall (total_light: 5)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     1     0     1     0     0     0
+Error    =  -999    -5     0     0     0     0 = -1004
+Weighted = -9990   -50     0     0     0     0 = -10040
+PID: error=-10040 --> out=-110180.5466956091
+Away from wall (total_light: 2)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     2     0     5     2     4     0
+Error    =  -998    -5     0     0     0     0 = -1003
+Weighted = -9980   -50     0     0     0     0 = -10030
+PID: error=-10030 --> out=-110190.54298698799
+Away from wall (total_light: 13)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     0     5     1     3     0
+Error    =  -996    -5     0     0     0     0 = -1001
+Weighted = -9960   -50     0     0     0     0 = -10010
+PID: error=-10010 --> out=-110201.07865742048
+Away from wall (total_light: 13)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     0     5     0     3     0
+Error    =  -996    -5     0     0     0     0 = -1001
+Weighted = -9960   -50     0     0     0     0 = -10010
+PID: error=-10010 --> out=-110220.0
+Away from wall (total_light: 12)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     1     0     6     0     4     0
+Error    =  -999    -5     0     0     0     0 = -1004
+Weighted = -9990   -50     0     0     0     0 = -10040
+PID: error=-10040 --> out=-110288.40353386999
+Away from wall (total_light: 11)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     0     4     0     0     0
+Error    =  -996    -5     0     0     0     0 = -1001
+Weighted = -9960   -50     0     0     0     0 = -10010
+PID: error=-10010 --> out=-110251.58584318843
+Away from wall (total_light: 8)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     4     1     4     0     0     0
+Error    =  -996    -4     0     0     0     0 = -1000
+Weighted = -9960   -40     0     0     0     0 = -10000
+PID: error=-10000 --> out=-110260.52514269901
+Away from wall (total_light: 9)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     5     2     4     0     0     0
+Error    =  -995    -3     0     0     0     0 =  -998
+Weighted = -9950   -30     0     0     0     0 = -9980
+PID: error=-9980 --> out=-110191.04343997574
+Away from wall (total_light: 11)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     5     2     6     0     2     0
+Error    =  -995    -3     0     0     0     0 =  -998
+Weighted = -9950   -30     0     0     0     0 = -9980
+PID: error=-9980 --> out=-110130.0
+Away from wall (total_light: 15)
+Sharp left
+Drive: R= 10 L=100
+under range start
+under range start
+Sensors  =     5     2     5     0     3     0
+Error    =  -995    -3     0     0     0     0 =  -998
+Weighted = -9950   -30     0     0     0     0 = -9980
+PID: error=-9980 --> out=-110060.0
+Away from wall (total_light: 15)
+Sharp left
+Drive: R= 10 L=100

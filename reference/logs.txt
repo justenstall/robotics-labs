@@ -1,0 +1,744 @@
+Trying /dev/tty.usbserial-DN0264WN... 
+----------------------------------------
+ Create opened serial connection
+   port: /dev/tty.usbserial-DN0264WN
+   datarate: 115200 bps
+----------------------------------------
+Connected!
+Passive
+Safe
+Rotating 90 degrees at 100mm/s
+Robot drove 191.8mm in 1.9 seconds.
+Rotating 90 degrees at 100mm/s
+Robot drove 191.9mm in 1.9 seconds.
+Follow wall
+Sensors  =     0     4     1     6     2     4
+Error    =     0     0     0     0    -3    -6 =    -9
+Weighted =     0     0     0     0   -30   -60 =   -90
+Total error:  -9
+Output:  -27
+Sensors  =     0     4     0     7     2     0
+Error    =     0     0     0     0    -3   -10 =   -13
+Weighted =     0     0     0     0   -30  -100 =  -130
+Total error:  -13
+Output:  -39
+Sensors  =     0     4     0     5     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -51
+Sensors  =     0     4     0     3     3     3
+Error    =     0     0     0     0    -2    -7 =    -9
+Weighted =     0     0     0     0   -20   -70 =   -90
+Total error:  -9
+Output:  -49
+Sensors  =     0     0     0     4     2     0
+Error    =     0     0     0     0    -3   -10 =   -13
+Weighted =     0     0     0     0   -30  -100 =  -130
+Total error:  -13
+Output:  -75
+Sensors  =     6     0     1     3     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -78
+Sensors  =     7     0     0     4     3     3
+Error    =     0     0     0     0    -2    -7 =    -9
+Weighted =     0     0     0     0   -20   -70 =   -90
+Total error:  -9
+Output:  -85
+Sensors  =     8     0     0     3     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -111
+Sensors  =     4     3     0     5     1     4
+Error    =     0     0     0     0    -4    -6 =   -10
+Weighted =     0     0     0     0   -40   -60 =  -100
+Total error:  -10
+Output:  -108
+Sensors  =     0     4     0     5     1     3
+Error    =     0     0     0     0    -4    -7 =   -11
+Weighted =     0     0     0     0   -40   -70 =  -110
+Total error:  -11
+Output:  -125
+Sensors  =     0     4     0     6     1     1
+Error    =     0     0     0     0    -4    -9 =   -13
+Weighted =     0     0     0     0   -40   -90 =  -130
+Total error:  -13
+Output:  -132
+Sensors  =     0     4     0     6     1     2
+Error    =     0     0     0     0    -4    -8 =   -12
+Weighted =     0     0     0     0   -40   -80 =  -120
+Total error:  -12
+Output:  -127
+Sensors  =     0     4     0     6     2     2
+Error    =     0     0     0     0    -3    -8 =   -11
+Weighted =     0     0     0     0   -30   -80 =  -110
+Total error:  -11
+Output:  -123
+Sensors  =     0     4     0     5     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -126
+Sensors  =     0     4     0     6     1     0
+Error    =     0     0     0     0    -4   -10 =   -14
+Weighted =     0     0     0     0   -40  -100 =  -140
+Total error:  -14
+Output:  -133
+Sensors  =     0     0     0     4     1     3
+Error    =     0     0     0     0    -4    -7 =   -11
+Weighted =     0     0     0     0   -40   -70 =  -110
+Total error:  -11
+Output:  -124
+Sensors  =     1     0     0     4     0     2
+Error    =     0     0     0     0    -5    -8 =   -13
+Weighted =     0     0     0     0   -50   -80 =  -130
+Total error:  -13
+Output:  -135
+Sensors  =     0     0     0     4     1     3
+Error    =     0     0     0     0    -4    -7 =   -11
+Weighted =     0     0     0     0   -40   -70 =  -110
+Total error:  -11
+Output:  -126
+Sensors  =     0     0     1     4     1     1
+Error    =     0     0     0     0    -4    -9 =   -13
+Weighted =     0     0     0     0   -40   -90 =  -130
+Total error:  -13
+Output:  -135
+Sensors  =     0     0     0     4     2     4
+Error    =     0     0     0     0    -3    -6 =    -9
+Weighted =     0     0     0     0   -30   -60 =   -90
+Total error:  -9
+Output:  -123
+Sensors  =     0     4     0     5     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -129
+Sensors  =     1     4     0     4     1     7
+Error    =     0     0     0     0    -4    -3 =    -7
+Weighted =     0     0     0     0   -40   -30 =   -70
+Total error:  -7
+Output:  -114
+Sensors  =     0     4     0     4     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -138
+Sensors  =     0     4     0     5     0     2
+Error    =     0     0     0     0    -5    -8 =   -13
+Weighted =     0     0     0     0   -50   -80 =  -130
+Total error:  -13
+Output:  -128
+Sensors  =     0     4     0     7     3     2
+Error    =     0     0     0     0    -2    -8 =   -10
+Weighted =     0     0     0     0   -20   -80 =  -100
+Total error:  -10
+Output:  -120
+Sensors  =     0     4     0     5     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -128
+Sensors  =     0     4     0     3     1     1
+Error    =     0     0     0     0    -4    -9 =   -13
+Weighted =     0     0     0     0   -40   -90 =  -130
+Total error:  -13
+Output:  -128
+Sensors  =     1     0     0     4     0     2
+Error    =     0     0     0     0    -5    -8 =   -13
+Weighted =     0     0     0     0   -50   -80 =  -130
+Total error:  -13
+Output:  -129
+Sensors  =     1     0     0     3     1     4
+Error    =     0     0     0     0    -4    -6 =   -10
+Weighted =     0     0     0     0   -40   -60 =  -100
+Total error:  -10
+Output:  -120
+Sensors  =     0     0     0     2     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -124
+Sensors  =     0     0     0     2     1     3
+Error    =     0     0     0     0    -4    -7 =   -11
+Weighted =     0     0     0     0   -40   -70 =  -110
+Total error:  -11
+Output:  -126
+Sensors  =     0     4     0     7     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -132
+Sensors  =     0     4     0     6     0     6
+Error    =     0     0     0     0    -5    -4 =    -9
+Weighted =     0     0     0     0   -50   -40 =   -90
+Total error:  -9
+Output:  -119
+Sensors  =     2     4     0     6     2     2
+Error    =     0     0     0     0    -3    -8 =   -11
+Weighted =     0     0     0     0   -30   -80 =  -110
+Total error:  -11
+Output:  -124
+Sensors  =     1     4     0     5     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -120
+Sensors  =     2     4     0     5     1     3
+Error    =     0     0     0     0    -4    -7 =   -11
+Weighted =     0     0     0     0   -40   -70 =  -110
+Total error:  -11
+Output:  -122
+Sensors  =     1     4     0     6     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -116
+Sensors  =     1     4     0     5     1     0
+Error    =     0     0     0     0    -4   -10 =   -14
+Weighted =     0     0     0     0   -40  -100 =  -140
+Total error:  -14
+Output:  -126
+Sensors  =     1     0     1     2     1     2
+Error    =     0     0     0     0    -4    -8 =   -12
+Weighted =     0     0     0     0   -40   -80 =  -120
+Total error:  -12
+Output:  -120
+Sensors  =     1     0     0     3     2     2
+Error    =     0     0     0     0    -3    -8 =   -11
+Weighted =     0     0     0     0   -30   -80 =  -110
+Total error:  -11
+Output:  -121
+Sensors  =     0     0     0     2     1     3
+Error    =     0     0     0     0    -4    -7 =   -11
+Weighted =     0     0     0     0   -40   -70 =  -110
+Total error:  -11
+Output:  -122
+Sensors  =     0     0     0     3     0     2
+Error    =     0     0     0     0    -5    -8 =   -13
+Weighted =     0     0     0     0   -50   -80 =  -130
+Total error:  -13
+Output:  -127
+Sensors  =     0     4     0     5     2     2
+Error    =     0     0     0     0    -3    -8 =   -11
+Weighted =     0     0     0     0   -30   -80 =  -110
+Total error:  -11
+Output:  -123
+Sensors  =     0     4     0     4     0     2
+Error    =     0     0     0     0    -5    -8 =   -13
+Weighted =     0     0     0     0   -50   -80 =  -130
+Total error:  -13
+Output:  -131
+Sensors  =     0     4     0     4     1     1
+Error    =     0     0     0     0    -4    -9 =   -13
+Weighted =     0     0     0     0   -40   -90 =  -130
+Total error:  -13
+Output:  -132
+Sensors  =     0     4     2     4     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -125
+Sensors  =     0     4     0     4     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -128
+Sensors  =     0     4     0     4     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -130
+Sensors  =     1     4     0     4     1     4
+Error    =     0     0     0     0    -4    -6 =   -10
+Weighted =     0     0     0     0   -40   -60 =  -100
+Total error:  -10
+Output:  -122
+Sensors  =     1     0     0     1     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -123
+Sensors  =     0     0     0     1     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -134
+Sensors  =     0     0     0     1     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -131
+Sensors  =     0     0     0     1     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -134
+Sensors  =     0     0     0     3     1     0
+Error    =     0     0     0     0    -4   -10 =   -14
+Weighted =     0     0     0     0   -40  -100 =  -140
+Total error:  -14
+Output:  -135
+Sensors  =     0     5     0     4     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -124
+Sensors  =     1     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -131
+Sensors  =     0     4     0     4     0     8
+Error    =     0     0     0     0    -5    -2 =    -7
+Weighted =     0     0     0     0   -50   -20 =   -70
+Total error:  -7
+Output:  -119
+Sensors  =     0     4     0     5     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -130
+Sensors  =     0     4     0     4     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -124
+Sensors  =     0     4     0     4     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -131
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -124
+Sensors  =     0     1     1     0     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -134
+Sensors  =     0     0     0     1     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -131
+Sensors  =     0     0     0     1     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -129
+Sensors  =     0     1     0     1     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -137
+Sensors  =     0     0     0     0     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -140
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -136
+Sensors  =     0     4     0     4     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -143
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -141
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -141
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -141
+Sensors  =     1     4     0     4     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -134
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -133
+Sensors  =     0     1     0     0     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -141
+Sensors  =     0     0     0     1     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -128
+Sensors  =     0     0     0     1     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -137
+Sensors  =     0     0     0     0     1     1
+Error    =     0     0     0     0    -4    -9 =   -13
+Weighted =     0     0     0     0   -40   -90 =  -130
+Total error:  -13
+Output:  -132
+Sensors  =     1     0     0     0     0     0
+Error    =     0     0     0     0    -5   -10 =   -15
+Weighted =     0     0     0     0   -50  -100 =  -150
+Total error:  -15
+Output:  -141
+Sensors  =     0     4     0     4     0     6
+Error    =     0     0     0     0    -5    -4 =    -9
+Weighted =     0     0     0     0   -50   -40 =   -90
+Total error:  -9
+Output:  -125
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -135
+Sensors  =     0     4     0     5     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -130
+Sensors  =     0     4     0     4     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -137
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -133
+Sensors  =     0     4     0     4     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -127
+Sensors  =     0     4     0     5     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -132
+Sensors  =     1     1     0     3     0     6
+Error    =     0     0     0     0    -5    -4 =    -9
+Weighted =     0     0     0     0   -50   -40 =   -90
+Total error:  -9
+Output:  -118
+Sensors  =     0     2     0     1     0     2
+Error    =     0     0     0     0    -5    -8 =   -13
+Weighted =     0     0     0     0   -50   -80 =  -130
+Total error:  -13
+Output:  -129
+Sensors  =     0     0     0     1     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -126
+Sensors  =     0     0     0     1     0     1
+Error    =     0     0     0     0    -5    -9 =   -14
+Weighted =     0     0     0     0   -50   -90 =  -140
+Total error:  -14
+Output:  -130
+Sensors  =     0     0     0     0     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -127
+Sensors  =     1     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -128
+Sensors  =     0     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -128
+Sensors  =     1     4     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -128
+Sensors  =     0     3     0     5     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -129
+Sensors  =     0     4     0     7     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -131
+Sensors  =     0     4     0     7     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -130
+Sensors  =     1     5     0     8     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -129
+Sensors  =     0     0     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -126
+Sensors  =     0     0     0     3     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -126
+Sensors  =     0     1     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -122
+Sensors  =     0     2     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -123
+Sensors  =     1     1     0     4     0     4
+Error    =     0     0     0     0    -5    -6 =   -11
+Weighted =     0     0     0     0   -50   -60 =  -110
+Total error:  -11
+Output:  -123
+Sensors  =     1     4     0     8     0     7
+Error    =     0     0     0     0    -5    -3 =    -8
+Weighted =     0     0     0     0   -50   -30 =   -80
+Total error:  -8
+Output:  -114
+Sensors  =     0     3     0     8     0     3
+Error    =     0     0     0     0    -5    -7 =   -12
+Weighted =     0     0     0     0   -50   -70 =  -120
+Total error:  -12
+Output:  -126
+Sensors  =     0     5     0     8     0     6
+Error    =     0     0     0     0    -5    -4 =    -9
+Weighted =     0     0     0     0   -50   -40 =   -90
+Total error:  -9
+Output:  -113
+Sensors  =     0     4     0     8     0     6
+Error    =     0     0     0     0    -5    -4 =    -9
+Weighted =     0     0     0     0   -50   -40 =   -90
+Total error:  -9
+Output:  -114
+Sensors  =     1     4     0     8     1     7
+Error    =     0     0     0     0    -4    -3 =    -7
+Weighted =     0     0     0     0   -40   -30 =   -70
+Total error:  -7
+Output:  -106
+Sensors  =     0     4     0     8     1     8
+Error    =     0     0     0     0    -4    -2 =    -6
+Weighted =     0     0     0     0   -40   -20 =   -60
+Total error:  -6
+Output:  -101
+Sensors  =     0     3     0     4     2     4
+Error    =     0     0     0     0    -3    -6 =    -9
+Weighted =     0     0     0     0   -30   -60 =   -90
+Total error:  -9
+Output:  -105
+Sensors  =     0     0     0     4     3     0
+Error    =     0     0     0     0    -2   -10 =   -12
+Weighted =     0     0     0     0   -20  -100 =  -120
+Total error:  -12
+Output:  -109
+Sensors  =     0     0     0     4     3     4
+Error    =     0     0     0     0    -2    -6 =    -8
+Weighted =     0     0     0     0   -20   -60 =   -80
+Total error:  -8
+Output:  -95
+Sensors  =     0     1     0     4     3     4
+Error    =     0     0     0     0    -2    -6 =    -8
+Weighted =     0     0     0     0   -20   -60 =   -80
+Total error:  -8
+Output:  -96
+Sensors  =     0     0     0     4     3     2
+Error    =     0     0     0     0    -2    -8 =   -10
+Weighted =     0     0     0     0   -20   -80 =  -100
+Total error:  -10
+Output:  -102
+Sensors  =     0     4     0     8     3     4
+Error    =     0     0     0     0    -2    -6 =    -8
+Weighted =     0     0     0     0   -20   -60 =   -80
+Total error:  -8
+Output:  -92
+Sensors  =     0     4     0     8     1     4
+Error    =     0     0     0     0    -4    -6 =   -10
+Weighted =     0     0     0     0   -40   -60 =  -100
+Total error:  -10
+Output:  -99
+Sensors  =     1     4     0     8     1     5
+Error    =     0     0     0     0    -4    -5 =    -9
+Weighted =     0     0     0     0   -40   -50 =   -90
+Total error:  -9
+Output:  -95
+Sensors  =     1     4     0     9     0     5
+Error    =     0     0     0     0    -5    -5 =   -10
+Weighted =     0     0     0     0   -50   -50 =  -100
+Total error:  -10
+Output:  -101
+Sensors  =     0     4     0     8     0     9
+Error    =     0     0     0     0    -5    -1 =    -6
+Weighted =     0     0     0     0   -50   -10 =   -60
+Total error:  -6
+Output:  -92
+Sensors  =     1     3     2     8     0     8
+Error    =     0     0     0     0    -5    -2 =    -7
+Weighted =     0     0     0     0   -50   -20 =   -70
+Total error:  -7
+Output:  -96
+Sensors  =     0     4     0     6     3     7
+Error    =     0     0     0     0    -2    -3 =    -5
+Weighted =     0     0     0     0   -20   -30 =   -50
+Total error:  -5
+Output:  -84
+Sensors  =     0     0     0     4     4     3
+Error    =     0     0     0     0    -1    -7 =    -8
+Weighted =     0     0     0     0   -10   -70 =   -80
+Total error:  -8
+Output:  -92
+Sensors  =     0     3     0     4     4    10
+Error    =     0     0     0     0    -1     0 =    -1
+Weighted =     0     0     0     0   -10     0 =   -10
+Total error:  -1
+Output:  -68
+Sensors  =     0     1     1     4     4     8
+Error    =     0     0     0     0    -1    -2 =    -3
+Weighted =     0     0     0     0   -10   -20 =   -30
+Total error:  -3
+Output:  -72
+Sensors  =     1     0     0     4     6     9
+Error    =     0     0     0     0     0    -1 =    -1
+Weighted =     0     0     0     0     0   -10 =   -10
+Total error:  -1
+Output:  -59
+Sensors  =     0     4     0     8     6     8
+Error    =     0     0     0     0     0    -2 =    -2
+Weighted =     0     0     0     0     0   -20 =   -20
+Total error:  -2
+Output:  -55
+Sensors  =     0     4     0     8     4    11
+Error    =     0     0     0     0    -1     0 =    -1
+Weighted =     0     0     0     0   -10     0 =   -10
+Total error:  -1
+Output:  -44
+Sensors  =     0     4     0     8     4    10
+Error    =     0     0     0     0    -1     0 =    -1
+Weighted =     0     0     0     0   -10     0 =   -10
+Total error:  -1
+Output:  -36
+Sensors  =     1     4     0     8     8    15
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -28
+Sensors  =     0     4     0     8     8    15
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -22
+Sensors  =     0     4     0     8     8    20
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -17
+Sensors  =     1     4     2     8    12    24
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -9
+Sensors  =     0     1     0     4    12    33
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -8
+Sensors  =     1     0     0     4    13    49
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -5
+Sensors  =     1     0     2     5    12    69
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -4
+Sensors  =     0     0     0     6    12   100
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -2
+Sensors  =     1     2     0     8    16   155
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  -1
+Turning right
+Sensors  =     0     4     0    12    15   216
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  0
+Turning right
+Sensors  =     0     3     0     9    12   266
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  0
+Turning right
+Sensors  =     1     4     0     8    12   320
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  0
+Turning right
+Sensors  =     0     4     0     8     8   382
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  0
+Turning right
+Sensors  =     0     4     0     8     8   462
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  0
+Turning right
+Sensors  =     1     0     0     4     8   479
+Error    =     0     0     0     0     0     0 =     0
+Weighted =     0     0     0     0     0     0 =     0
+Total error:  0
+Output:  0
+Turning right
+Sensors  =     0     0     0     3     4   456
+Error    =     0     0     0     0    -1     0 =    -1
+Weighted =     0     0     0     0   -10     0 =   -10
+Total error:  -1
+Output:  -3
+Turning right
+Sensors  =     0     3     0     0     4   427
+Error    =     0     0     0     0    -1     0 =    -1
+Weighted =     0     0     0     0   -10     0 =   -10
+Total error:  -1
+Output:  -3
+Turning right
+Collision detected, reversing
