@@ -216,7 +216,7 @@ class TetheredDriveApp(Tk):
                 print("Find wall")
                 self.driveLightBumper()
             elif k == 'T':
-                self.rotate_until(200, 90)
+                self.rotate_until(200, 100)
             elif k == 'X':
                 # Follow wall
                 print("Follow wall")
@@ -468,6 +468,29 @@ class TetheredDriveApp(Tk):
 # Farthest reading was just center left hit first with a sensor value of 178
 # At a better distance:
 
+    def reverse_drive(self):
+        l_vel = -75
+        r_vel = -100
+        distance = 200 #mm
+        velocity = 100
+
+        self.robot.drive_direct(l_vel,r_vel)
+        self.driving = True
+
+        startTime = time.perf_counter() # returns time in seconds
+        elapsed = 0 # initialize elapsed time
+        traveled = 0
+
+        while (traveled < distance):
+            # Check traveled distance no matter what so elapsed time and traveled distance are accurate
+            checkTime = time.perf_counter() # get what time it is
+            # difference between checkTime and startTime is how much time has passed
+            elapsed = checkTime - startTime # update elapsed time
+            traveled = velocity * elapsed # update traveled distance
+            #print(f"Current Distance: {traveled}\n")
+        
+        self.wall_follow_pid()
+
     def drive_until(self, velocity=200, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
         """direct_drive_until
         Drives the robot until it reaches the stop_condition or has travelled the specified distance in mm  
@@ -558,14 +581,15 @@ class TetheredDriveApp(Tk):
 
             # Pause driving if there is a bump or wheeldrop
             if bump_or_wheeldrop(sensors=sensors):
-                print("Bump or wheeldrop")
+                #print("Bump or wheeldrop")
                 #reverse
-                
+                #turn
+                self.reverse_drive()
                 #self.robot.drive_stop()
 
                 # continue to next iteration so sensor can be read again
                 # if there is no bump or wheeldrop on the next, it will drive again
-                continue
+                
 
             # Calculate the error
             # Negative error: light reading was too low, turn towards the wall (left)
@@ -596,11 +620,11 @@ class TetheredDriveApp(Tk):
             print("Output: ", output)
 
             # We need to figure out the output ranges to map to "turn left" and "turn right"
-            if in_range(output, -300, -166): # TODO: determine the correct range for turning left
-                deviation = -5
+            if in_range(output, -200, -150): # TODO: determine the correct range for turning left
+                deviation = -25
                 print("Turning left")
-            elif in_range(output, -164, 0): # TODO: determine the correct range for turning right
-                deviation = 5
+            elif in_range(output, -10, 4000): # TODO: determine the correct range for turning right
+                deviation = 25
                 print("Turning right")
 
             # Add deviation to one wheel's velocity,
@@ -639,16 +663,25 @@ def calc_error(sensors):
     # right = sensors.light_bumper.right
     # front_right = sensors.light_bumper.front_right
     # center_right = sensors.light_bumper.center_right
-    center_left = sensors.light_bumper.center_left
+    center_left = sensors.light_bumper_center_left
     center_left_error = range_error(center_left, light_ranges['center_left'])
 
-    front_left = sensors.light_bumper.front_left
+    front_left = sensors.light_bumper_front_left
     front_left_error = range_error(front_left, light_ranges['front_left'])
 
-    left = sensors.light_bumper.left
+    left = sensors.light_bumper_left
     left_error = range_error(left, light_ranges['left'])
 
     total_error = center_left_error + front_left_error + left_error
+
+    return total_error
+
+def calc_error_two(sensors):
+    center_left = sensors.light_bumper_center_left
+    front_left = sensors.light_bumper_front_left
+    left = sensors.light_bumper_left
+
+    total_error = center_left + front_left + left
 
     return total_error
 
