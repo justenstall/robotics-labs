@@ -1,6 +1,8 @@
 # Create Library
 import createlib as cl
 
+import buoys
+
 # each sensor range is a tuple: (range_start, range_stop)
 light_set_points = {
     # The "right" sensors are not used since our robot follows using its left side
@@ -39,6 +41,7 @@ def wall(sensors: cl.Sensors):
     return total_e
 
 def dock(sensors: cl.Sensors):
+    ir = buoys.get_sensors(sensors=sensors)
     left_e = sensors.light_bumper_left - light_set_points["left"]
     front_left_e = sensors.light_bumper_front_left - light_set_points["front_left"]
     center_left_e = sensors.light_bumper_center_left - light_set_points["center_left"]

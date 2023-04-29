@@ -54,9 +54,11 @@ from typing import Callable
 from itertools import cycle
 
 import errors
+import buoys
 
 # Create Library
 import createlib as cl
+
 
 try:
     import serial
@@ -528,11 +530,10 @@ class TetheredDriveApp(Tk):
             return self.drive_until(l_vel=l_vel, r_vel=r_vel, distance=(distance-traveled), stop_condition=stop_condition)
         
         return (traveled, elapsed)
-    
 
     def dockRobot(self):
         #sensors needed are ir_opcode_right and ir_opcode_left
-        #sensors = self.robot.get_sensors()
+        sensors = self.robot.get_sensors()
         #back up
         #self.reverse_drive(distance=100)
         #turn right
@@ -545,14 +546,20 @@ class TetheredDriveApp(Tk):
         #    if(sensors.ir_opcode_left == 255 | sensors.ir_opcode_right == 255):
         #        self.robot.drive_stop()
         #        self.drive_until(l_vel=50, r_vel=50, distance=200)
-        self.rotate_until(100, 270)
+        self.rotate_until(100, -90)
         #drive
-        self.drive_until(l_vel=100, r_vel=100, distance=100)
+        while True:
+            #self.robot.drive_direct(100,100)
+            self.rotate_until(100, 720, stop_condition=stop_if_buoy)
+            # if (sensors.ir_opcode_left > 161):
+            #     self.robot.drive_stop()
+            #     self.drive_until(l_vel=100, r_vel=100, distance=200)
+                #self.rotate_until(100, -90)
+                #self.drive_until(l_vel=100, r_vel=100, distance=500)
         #spin right
-        self.rotate_until(100, 270)
+        
         #drive into dock
         #probably need to create another pid controller for docking
-        self.drive_until(l_vel=100, r_vel=100, distance=200)
 
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
@@ -707,6 +714,10 @@ def ir_threshold(threshold, list):
         if i > threshold:
             return True 
     return False
+
+def stop_if_buoy(sensors: cl.Sensors):
+    ir = buoys.get_sensors(sensors=sensors)
+    return ir.omni.green_buoy or ir.omni.red_buoy
 
 def bump_or_wheeldrop(sensors: cl.Sensors):
     return bump(sensors) | wheeldrop(sensors)
