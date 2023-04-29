@@ -219,7 +219,7 @@ class TetheredDriveApp(Tk):
                 self.driveLightBumper()
             elif k == 'T':
                 # Rotate 90 degrees
-                self.rotate_until(100, 90)
+                self.rotate_until(100, 85)
             elif k == 'X':
                 # Follow wall
                 print("Follow wall")
@@ -529,20 +529,27 @@ class TetheredDriveApp(Tk):
 
     def dockRobot(self):
         #sensors needed are ir_opcode_right and ir_opcode_left
+        sensors = self.robot.get_sensors()
         #back up
-        self.reverse_drive(distance=100)
+        #self.reverse_drive(distance=100)
         #turn right
         self.rotate_until(100, 90)
         #drive
-        self.drive_until(l_vel=100, r_vel=100, distance=200)
+        self.drive_until(l_vel=100, r_vel=100, distance=500)
         #spin right
+        #while(sensors.ir_opcode_left != 255 & sensors.ir_opcode_right != 255):
+        #    self.rotate_until(100, 45)
+        #    if(sensors.ir_opcode_left == 255 | sensors.ir_opcode_right == 255):
+        #        self.robot.drive_stop()
+        #        self.drive_until(l_vel=50, r_vel=50, distance=200)
         self.rotate_until(100, 270)
         #drive
         self.drive_until(l_vel=100, r_vel=100, distance=100)
         #spin right
         self.rotate_until(100, 270)
         #drive into dock
-        #self.drive_until()
+        #probably need to create another pid controller for docking
+        self.drive_until(l_vel=100, r_vel=100, distance=200)
     
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
@@ -590,7 +597,7 @@ class TetheredDriveApp(Tk):
             #initiate dock if detected
             if ir_threshold(160, [sensors.ir_opcode_left, sensors.ir_opcode_right]):
                 print("Dock detected. Starting Dock")
-                self.dockRobot()
+                #self.dockRobot()
 
             # Calculate the error
             # Negative error: light reading was too low, turn towards the wall (left)
