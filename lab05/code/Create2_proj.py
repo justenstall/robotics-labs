@@ -537,7 +537,7 @@ class TetheredDriveApp(Tk):
 
     def dockRobot(self):
         #sensors needed are ir_opcode_right and ir_opcode_left
-        #sensors = self.robot.get_sensors()
+        sensors = self.robot.get_sensors()
         #back up
         #self.reverse_drive(distance=100)
         #turn right
@@ -552,12 +552,20 @@ class TetheredDriveApp(Tk):
         #        self.drive_until(l_vel=50, r_vel=50, distance=200)
         self.rotate_until(100, -90)
         #drive
-        self.drive_until(l_vel=100, r_vel=100, distance=500)
+        while(sensors.ir_opcode_left <= 161):
+            #self.robot.drive_direct(100,100)
+            self.rotate_until(100, -15)
+            sensors = self.robot.get_sensors()
+            if (sensors.ir_opcode_left > 161):
+                self.robot.drive_stop()
+                self.drive_until(l_vel=100, r_vel=100, distance=200)
+                #self.rotate_until(100, -90)
+                #self.drive_until(l_vel=100, r_vel=100, distance=500)
         #spin right
-        self.rotate_until(100, -90)
+        
         #drive into dock
         #probably need to create another pid controller for docking
-        self.drive_until(l_vel=100, r_vel=100, distance=500)
+        
 
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
