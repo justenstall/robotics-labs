@@ -527,6 +527,31 @@ class TetheredDriveApp(Tk):
         
         return (traveled, elapsed)
     
+
+    def dockRobot(self):
+        #sensors needed are ir_opcode_right and ir_opcode_left
+        #sensors = self.robot.get_sensors()
+        #back up
+        #self.reverse_drive(distance=100)
+        #turn right
+        self.rotate_until(100, 90)
+        #drive
+        self.drive_until(l_vel=100, r_vel=100, distance=500)
+        #spin right
+        #while(sensors.ir_opcode_left != 255 & sensors.ir_opcode_right != 255):
+        #    self.rotate_until(100, 45)
+        #    if(sensors.ir_opcode_left == 255 | sensors.ir_opcode_right == 255):
+        #        self.robot.drive_stop()
+        #        self.drive_until(l_vel=50, r_vel=50, distance=200)
+        self.rotate_until(100, 270)
+        #drive
+        self.drive_until(l_vel=100, r_vel=100, distance=100)
+        #spin right
+        self.rotate_until(100, 270)
+        #drive into dock
+        #probably need to create another pid controller for docking
+        self.drive_until(l_vel=100, r_vel=100, distance=200)
+
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
     def wall_follow_pid(self):
@@ -567,6 +592,10 @@ class TetheredDriveApp(Tk):
                 self.reverse_drive(distance=100) # back away from the wall
                 continue
                 # continue to next iteration so sensors are refreshed
+
+            if ir_threshold(160, [sensors.ir_opcode_left, sensors.ir_opcode_right]):
+                print("Dock detected. Starting Dock")
+                self.dockRobot()
 
             # Turn amount
             deviation = 40
@@ -705,6 +734,12 @@ def any_greater_than(threshold, list):
         if i > threshold:
             return False
     return True
+
+def ir_threshold(threshold, list):
+    for i in list:
+        if i > threshold:
+            return True 
+    return False
 
 def bump_or_wheeldrop(sensors: cl.Sensors):
     return bump(sensors) | wheeldrop(sensors)
