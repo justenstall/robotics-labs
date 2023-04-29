@@ -438,8 +438,15 @@ class TetheredDriveApp(Tk):
         diameter = 235 # Create 2 wheel diameter
         circumference = diameter * math.pi
 
-        distance = circumference * (degrees/360)
-        return self.drive_until(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
+        distance = circumference * (abs(degrees)/360)
+
+        l_vel = velocity
+        r_vel = -velocity
+        if degrees < 0:
+            l_vel = -velocity
+            r_vel = velocity
+
+        return self.drive_until(l_vel=l_vel, r_vel=r_vel, distance=distance, stop_condition=stop_condition)
 
 # LIGHT BUMP SENSOR READINGS
 # Farthest reading was just center left hit first with a sensor value of 178
@@ -543,14 +550,14 @@ class TetheredDriveApp(Tk):
         #    if(sensors.ir_opcode_left == 255 | sensors.ir_opcode_right == 255):
         #        self.robot.drive_stop()
         #        self.drive_until(l_vel=50, r_vel=50, distance=200)
-        self.rotate_until(100, 270)
+        self.rotate_until(100, -90)
         #drive
-        self.drive_until(l_vel=100, r_vel=100, distance=100)
+        self.drive_until(l_vel=100, r_vel=100, distance=500)
         #spin right
-        self.rotate_until(100, 270)
+        self.rotate_until(100, -90)
         #drive into dock
         #probably need to create another pid controller for docking
-        self.drive_until(l_vel=100, r_vel=100, distance=200)
+        self.drive_until(l_vel=100, r_vel=100, distance=500)
 
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
