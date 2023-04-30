@@ -487,18 +487,19 @@ class TetheredDriveApp(Tk):
         print("Rotating away from the wall")
         self.rotate_until(stop_degrees=30)
 
-        # Drive until the omni sensor sees anything
+        # Drive until the omni sensor sees far buoy
         def omni_sees_far_buoy(sensors: cl.Sensors):
             ir = docking.get_sensors(sensors=sensors)
             if ir.omni.red_buoy:
                 print("Omni sensor saw the far buoy, stopping")
-            return ir.omni.red_buoy
+            return ir.omni.red_buoy | bump_or_wheeldrop(sensors)
 
         self.drive_until(
             l_vel=100,
             r_vel=100,
             stop_distance=0,
             stop_condition=omni_sees_far_buoy,
+            persist=False
         )
 
         # Rotate until the right IR sensor sees the green buoy
@@ -506,22 +507,23 @@ class TetheredDriveApp(Tk):
             ir = docking.get_sensors(sensors=sensors)
             if ir.right.green_buoy:
                 print("Right sensor saw the green buoy, stopping rotation")
-            return ir.right.green_buoy
+            return ir.right.green_buoy | bump_or_wheeldrop(sensors)
 
         self.rotate_until(
             velocity=30,
-            stop_degrees=0,
+            stop_degrees=-360,
             stop_condition=right_sees_green,
+            persist=False
         )
 
         pid = Controller(
             name="docking",
-            Kp=1,
-            Ki=1,
-            Kd=1,
-            # Kp=0.1,
-            # Ki=0.01,
-            # Kd=0.1,
+            # Kp=1,
+            # Ki=1,
+            # Kd=1,
+            Kp=8,
+            Ki=0,
+            Kd=0,
         )
 
         # iterate unless robot dies
@@ -552,10 +554,11 @@ class TetheredDriveApp(Tk):
             output = pid.iterate(docking.error(sensors))
 
             # the default speed to go if the robot is moving straight forward
-            normal_velocity = 40
+            normal_velocity = 20
 
             # Turn amount
-            deviation = int(self.robot.limit(3*output, -40, 40))
+            # deviation = int(self.robot.limit(3*output, -40, 40))
+            deviation = int(self.robot.limit(output, -20, 20))
 
             # RIGHT TURN: left wheel speeds up, right wheel slows down
             # LEFT TURN: left wheel slows down, right wheel speeds up

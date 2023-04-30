@@ -10,26 +10,31 @@ def error(sensors: cl.Sensors):
 
     error = 0
 
-    turn_left = -1
-    turn_right = 1
-
     print(30*"-"+"\nCalculating error")
+
+    if ir.left.green_buoy:
+        print("Left sees green")
+        error = error + 1
 
     if ir.left.red_buoy:
         print("Left sees red")
-        error = error + turn_left
+        error = error + -2
 
     if ir.right.green_buoy:
         print("Right sees green")
-        error = error + turn_right
-
-    if ir.omni.red_buoy and not ir.omni.green_buoy:
-        print("Omni only sees red")
-        error = error + turn_left
+        error = error + 2
     
-    if ir.omni.green_buoy and not ir.omni.red_buoy:
-        print("Omni only sees green")
-        error = error + turn_right
+    if ir.right.red_buoy:
+        print("Right sees red")
+        error = error + -1
+
+    # if ir.omni.red_buoy and not ir.omni.green_buoy:
+    #     print("Omni only sees red")
+    #     error = error + turn_left
+    
+    # if ir.omni.green_buoy and not ir.omni.red_buoy:
+    #     print("Omni only sees green")
+    #     error = error + turn_right
 
     return error
 
