@@ -533,7 +533,7 @@ class TetheredDriveApp(Tk):
             sensors = self.robot.get_sensors()
 
             # First things first check if we completed the docking
-            if sensors.charger_state == cl.CHARGE_SOURCE.HOME_BASE:
+            if sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING:
                 print(30 * "-" + "\nDocked!\n" + 30 * "-")
                 break
 
@@ -545,8 +545,19 @@ class TetheredDriveApp(Tk):
             if bump(sensors):
                 print("Collision detected, reversing")
                 self.robot.drive_stop()  # stop driving
-                # time.sleep(self.sensorDelay)
-                self.reverse_drive(distance=100)  # back away from the wall
+                global did_dock
+                did_dock = False
+                def is_on_power(sensors: cl.Sensors):
+                    if sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING:
+                        print(30 * "-" + "\nDocked!\n" + 30 * "-")
+                        global did_dock 
+                        did_dock = True
+                        return True
+                    return False
+                self.drive_until(l_vel=-10, r_vel=-10, stop_distance=100, stop_condition=is_on_power)
+                if did_dock:
+                    print(30 * "-" + "\nDocked!\n" + 30 * "-")
+                    break
                 continue
                 # continue to next iteration so sensors are refreshed
 
@@ -558,15 +569,17 @@ class TetheredDriveApp(Tk):
 
             # Turn amount
             # deviation = int(self.robot.limit(3*output, -40, 40))
-            deviation = int(self.robot.limit(output, -20, 20))
+            deviation = int(self.robot.limit(output, -30, 30))
 
             # RIGHT TURN: left wheel speeds up, right wheel slows down
             # LEFT TURN: left wheel slows down, right wheel speeds up
-            left_vel = normal_velocity + deviation
-            right_vel = normal_velocity - deviation
+            # left_vel = normal_velocity + deviation
+            # right_vel = normal_velocity - deviation
+            left_vel = deviation + 20
+            right_vel = -deviation + 20
 
             # Trigger the drive with the updated velocities
-            print(f"Drive: R={left_vel:3} L={right_vel:3}")
+            print(f"Drive: L={left_vel:3} R={right_vel:3}")
             self.robot.drive_direct(left_vel, right_vel)
 
             # Apply the sensor delay before next iteration

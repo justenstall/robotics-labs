@@ -1,0 +1,366 @@
+Trying /dev/tty.usbserial-DN05J9ZT... 
+----------------------------------------
+ Create opened serial connection
+   port: /dev/tty.usbserial-DN05J9ZT
+   datarate: 115200 bps
+----------------------------------------
+Connected!
+Passive
+Safe
+Full
+Follow wall
+Light =     5     0     7     1     2     0 total=15
+Error =   -30     0     7     0     0     0 = -24.75
+wall-follow[1]: error=-24.75 --> out=-24.75
+-24P+-24I+24D
+Turn right
+Drive: R=110 L= 50
+Light =     5     3     6     0     0     0 total=14
+Error =   -30     3     6     0     0     0 = -22.5
+wall-follow[2]: error=-22.5 --> out=-72.0
+-22P+-47I+-2D
+Turn left
+Drive: R= 50 L=110
+Light =     5     0     6     2     0     0 total=13
+Error =   -30     0     6     0     0     0 = -25.5
+wall-follow[3]: error=-25.5 --> out=-95.25
+-25P+-72I+3D
+Turn left
+Drive: R= 50 L=110
+Light =     4     3     7     0     0     0 total=14
+Error =   -31     3     7     0     0     0 = -22.75
+wall-follow[4]: error=-22.75 --> out=-121.0
+-22P+-95I+-2D
+Turn left
+Drive: R= 50 L=110
+Light =     9     2     8     0     4     0 total=23
+Error =   -26     2     8     0     0     0 = -18.0
+wall-follow[5]: error=-18.0 --> out=-136.25
+-18P+-113I+-4D
+Turn left
+Drive: R= 50 L=110
+Light =     9     0    12     0     4     0 total=25
+Error =   -26     0    12     0     0     0 = -17.0
+wall-follow[6]: error=-17.0 --> out=-148.5
+-17P+-130I+-1D
+Turn left
+Drive: R= 50 L=110
+Light =    11     0    13     0     3     0 total=27
+Error =   -24     0    13     0     0     0 = -14.25
+wall-follow[7]: error=-14.25 --> out=-161.75
+-14P+-144I+-2D
+Turn left
+Drive: R= 50 L=110
+Light =    12     2    16     0     4     0 total=34
+Error =   -23     2    16     0     0     0 =  -9.0
+wall-follow[8]: error= -9.0 --> out=-168.0
+-9P+-153I+-5D
+Turn left
+Drive: R= 50 L=110
+Light =    13     3    12     0     0     0 total=28
+Error =   -22     3    12     0     0     0 = -10.0
+wall-follow[9]: error=-10.0 --> out=-172.75
+-10P+-163I+1D
+Turn left
+Drive: R= 50 L=110
+Light =    17     0    16     0     0     0 total=33
+Error =   -18     0    16     0     0     0 =  -6.0
+wall-follow[10]: error= -6.0 --> out=-179.75
+-6P+-169I+-4D
+Turn left
+Drive: R= 50 L=110
+Dock detected. Starting docking maneuver...
+Rotating away from the wall
+Rotating 30 degrees at 100mm/s
+Drove distance limit 61.522856132800115mm, stopping
+Omni sensor saw the far buoy, stopping
+Stop condition met
+Rotating -360 degrees at 30mm/s
+Right sensor saw the green buoy, stopping rotation
+Stop condition met
+------------------------------
+Calculating error
+docking[1]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[2]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[3]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[4]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Left sees green
+Right sees green
+Omni sees green
+docking[5]: error=    6 --> out=   48
+48P+0I+0D
+Drive: L= 50 R=-10
+------------------------------
+Calculating error
+docking[6]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[7]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Left sees green
+Right sees green
+Omni sees green
+docking[8]: error=    6 --> out=   48
+48P+0I+0D
+Drive: L= 50 R=-10
+------------------------------
+Calculating error
+Left sees green
+Right sees green
+Omni sees green
+docking[9]: error=    6 --> out=   48
+48P+0I+0D
+Drive: L= 50 R=-10
+------------------------------
+Calculating error
+docking[10]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[11]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[12]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Omni sees green
+Omni sees red
+docking[13]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[14]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[15]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[16]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Right sees red
+docking[17]: error=   -1 --> out=   -8
+-8P+0I+0D
+Drive: L= 12 R= 28
+------------------------------
+Calculating error
+docking[18]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[19]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Right sees red
+Omni sees red
+docking[20]: error=   -4 --> out=  -32
+-32P+0I+0D
+Drive: L=-10 R= 50
+------------------------------
+Calculating error
+docking[21]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Right sees red
+docking[22]: error=   -1 --> out=   -8
+-8P+0I+0D
+Drive: L= 12 R= 28
+------------------------------
+Calculating error
+docking[23]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[24]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Omni sees red
+docking[25]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+Omni sees red
+docking[26]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+docking[27]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Right sees red
+Omni sees red
+docking[28]: error=   -4 --> out=  -32
+-32P+0I+0D
+Drive: L=-10 R= 50
+------------------------------
+Calculating error
+docking[29]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Omni sees red
+docking[30]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+docking[31]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[32]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[33]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Omni sees red
+docking[34]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+Omni sees red
+docking[35]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+Omni sees red
+docking[36]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+docking[37]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Left sees red
+Omni sees red
+docking[38]: error=   -5 --> out=  -40
+-40P+0I+0D
+Drive: L=-10 R= 50
+------------------------------
+Calculating error
+Omni sees red
+docking[39]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+Left sees red
+docking[40]: error=   -2 --> out=  -16
+-16P+0I+0D
+Drive: L=  4 R= 36
+------------------------------
+Calculating error
+docking[41]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Left sees red
+Right sees red
+Omni sees red
+docking[42]: error=   -6 --> out=  -48
+-48P+0I+0D
+Drive: L=-10 R= 50
+------------------------------
+Calculating error
+Left sees red
+Right sees red
+Omni sees red
+docking[43]: error=   -6 --> out=  -48
+-48P+0I+0D
+Drive: L=-10 R= 50
+------------------------------
+Calculating error
+docking[44]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Left sees green
+Right sees red
+Omni sees green
+docking[45]: error=    3 --> out=   24
+24P+0I+0D
+Drive: L= 44 R= -4
+------------------------------
+Calculating error
+docking[46]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+docking[47]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+------------------------------
+Calculating error
+Omni sees red
+docking[48]: error=   -3 --> out=  -24
+-24P+0I+0D
+Drive: L= -4 R= 44
+------------------------------
+Calculating error
+docking[49]: error=    0 --> out=    0
+0P+0I+0D
+Drive: L= 20 R= 20
+Collision detected, reversing
+Drove distance limit 100mm, stopping
+Collision detected, reversing
+not handled 'CONTROL_L'

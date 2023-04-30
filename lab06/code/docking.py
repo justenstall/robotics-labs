@@ -28,13 +28,13 @@ def error(sensors: cl.Sensors):
         print("Right sees red")
         error = error + -1
 
-    # if ir.omni.red_buoy and not ir.omni.green_buoy:
-    #     print("Omni only sees red")
-    #     error = error + turn_left
+    if ir.omni.green_buoy:
+        print("Omni sees green")
+        error = error + 3
     
-    # if ir.omni.green_buoy and not ir.omni.red_buoy:
-    #     print("Omni only sees green")
-    #     error = error + turn_right
+    if ir.omni.red_buoy:
+        print("Omni sees red")
+        error = error + -3
 
     return error
 
