@@ -526,6 +526,12 @@ class TetheredDriveApp(Tk):
             Kd=0,
         )
 
+        def is_docked(sensors: cl.Sensors):
+            if (sensors.charger_state != cl.CHARGING_STATE.CHARGING_FAULT) & (sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING):
+                print(30 * "-" + "\nDocked!\n" + 30 * "-")
+                return True
+            return False
+
         # iterate unless robot dies
         while self.robot is not None:
             # Read the sensors
@@ -533,8 +539,7 @@ class TetheredDriveApp(Tk):
             sensors = self.robot.get_sensors()
 
             # First things first check if we completed the docking
-            if sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING:
-                print(30 * "-" + "\nDocked!\n" + 30 * "-")
+            if is_docked(sensors):
                 break
 
             # End on wheeldrop
@@ -545,19 +550,7 @@ class TetheredDriveApp(Tk):
             if bump(sensors):
                 print("Collision detected, reversing")
                 self.robot.drive_stop()  # stop driving
-                global did_dock
-                did_dock = False
-                def is_on_power(sensors: cl.Sensors):
-                    if sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING:
-                        print(30 * "-" + "\nDocked!\n" + 30 * "-")
-                        global did_dock 
-                        did_dock = True
-                        return True
-                    return False
-                self.drive_until(l_vel=-10, r_vel=-10, stop_distance=100, stop_condition=is_on_power)
-                if did_dock:
-                    print(30 * "-" + "\nDocked!\n" + 30 * "-")
-                    break
+                self.drive_until(l_vel=-10, r_vel=-10, stop_distance=100, stop_condition=is_docked, persist=False)
                 continue
                 # continue to next iteration so sensors are refreshed
 
