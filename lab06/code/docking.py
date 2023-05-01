@@ -3,10 +3,10 @@ import createlib as cl
 from collections import namedtuple
 
 IRSensors = namedtuple('IRSensors', ['omni','left', 'right'])
-IRSensor = namedtuple('IRSensor', ['value', 'reserved','force_field', 'green_buoy', 'red_buoy'])
+OpcodeDock600 = namedtuple('OpcodeDock600', ['value', 'reserved','force_field', 'green_buoy', 'red_buoy'])
 
 def error(sensors: cl.Sensors):
-    ir = get_sensors(sensors=sensors)
+    ir = get_dock600_opcodes(sensors=sensors)
 
     error = 0
 
@@ -38,14 +38,14 @@ def error(sensors: cl.Sensors):
 
     return error
 
-def get_sensors(sensors: cl.Sensors):
+def get_dock600_opcodes(sensors: cl.Sensors):
     return IRSensors(
-        omni=parse_sensor(sensors.ir_opcode),
-        left=parse_sensor(sensors.ir_opcode_left),
-        right=parse_sensor(sensors.ir_opcode_right),
+        omni=parse_dock600_opcode(sensors.ir_opcode),
+        left=parse_dock600_opcode(sensors.ir_opcode_left),
+        right=parse_dock600_opcode(sensors.ir_opcode_right),
     )
 
-def parse_sensor(got):
+def parse_dock600_opcode(got):
     value = got
     reserved = False
     red_buoy = False
@@ -65,7 +65,7 @@ def parse_sensor(got):
         force_field = True
         got = got - 1
 
-    buoys = IRSensor(
+    buoys = OpcodeDock600(
         value=value,
         reserved=reserved,
         force_field=force_field,
