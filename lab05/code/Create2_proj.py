@@ -438,8 +438,15 @@ class TetheredDriveApp(Tk):
         diameter = 235 # Create 2 wheel diameter
         circumference = diameter * math.pi
 
-        distance = circumference * (degrees/360)
-        return self.drive_until(l_vel=velocity, r_vel=-velocity, distance=distance, stop_condition=stop_condition)
+        distance = circumference * (abs(degrees)/360)
+
+        l_vel = velocity
+        r_vel = -velocity
+        if degrees < 0:
+            l_vel = -velocity
+            r_vel = velocity
+
+        return self.drive_until(l_vel=l_vel, r_vel=r_vel, distance=distance, stop_condition=stop_condition)
 
 # LIGHT BUMP SENSOR READINGS
 # Farthest reading was just center left hit first with a sensor value of 178
@@ -448,8 +455,8 @@ class TetheredDriveApp(Tk):
     def reverse_drive(self, distance=50):
         # l_vel = -75
         # r_vel = -100
-        l_vel = -15
-        r_vel = -20
+        l_vel = -50
+        r_vel = -50
         self.drive_until(l_vel=l_vel, r_vel=r_vel, distance=distance)   
 
     def drive_straight_until(self, velocity=200, distance=-1, stop_condition: Callable[[cl.Sensors], bool]=None):
@@ -526,36 +533,12 @@ class TetheredDriveApp(Tk):
             return self.drive_until(l_vel=l_vel, r_vel=r_vel, distance=(distance-traveled), stop_condition=stop_condition)
         
         return (traveled, elapsed)
+        
 
-    def dockRobot(self):
-        #sensors needed are ir_opcode_right and ir_opcode_left
-        sensors = self.robot.get_sensors()
-        #back up
-        #self.reverse_drive(distance=100)
-        #turn right
-        self.rotate_until(100, 90)
-        #drive
-        self.drive_until(l_vel=100, r_vel=100, distance=500)
-        #spin right
-        #while(sensors.ir_opcode_left != 255 & sensors.ir_opcode_right != 255):
-        #    self.rotate_until(100, 45)
-        #    if(sensors.ir_opcode_left == 255 | sensors.ir_opcode_right == 255):
-        #        self.robot.drive_stop()
-        #        self.drive_until(l_vel=50, r_vel=50, distance=200)
-        self.rotate_until(100, 270)
-        #drive
-        self.drive_until(l_vel=100, r_vel=100, distance=100)
-        #spin right
-        self.rotate_until(100, 270)
-        #drive into dock
-        #probably need to create another pid controller for docking
-        self.drive_until(l_vel=100, r_vel=100, distance=200)
-    
     # A PID implementation for following a wall
     # Input to the PID formula is the combined error from all of the left-facing light bumper sensors
     def wall_follow_pid(self):
-        # "normal_velocity" is the default speed to go if the robot is moving straight forward
-        normal_velocity=100
+        time.sleep(self.sensorDelay)
 
         self.driving = True
 
@@ -565,6 +548,7 @@ class TetheredDriveApp(Tk):
 
         # Create array to store errors 
         error_array = [None] * 10
+        error_array = []
 
         # and endless stream of 0-9, 0-9, 0-9, etc
         index_circle = cycle(range(array_size))
@@ -578,8 +562,6 @@ class TetheredDriveApp(Tk):
 
             # Check traveled distance no matter what so elapsed time and traveled distance are accurate
             checkTime = time.perf_counter() # get what time it is
-            # difference between checkTime and startTime is how much time has passed
-            delta_t = checkTime - startTime # update elapsed time
 
             # End on wheeldrop
             if wheeldrop(sensors):
@@ -590,81 +572,94 @@ class TetheredDriveApp(Tk):
                 print("Collision detected, reversing")
                 self.robot.drive_stop() # stop driving
                 # time.sleep(self.sensorDelay)
-                self.reverse_drive(distance=200) # back away from the wall
+                self.reverse_drive(distance=100) # back away from the wall
                 continue
                 # continue to next iteration so sensors are refreshed
 
-            #initiate dock if detected
-            if ir_threshold(160, [sensors.ir_opcode_left, sensors.ir_opcode_right]):
-                print("Dock detected. Starting Dock")
-                #self.dockRobot()
-
-            # Calculate the error
-            # Negative error: light reading was too low, turn towards the wall (left)
-            # Positive error: light reading was too high, turn away from the wall (right)
-            error_n = calc_error(sensors)
-            
-            # Store the current error
-            error_array[n] = error_n
-
-            # Use remainder so it circles
-            n_minus_1 = (n - 1) % array_size
-
-            error_n_minus_1 = error_array[n_minus_1]
-            if error_n_minus_1 is None:
-                # This case should only happen on the first iteration
-                # n-1 will be -1 which will
-                error_n_minus_1 = 0
-
-            # The big formula for PID that evaluates to "output" on his board
-            Kp = 1
-            Ki = 1
-            Kd = 1
-            #deltaT = 1
-
-            proportional = Kp * error_n
-            integral = Ki * sum(filter(None, error_array))
-            derivative = Kd * (error_n_minus_1 - error_n)
-            output = proportional + integral + derivative
-            # output = (Kp * error_n) + (Ki * (sum(error_array))) + (Kd * (prev_Error - error_n)) 
-            print(f"PID: error={error_n:5} --> out={output:5}")
-
-            # Represents the speed difference for each wheel
-            # It is applied to each wheel's speed oppositely
-            # Deviation is applied positively to the left wheel,
-            #   so visualize it as the change to the left wheel speed
-            # Add deviation to one wheel's velocity,
-            #  subtract it from the other
+            # Turn amount
+            deviation = 40
+            # "normal_velocity" is the default speed to go if the robot is moving straight forward
+            normal_velocity = 80
             # RIGHT TURN: left wheel speeds up, right wheel slows down
             # LEFT TURN: left wheel slows down, right wheel speeds up
             left_vel = normal_velocity
             right_vel = normal_velocity
 
+            total_light = check_light(sensors)
+            # if total_light < 50:
+            #     print(f"Away from wall")
+            #     # Do this here so we don't add to the error array?
+            #     left_vel = normal_velocity
+            #     right_vel = normal_velocity
+            #     print(f"Drive: R={left_vel:3} L={right_vel:3}")
+            #     self.robot.drive_direct(left_vel, right_vel)
+            #     continue
+
+            # Calculate the error
+            # Negative error: light reading was too low, turn towards the wall (left)
+            # Positive error: light reading was too high, turn away from the wall (right)
+            error_n = calc_error(sensors)
+
+            # Store the current error
+            if n >= len(error_array):
+                error_array.append(error_n)
+            else:
+                error_array[n] = error_n
+
+            # Use remainder so it circles
+            n_minus_1 = (n - 1) % array_size
+
+            error_n_minus_1 = 0
+            if n_minus_1 < len(error_array):
+                # This case should only happen on the first iteration
+                # n-1 will be -1 which will eval to 9
+                error_n_minus_1 = error_array[n_minus_1]
+
+            # The big formula for PID that evaluates to "output" on his board
+            Kp = 1
+            Ki = 1
+            Kd = 1
+            # difference between checkTime and startTime is how much time has passed
+            delta_t = checkTime - startTime # update elapsed time
+            
+            proportional = Kp * error_n
+            integral = Ki * sum(error_array)
+            derivative = Kd * (error_n_minus_1 - error_n)
+            output = proportional + integral + derivative
+            print(f"PID: error={error_n:5} --> out={output:5}")
+
+            left_bound = -1000
+            middle_bound = -50
+            right_bound = 3000
+
             # We need to figure out the output ranges to map to "turn left" and "turn right"
-            if total_light(sensors) < 50:
-                print(f"Away from wall (total_light: {total_light(sensors)})")
-                left_vel = normal_velocity
-                right_vel = normal_velocity
-            if output < -100000:
+            # if total_light < 15:
+            #     print(f"Away from wall")
+            #     left_vel = normal_velocity
+            #     right_vel = normal_velocity
+            if output <= left_bound:
+                # if output < -100000:
                 print("Sharp left")
                 # left_vel = -normal_velocity
                 # right_vel = normal_velocity
                 left_vel = 10
-                right_vel = 100
-            elif in_range(output, -1000, -50): # TODO: determine the correct range for turning left
+                right_vel = 50
+            elif left_bound <= output <= middle_bound:
+            # elif in_range(output, left_bound, middle_bound): # TODO: determine the correct range for turning left
                 print("Turn left")
-                left_vel = normal_velocity - 30
-                right_vel = normal_velocity + 30
-            elif in_range(output, -10, 3000): # TODO: determine the correct range for turning right
+                left_vel = normal_velocity - deviation
+                right_vel = normal_velocity + deviation
+            elif middle_bound <= output <= right_bound:
+                # elif in_range(output, middle_bound, right_bound): # TODO: determine the correct range for turning right
                 print("Turn right")
-                left_vel = normal_velocity + 30
-                right_vel = normal_velocity - 30
-            elif output >= 3000: # TODO: determine the correct range for turning right
+                left_vel = normal_velocity + deviation
+                right_vel = normal_velocity - deviation
+            elif right_bound <= output: # TODO: determine the correct range for turning right
                 print("Sharp right")
                 # left_vel = normal_velocity
                 # right_vel = -normal_velocity
-                left_vel = 100
-                right_vel = 10
+                left_vel = 50
+                right_vel = -50
 
             print(f"Drive: R={left_vel:3} L={right_vel:3}")
 
@@ -675,10 +670,10 @@ class TetheredDriveApp(Tk):
 
         print("Stopping wall follow")
         self.robot.drive_stop()
-        self.driving = False  
+        self.driving = False
 
 # each sensor range is a tuple: (range_start, range_stop)
-light_ranges = {
+light_set_points = {
     # The "right" sensors are not used since our robot follows using its left side
     # 'right': (0, 1200),
     # 'front_right': (0, 1200),
@@ -689,99 +684,28 @@ light_ranges = {
     
     # If this gets too high it means the robot is head on and needs to turn
     # The low of the range is 0, which happens when the robot is going straight
-    'center_left': (0, 500),
+    'center_left': 0,
 
     # If this gets too high it means the robot is head on and needs to turn
     # The low of the range is very low, which happens when the robot is going straight
-    'front_left': (5, 1000),
+    'front_left': 0,
     
     # If this gets too high it means the robot is too close to the wall and needs to adjust away
     # If this gets too low it means the robot is moving away from a convex corner,
     #   which means the robot needs to turn towards the corner
-    'left': (1000, 15000)
+    'left': 35
 }
 
-# Calculates error for each left side light bumper sensor
-# Uses the "happy" ranges defined in the dict above
-def calc_error(sensors):
-    # TODO: modify this per-sensor?
-    weighted = lambda e: e*10 if e < 0 else e
+def calc_error(sensors: cl.Sensors):
+    left_e = sensors.light_bumper_left - light_set_points['left']
+    front_left_e = sensors.light_bumper_front_left - light_set_points['front_left']
+    center_left_e =  sensors.light_bumper_center_left - light_set_points['center_left']
 
-    right = sensors.light_bumper_right
-    # right_e = range_error(right, light_ranges['right'])
-    right_e = 0
-    right_w = 0
-    
-    front_right = sensors.light_bumper_front_right
-    # front_right_e = range_error(front_right, light_ranges['front_right'])
-    front_right_e = 0
-    front_right_w = 0
-    
-    center_right = sensors.light_bumper_center_right
-    # center_right_e = range_error(center_right, light_ranges['center_right'])
-    center_right_e = 0
-    center_right_w = 0
-    
-    center_left = sensors.light_bumper_center_left
-    center_left_e = range_error(center_left, light_ranges['center_left'])
-    center_left_w = weighted(center_left_e)
+    total_e = left_e + front_left_e + (center_left_e * .75)
 
-    front_left = sensors.light_bumper_front_left
-    front_left_e = range_error(front_left, light_ranges['front_left'])
-    front_left_w = weighted(front_left_e)
+    print(f"Error = {left_e:5} {front_left_e:5} {center_left_e:5} {0:5} {0:5} {0:5} = {total_e:5}")
 
-    left = sensors.light_bumper_left
-    left_e = range_error(left, light_ranges['left'])
-    left_w = weighted(left_e)
-
-    total_e = left_e + front_left_e + center_left_e
-    total_w = center_left_w + front_left_w + left_w
-
-    print(f"Sensors  = {left:5} {front_left:5} {center_left:5} {center_right:5} {front_right:5} {right:5}")
-    print(f"Error    = {left_e:5} {front_left_e:5} {center_left_e:5} {center_right_e:5} {front_right_e:5} {right_e:5} = {total_e:5}")
-    print(f"Weighted = {left_w:5} {front_left_w:5} {center_left_w:5} {center_right_w:5} {front_right_w:5} {right_w:5} = {total_w:5}")
-    # print(f"Error    = {right_e:5} {front_right_e:5} {center_right_e:5} {center_left_e:5} {front_left_e:5} {left_e:5} = {total_e:5}")
-    # print(f"Weighted = {right_w:5} {front_right_w:5} {center_right_w:5} {center_left_w:5} {front_left_w:5} {left_w:5} = {total_w:5}")
-    # print(f"Weighted = {right_w:5} {front_right_w:5} {center_right_w:5} {center_left_w:5} {front_left_w:5} {left_w:5} = {total_w:5}")
-
-    return total_w #TODO: return total_e or total_w?
-
-def total_light(sensors):
-    right = sensors.light_bumper_right
-    front_right = sensors.light_bumper_front_right
-    center_right = sensors.light_bumper_center_right
-    center_left = sensors.light_bumper_center_left
-    front_left = sensors.light_bumper_front_left
-    left = sensors.light_bumper_left
-    return right + front_right + center_right + center_left + front_left + left
-
-def calc_error_two(sensors):
-    center_left = sensors.light_bumper_center_left
-    front_left = sensors.light_bumper_front_left
-    left = sensors.light_bumper_left
-
-    total_error = center_left + front_left + left
-
-    return total_error
-
-# Will need to determine the ranges for sensors and the output is a matrix, 
-#   which would require a more complex function here
-def in_range(output, range_start, range_stop):
-    return range_start <= output <= range_stop
-
-# Calculate an error for "value" for the given range "range_tuple"
-# "range_tuple": (range_start, range_stop)
-def range_error(value, range_tuple):
-    range_start = range_tuple[0]
-    range_stop = range_tuple[1]
-    if value < range_start:
-        print("under range start")
-        return -(range_start-value)
-    elif value > range_stop:
-        print("over range stop")
-        return value - range_stop
-    else:
-        return 0
+    return total_e
 
 # TODO: edit this based on how the light sensors work, the logic may be backwards if the light
 def any_greater_than(threshold, list):
@@ -797,11 +721,7 @@ def ir_threshold(threshold, list):
     return False
 
 def bump_or_wheeldrop(sensors: cl.Sensors):
-    wl = sensors.bumps_wheeldrops.wheeldrop_left
-    wr = sensors.bumps_wheeldrops.wheeldrop_right
-    bl = sensors.bumps_wheeldrops.bump_left
-    br = sensors.bumps_wheeldrops.bump_right
-    return wl | wr | bl | br
+    return bump(sensors) | wheeldrop(sensors)
 
 def bump(sensors: cl.Sensors):
     bl = sensors.bumps_wheeldrops.bump_left
@@ -820,9 +740,20 @@ def light_bumper(sensors: cl.Sensors):
     lcl = sensors.light_bumper.center_left
     lfl = sensors.light_bumper.front_left
     ll = sensors.light_bumper.left
-    
-    # return any_greater_than(threshold=light_threshold, list=[lr, lfr, lcr, lcl, lfl, ll]):
     return lr | lfr | lcr | lcl | lfl | ll
+
+def check_light(sensors: cl.Sensors):
+    right = sensors.light_bumper_right
+    front_right = sensors.light_bumper_front_right
+    center_right = sensors.light_bumper_center_right
+    center_left = sensors.light_bumper_center_left
+    front_left = sensors.light_bumper_front_left
+    left = sensors.light_bumper_left
+
+    total = left + front_left + center_left + center_right + front_right + right
+
+    print(f"Light = {left:5} {front_left:5} {center_left:5} {center_right:5} {front_right:5} {right:5} total={total}")
+    return total
 
 # ----------------------- Main Driver ------------------------------
 if __name__ == "__main__":

@@ -1,78 +1,77 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-from itertools import cycle
+import time
 
 
+class Controller(object):
+    """
+    A class represenation of a PID controller
+    """
 
-# This is a dumb pseudocode version of what his PID code on the whiteboard showed
-def pid():
-    # The default speed to go if the robot is moving straight forward
-    normal = 100  # mm/s
+    def __init__(self, name, max_errors=10, Kp=1, Ki=1, Kd=1, useDeltaT=False):
+        """
+        Constructor, sets up class
+        """
+        self.name = name
+        self.max_errors = max_errors
 
-    # Set the number of errors to store
-    # The error array is created as this size
-    array_maxsize = 10
+        # Chase's gains: p=8, i=1, d=0
+        # Chase's gains: p=.1, i=1, d=0
+        self.Kp = Kp
+        self.Ki = Ki
+        self.Kd = Kd
 
-    # Create array to store errors 
-    error_array = [None] * 10
+        self.useDeltaT = useDeltaT
 
-    cycler = cycle(range(array_maxsize))
+        self.error_array = [0] * self.max_errors
 
-    for index in cycler:
-        sensors = robot.get_sensors()
-        error_n = calc_error(sensors)
-        
-        error_array[index] = error_n
+        self.n = 0
 
-        # Represents the speed difference for each wheel
-        # It is applied to each wheel's speed oppositely
-        deviation = 0  # mm/s
+        # Initialize timing
+        self.startTime = time.perf_counter()  # returns time in seconds
+        self.elapsedTime = 0  # initialize elapsed time
+        self.previousTime = self.startTime  # time of previous iteration
 
-        # The big formula for PID that evaluates to "output" on his board
-        output = 0
+    # ------------------- Mode Control ------------------------
 
-        # We need to figure out the output ranges to map to "turn left" and "turn right"
-        if in_range(output, 0, 1):
-            deviation = 5
-        elif in_range(output, 1, 2):
-            deviation = -5
+    # Runs the next iteration of the PID controller, ingesting error_n into the error tracking
+    # Returns the output of the PID formula
+    def iterate(self, error_n):
+        # get the current time of this iteration
+        iterationTime = time.perf_counter()
 
-        # Add deviation to one wheel's velocity,
-        #  subtract it from the other
-        robot.drive(normal + deviation, normal - deviation)
+        # increase N
+        self.n = self.n + 1
 
-def calc_error(sensors):
-    # right = sensors.light_bumper.right
-    # front_right = sensors.light_bumper.front_right
-    # center_right = sensors.light_bumper.center_right
-    center_left = sensors.light_bumper.center_left
-    center_left_error = range_error(center_left, ranges['center_left'])
+        # Store the current error
+        self.error_array[self.index()] = error_n
 
-    front_left = sensors.light_bumper.front_left
-    front_left_error = range_error(front_left, ranges['front_left'])
+        error_n_minus_1 = self.error(self.n - 1)
 
-    left = sensors.light_bumper.left
-    left_error = range_error(left, ranges['left'])
+        proportional = self.Kp * error_n
+        integral = self.Ki * sum(self.error_array)
+        derivative = self.Kd * (error_n_minus_1 - error_n)
+        if self.useDeltaT:
+            derivative = derivative / self.deltaT()
 
-    total_error = center_left_error + front_left_error + left_error
-    print("Total error: "+total_error)
+        output = proportional + integral + derivative
 
-    return total_error
+        print(
+            f"{self.name}[{self.n}]: error={error_n:5} --> out={output:5}\n{int(proportional)}P+{int(integral)}I+{int(derivative)}D"
+        )
 
-# Will need to determine the ranges for sensors and the output is a matrix, 
-#   which would require a more complex function here
-def in_range(output, range_start, range_stop):
-    return range_start <= output <= range_stop
+        self.previousTime = iterationTime  # update the iteration time
 
-# Calculate an error for "value" for the given range "range_tuple"
-# "range_tuple": (range_start, range_stop)
-def range_error(value, range_tuple):
-    range_start = range_tuple[0]
-    range_stop = range_tuple[1]
-    if value < range_start:
-        return -(range_start-value)
-    elif value > range_stop:
-        return value - range_stop
-    else:
-        return 0
+        return output
+
+    def error(self, n=None):
+        if n is None:
+            n = self.n
+        return self.error_array[self.index(n)]
+
+    def index(self, n=None):
+        if n is None:
+            n = self.n
+        return n % self.max_errors
+
+    def deltaT(self, now: float):
+        # difference between checkTime and startTime is how much time has passed
+        self.elapsedTime = now - self.previousTime  # update elapsed time

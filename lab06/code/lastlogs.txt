@@ -1,0 +1,279 @@
+Trying /dev/tty.usbserial-DN0264WN... 
+----------------------------------------
+ Create opened serial connection
+   port: /dev/tty.usbserial-DN0264WN
+   datarate: 115200 bps
+----------------------------------------
+Connected!
+Passive
+Safe
+Full
+Follow wall
+Light =     3     0     1     0     0     0 total=4
+Error =   -32     0     1     0     0     0 = -31.25
+wall-follow[1]: error=-31.25 --> out=-31.25
+-31.25+-31.25+31.25
+Turn right
+Drive: R=110 L= 50
+Light =     1     0     1     2     0     0 total=4
+Error =   -34     0     1     0     0     0 = -33.25
+wall-follow[2]: error=-33.25 --> out=-95.75
+-33.25+-64.5+2.0
+Turn left
+Drive: R= 50 L=110
+Light =     4     0     3     0     0     0 total=7
+Error =   -31     0     3     0     0     0 = -28.75
+wall-follow[3]: error=-28.75 --> out=-126.5
+-28.75+-93.25+-4.5
+Turn left
+Drive: R= 50 L=110
+Light =     6     0     6     0     4     0 total=16
+Error =   -29     0     6     0     0     0 = -24.5
+wall-follow[4]: error=-24.5 --> out=-146.5
+-24.5+-117.75+-4.25
+Turn left
+Drive: R= 50 L=110
+Light =     8     0     7     0     4     0 total=19
+Error =   -27     0     7     0     0     0 = -21.75
+wall-follow[5]: error=-21.75 --> out=-164.0
+-21.75+-139.5+-2.75
+Turn left
+Drive: R= 50 L=110
+Light =     7     0     8     0     3     0 total=18
+Error =   -28     0     8     0     0     0 = -22.0
+wall-follow[6]: error=-22.0 --> out=-183.25
+-22.0+-161.5+0.25
+Turn left
+Drive: R= 50 L=110
+Light =     5     0     7     0     3     0 total=15
+Error =   -30     0     7     0     0     0 = -24.75
+wall-follow[7]: error=-24.75 --> out=-208.25
+-24.75+-186.25+2.75
+Turn left
+Drive: R= 50 L=110
+Light =     2     2     4     1     0     0 total=9
+Error =   -33     2     4     0     0     0 = -28.0
+wall-follow[8]: error=-28.0 --> out=-239.0
+-28.0+-214.25+3.25
+Turn left
+Drive: R= 50 L=110
+Light =     3     1     5     0     1     0 total=10
+Error =   -32     1     5     0     0     0 = -27.25
+wall-follow[9]: error=-27.25 --> out=-269.5
+-27.25+-241.5+-0.75
+Turn left
+Drive: R= 50 L=110
+Light =     4     1     7     0     1     0 total=13
+Error =   -31     1     7     0     0     0 = -24.75
+wall-follow[10]: error=-24.75 --> out=-293.5
+-24.75+-266.25+-2.5
+Turn left
+Drive: R= 50 L=110
+Light =     7     0     8     0     4     0 total=19
+Error =   -28     0     8     0     0     0 = -22.0
+wall-follow[11]: error=-22.0 --> out=-281.75
+-22.0+-257.0+-2.75
+Turn left
+Drive: R= 50 L=110
+Light =     9     0    12     0     4     1 total=26
+Error =   -26     0    12     0     0     0 = -17.0
+wall-follow[12]: error=-17.0 --> out=-262.75
+-17.0+-240.75+-5.0
+Turn left
+Drive: R= 50 L=110
+Dock detected. Starting docking maneuver...
+Rotating away from the wall
+Rotating 30 degrees at 100mm/s
+Drove distance limit 61.522856132800115mm, stopping
+Omni sensor saw the far buoy, stopping
+Stop condition met
+Rotating 0 degrees at 30mm/s
+Right sensor saw the green buoy, stopping rotation
+Stop condition met
+docking[1]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+Right sees green, turn right
+docking[2]: error=    1 --> out=0.010000000000000009
+1+0.01+-1
+Drive: R= 40 L= 39
+Right sees green, turn right
+docking[3]: error=    1 --> out= 1.02
+1+0.02+0
+Drive: R= 60 L= 19
+Right sees green, turn right
+docking[4]: error=    1 --> out= 1.03
+1+0.03+0
+Drive: R= 60 L= 19
+Right sees green, turn right
+docking[5]: error=    1 --> out= 1.04
+1+0.04+0
+Drive: R= 60 L= 19
+Right sees green, turn right
+docking[6]: error=    1 --> out= 1.05
+1+0.05+0
+Drive: R= 61 L= 19
+docking[7]: error=    0 --> out= 1.05
+0+0.05+1
+Drive: R= 61 L= 19
+Right sees green, turn right
+docking[8]: error=    1 --> out=0.06000000000000005
+1+0.06+-1
+Drive: R= 41 L= 38
+Right sees green, turn right
+docking[9]: error=    1 --> out= 1.07
+1+0.07+0
+Drive: R= 61 L= 18
+docking[10]: error=    0 --> out= 1.07
+0+0.07+1
+Drive: R= 61 L= 18
+docking[11]: error=    0 --> out= 0.07
+0+0.07+0
+Drive: R= 41 L= 38
+docking[12]: error=    0 --> out= 0.06
+0+0.06+0
+Drive: R= 41 L= 38
+docking[13]: error=    0 --> out= 0.05
+0+0.05+0
+Drive: R= 41 L= 39
+docking[14]: error=    0 --> out= 0.04
+0+0.04+0
+Drive: R= 40 L= 39
+docking[15]: error=    0 --> out= 0.03
+0+0.03+0
+Drive: R= 40 L= 39
+docking[16]: error=    0 --> out= 0.02
+0+0.02+0
+Drive: R= 40 L= 39
+docking[17]: error=    0 --> out= 0.02
+0+0.02+0
+Drive: R= 40 L= 39
+docking[18]: error=    0 --> out= 0.01
+0+0.01+0
+Drive: R= 40 L= 39
+docking[19]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[20]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[21]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[22]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[23]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[24]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[25]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[26]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[27]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[28]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[29]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[30]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[31]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[32]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[33]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[34]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[35]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[36]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[37]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[38]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[39]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[40]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[41]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[42]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[43]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[44]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[45]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[46]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[47]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[48]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[49]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[50]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[51]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[52]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[53]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[54]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[55]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[56]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[57]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[58]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[59]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
+docking[60]: error=    0 --> out=  0.0
+0+0.0+0
+Drive: R= 40 L= 40
