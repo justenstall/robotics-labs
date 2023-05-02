@@ -1,1 +1,1 @@
-/dev/tty.usbserial-DN05J9ZT
+/dev/tty.usbserial-DN05U5SW

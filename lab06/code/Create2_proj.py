@@ -74,6 +74,7 @@ TEXTHEIGHT = 24  # window height, in lines
 VELOCITYCHANGE = 200
 ROTATIONCHANGE = 300
 
+
 class TetheredDriveApp(Tk):
     # static variables for keyboard callback -- I know, this is icky
     callbackKeyUp = False
@@ -196,7 +197,7 @@ class TetheredDriveApp(Tk):
                 print(sensor_str)
             elif k == "B":  # Print Buoy Sensors
                 sensors = self.robot.get_sensors()
-                ir = docking.get_sensors(sensors)
+                ir = docking.get_dock600_opcodes(sensors)
                 docking.prettyPrint(ir)
             elif k == "UP":
                 self.callbackKeyUp = True
@@ -466,13 +467,13 @@ class TetheredDriveApp(Tk):
         # print(f"Robot drove {traveled:0.1f}mm in {elapsed:0.1f} seconds.")
 
         # Finish the distance if requested
-        if (persist) & (stop_distance != 0) & (traveled < stop_distance):
+        if (persist) & (traveled < stop_distance):
             return self.drive_until(
                 l_vel=l_vel,
                 r_vel=r_vel,
                 stop_distance=(stop_distance - traveled),
                 stop_condition=stop_condition,
-                persist=persist
+                persist=persist,
             )
 
         return (traveled, elapsed)
@@ -488,7 +489,7 @@ class TetheredDriveApp(Tk):
 
         # Drive until the omni sensor sees far buoy
         def omni_sees_far_buoy(sensors: cl.Sensors):
-            ir = docking.get_sensors(sensors=sensors)
+            ir = docking.get_dock600_opcodes(sensors=sensors)
             if ir.omni.red_buoy:
                 print("Omni sensor saw the far buoy, stopping")
             return ir.omni.red_buoy | bump_or_wheeldrop(sensors)
@@ -498,21 +499,24 @@ class TetheredDriveApp(Tk):
             r_vel=100,
             stop_distance=0,
             stop_condition=omni_sees_far_buoy,
-            persist=False
+            persist=False,
         )
 
         # Rotate until the right IR sensor sees the green buoy
         def right_sees_green(sensors: cl.Sensors):
-            ir = docking.get_sensors(sensors=sensors)
+            if bump_or_wheeldrop(sensors):
+                # Cancel the whole procedure
+                return True
+            ir = docking.get_dock600_opcodes(sensors=sensors)
             if ir.right.green_buoy:
                 print("Right sensor saw the green buoy, stopping rotation")
-            return ir.right.green_buoy | bump_or_wheeldrop(sensors)
+            return ir.right.green_buoy
 
         self.rotate_until(
             velocity=30,
             stop_degrees=-360,
             stop_condition=right_sees_green,
-            persist=False
+            persist=False,
         )
 
         pid = Controller(
@@ -524,12 +528,6 @@ class TetheredDriveApp(Tk):
             Ki=0,
             Kd=0,
         )
-
-        def is_docked(sensors: cl.Sensors):
-            if (sensors.charger_state != cl.CHARGING_STATE.CHARGING_FAULT) & (sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING):
-                print(30 * "-" + "\nDocked!\n" + 30 * "-")
-                return True
-            return False
 
         # iterate unless robot dies
         while self.robot is not None:
@@ -549,7 +547,13 @@ class TetheredDriveApp(Tk):
             if bump(sensors):
                 print("Collision detected, reversing")
                 self.robot.drive_stop()  # stop driving
-                self.drive_until(l_vel=-10, r_vel=-10, stop_distance=100, stop_condition=is_docked, persist=False)
+                self.drive_until(
+                    l_vel=-10,
+                    r_vel=-10,
+                    stop_distance=100,
+                    stop_condition=is_docked,
+                    persist=False,
+                )
                 continue
                 # continue to next iteration so sensors are refreshed
 
@@ -608,7 +612,7 @@ class TetheredDriveApp(Tk):
                 continue
                 # continue to next iteration so sensors are refreshed
 
-            ir = docking.get_sensors(sensors)
+            ir = docking.get_dock600_opcodes(sensors)
             if ir.omni.force_field | ir.left.force_field | ir.right.force_field:
                 print("Dock detected. Starting docking maneuver...")
                 return self.dockRobot()
@@ -693,8 +697,17 @@ def ir_threshold(threshold, list):
     return False
 
 
+def is_docked(sensors: cl.Sensors):
+    if (sensors.charger_state != cl.CHARGING_STATE.CHARGING_FAULT) & (
+        sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING
+    ):
+        print(30 * "-" + "\nDocked!\n" + 30 * "-")
+        return True
+    return False
+
+
 def stop_if_buoy(sensors: cl.Sensors):
-    ir = docking.get_sensors(sensors=sensors)
+    ir = docking.get_dock600_opcodes(sensors=sensors)
     stop = ir.omni.green_buoy or ir.omni.red_buoy
     if stop:
         print("Buoy detected!")
@@ -710,10 +723,12 @@ def bump(sensors: cl.Sensors):
     br = sensors.bumps_wheeldrops.bump_right
     return bl | br
 
+
 def wheeldrop(sensors: cl.Sensors):
     wl = sensors.bumps_wheeldrops.wheeldrop_left
     wr = sensors.bumps_wheeldrops.wheeldrop_right
     return wl | wr
+
 
 def light_bumper(sensors: cl.Sensors):
     lr = sensors.light_bumper.right
