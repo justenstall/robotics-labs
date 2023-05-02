@@ -448,7 +448,7 @@ class TetheredDriveApp(Tk):
             traveled = distance_velocity * elapsed  # update traveled distance
 
             if (stop_distance != 0) & (traveled >= stop_distance):
-                print(f"Drove distance limit {stop_distance}mm, stopping")
+                print(f"Drove distance limit {int(stop_distance)}mm, stopping")
                 break
 
             # Exit loop if there has been a bump or wheeldrop
@@ -545,34 +545,60 @@ class TetheredDriveApp(Tk):
 
             # Back up if there is a bump
             if bump(sensors):
-                print("Collision detected, reversing")
-                self.robot.drive_stop()  # stop driving
-                self.drive_until(
-                    l_vel=-10,
-                    r_vel=-10,
-                    stop_distance=100,
-                    stop_condition=is_docked,
-                    persist=False,
-                )
-                continue
+                self.robot.drive_stop()
+                print("Hit the back of the dock")
+                # for i in range(3):
+                #     time.sleep(2+self.sensorDelay)
+                #     sensors = self.robot.get_sensors()
+                #     if is_docked(sensors):
+                #         break
+                #     print("Inching back...")
+                #     self.robot.drive_direct(l_vel=-11, r_vel=-11)
+                #     time.sleep(.3)
+                #     self.robot.drive_stop()
+                # print("Retrying the final approach")
+                # self.robot.drive_direct(l_vel=-30, r_vel=-30)
+                # time.sleep(5)
+                # self.robot.drive_stop()
+                break
+                # continue
                 # continue to next iteration so sensors are refreshed
 
             # Get PID controller's output for the current error value
             output = pid.iterate(docking.error(sensors))
 
             # the default speed to go if the robot is moving straight forward
-            normal_velocity = 20
+
+            dev_limit = 25
+            normal_velocity = 15
+            if light_bumper(sensors):
+                dev_limit = 10
+                normal_velocity = 15
+                print("Light bump speeds")
 
             # Turn amount
             # deviation = int(self.robot.limit(3*output, -40, 40))
-            deviation = int(self.robot.limit(output, -30, 30))
+            # deviation = int(self.robot.limit(output, -30, 30))
+            deviation = int(self.robot.limit(output, -dev_limit, dev_limit))
 
             # RIGHT TURN: left wheel speeds up, right wheel slows down
             # LEFT TURN: left wheel slows down, right wheel speeds up
             # left_vel = normal_velocity + deviation
             # right_vel = normal_velocity - deviation
-            left_vel = deviation + 20
-            right_vel = -deviation + 20
+            left_vel = deviation + normal_velocity
+            right_vel = -deviation + normal_velocity
+
+            if light_bumper(sensors):
+                min_speed = 11
+                min_stop = 5
+                if left_vel < min_speed & left_vel > min_stop:
+                    left_vel = min_speed
+                if left_vel > -min_speed & left_vel < -min_stop:
+                    left_vel = -min_speed
+                if right_vel < min_speed & right_vel > min_stop:
+                    right_vel = min_speed
+                if right_vel > -min_speed & right_vel < -min_stop:
+                    right_vel = -min_speed
 
             # Trigger the drive with the updated velocities
             print(f"Drive: L={left_vel:3} R={right_vel:3}")
@@ -698,12 +724,13 @@ def ir_threshold(threshold, list):
 
 
 def is_docked(sensors: cl.Sensors):
-    if (sensors.charger_state != cl.CHARGING_STATE.CHARGING_FAULT) & (
-        sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING
-    ):
+    # if (sensors.charger_state != cl.CHARGING_STATE.CHARGING_FAULT) & (
+    #     sensors.charger_state != cl.CHARGING_STATE.NOT_CHARGING
+    # ):
+    docked = (sensors.charger_state == cl.CHARGING_STATE.FULL_CHARGING) | (sensors.charger_state == cl.CHARGING_STATE.TRICKLE_CHARGING)
+    if docked:
         print(30 * "-" + "\nDocked!\n" + 30 * "-")
-        return True
-    return False
+    return docked
 
 
 def stop_if_buoy(sensors: cl.Sensors):
@@ -721,12 +748,16 @@ def bump_or_wheeldrop(sensors: cl.Sensors):
 def bump(sensors: cl.Sensors):
     bl = sensors.bumps_wheeldrops.bump_left
     br = sensors.bumps_wheeldrops.bump_right
+    if bl | br:
+        print("Bump detected")
     return bl | br
 
 
 def wheeldrop(sensors: cl.Sensors):
     wl = sensors.bumps_wheeldrops.wheeldrop_left
     wr = sensors.bumps_wheeldrops.wheeldrop_right
+    if wl | wr:
+        print("Wheeldrop detected")
     return wl | wr
 
 
